@@ -64,16 +64,6 @@ const Header = () => {
             </div>
           </div>
 
-          <div className="top-bar-contact">
-            <a href={`mailto:${corporate?.email || ''}`} className="contact-link">
-              <i className="fa-regular fa-envelope"></i> {corporate?.email || 'Loading...'}
-            </a>
-            <span className="contact-divider"></span>
-            <a href={`tel:${corporate?.phone1 || ''}`} className="contact-link">
-              <i className="fa-solid fa-phone"></i> +91 {corporate?.phone1 || 'Loading...'}
-            </a>
-          </div>
-
           <div className="nav-dropdown">
             <a href="#publications" className="nav-link dropdown-toggle">Resources <i className="fa-solid fa-chevron-down"></i></a>
             <div className="dropdown-menu">
