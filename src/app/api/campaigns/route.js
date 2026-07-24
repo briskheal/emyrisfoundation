@@ -18,6 +18,7 @@ const verifyAuth = (req) => {
 import fs from 'fs';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
 export async function GET() {
   try {
     let campaigns = await Campaign.findAll({ order: [['order', 'ASC']] });

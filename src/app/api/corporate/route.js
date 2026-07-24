@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 
 // --- PUBLIC ROUTE ---
+export const dynamic = 'force-dynamic';
 export async function GET() {
   try {
     const profile = await CorporateProfile.findOne();
