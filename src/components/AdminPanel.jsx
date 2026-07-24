@@ -13,6 +13,7 @@ const AdminPanel = () => {
   const [loginError, setLoginError] = useState('');
   const [activeTab, setActiveTab] = useState('corporate');
   const [saved, setSaved] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   // Corporate form state
   const [corp, setCorp] = useState({});
@@ -180,46 +181,76 @@ const AdminPanel = () => {
   ];
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%)', padding: '20px', fontFamily: 'Inter, sans-serif' }}>
-      {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '30px', flexWrap: 'wrap', gap: '10px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <img src="/emyris_logo.webp" alt="Logo" style={{ width: '42px' }} />
+    <div style={{ display: 'flex', minHeight: '100vh', background: 'linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%)', fontFamily: 'Inter, sans-serif' }}>
+      
+      {/* Sidebar */}
+      <div style={{
+        width: sidebarOpen ? '260px' : '0px',
+        background: 'rgba(255,255,255,0.03)',
+        borderRight: sidebarOpen ? '1px solid rgba(255,255,255,0.08)' : 'none',
+        transition: 'all 0.3s ease',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        <div style={{ padding: '24px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.05)', whiteSpace: 'nowrap' }}>
+          <img src="/emyris_logo.webp" alt="Logo" style={{ width: '40px' }} />
           <div>
-            <h2 style={{ color: 'white', margin: 0, fontFamily: 'Outfit, sans-serif', fontSize: '1.3rem' }}>Emyris Admin Panel</h2>
-            <p style={{ color: 'rgba(255,255,255,0.4)', margin: 0, fontSize: '0.8rem' }}>Foundation Management System</p>
+            <h2 style={{ color: 'white', margin: 0, fontFamily: 'Outfit, sans-serif', fontSize: '1.2rem' }}>Emyris Admin</h2>
+            <p style={{ color: 'rgba(255,255,255,0.4)', margin: 0, fontSize: '0.75rem' }}>Management System</p>
           </div>
         </div>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-          <a href="/" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem', textDecoration: 'none' }}>
+        
+        <div style={{ padding: '20px 12px', display: 'flex', flexDirection: 'column', gap: '8px', flex: 1, overflowY: 'auto' }}>
+          <p style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px', margin: '0 0 10px 10px' }}>Menu</p>
+          {tabs.map(t => (
+            <button key={t.id} onClick={() => setActiveTab(t.id)} style={{
+              padding: '12px 16px', borderRadius: '8px', border: 'none', cursor: 'pointer',
+              fontFamily: 'Inter, sans-serif', fontWeight: 500, fontSize: '0.9rem', textAlign: 'left',
+              display: 'flex', alignItems: 'center', gap: '12px',
+              background: activeTab === t.id ? 'linear-gradient(135deg, #f97316, #ea580c)' : 'transparent',
+              color: activeTab === t.id ? 'white' : 'rgba(255,255,255,0.6)',
+              transition: 'all 0.2s', width: '100%', whiteSpace: 'nowrap'
+            }}>
+              <i className={`fa-solid ${t.icon}`} style={{ width: '20px', textAlign: 'center' }}></i> {t.label}
+            </button>
+          ))}
+        </div>
+
+        <div style={{ padding: '20px', borderTop: '1px solid rgba(255,255,255,0.05)', whiteSpace: 'nowrap' }}>
+          <a href="/" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
             <i className="fa-solid fa-arrow-left"></i> Back to Site
           </a>
           <button onClick={() => setIsLoggedIn(false)} style={{
-            background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)',
-            color: '#f87171', borderRadius: '8px', padding: '8px 16px', cursor: 'pointer', fontSize: '0.85rem'
+            width: '100%', background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)',
+            color: '#f87171', borderRadius: '8px', padding: '10px', cursor: 'pointer', fontSize: '0.9rem',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'
           }}>
             <i className="fa-solid fa-right-from-bracket"></i> Logout
           </button>
         </div>
       </div>
 
-      {/* Tabs */}
-      <div style={{ display: 'flex', gap: '8px', marginBottom: '24px', flexWrap: 'wrap' }}>
-        {tabs.map(t => (
-          <button key={t.id} onClick={() => setActiveTab(t.id)} style={{
-            padding: '10px 20px', borderRadius: '10px', border: 'none', cursor: 'pointer',
-            fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: '0.88rem',
-            background: activeTab === t.id ? 'linear-gradient(135deg, #f97316, #ea580c)' : 'rgba(255,255,255,0.06)',
-            color: activeTab === t.id ? 'white' : 'rgba(255,255,255,0.6)',
-            transition: 'all 0.2s'
+      {/* Main Content Area */}
+      <div style={{ flex: 1, padding: '20px 32px', display: 'flex', flexDirection: 'column', height: '100vh', boxSizing: 'border-box', overflowY: 'auto' }}>
+        
+        {/* Topbar */}
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px' }}>
+          <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{
+            background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)', color: 'white',
+            width: '40px', height: '40px', borderRadius: '8px', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem',
+            marginRight: '20px', transition: 'background 0.2s'
           }}>
-            <i className={`fa-solid ${t.icon}`}></i> {t.label}
+            <i className="fa-solid fa-bars"></i>
           </button>
-        ))}
-      </div>
+          <h2 style={{ color: 'white', margin: 0, fontFamily: 'Outfit, sans-serif', fontSize: '1.5rem' }}>
+            {tabs.find(t => t.id === activeTab)?.label}
+          </h2>
+        </div>
 
-      {/* Panel */}
-      <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', padding: '28px' }}>
+        {/* Panel */}
+        <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', padding: '28px', flex: 1, overflowY: 'auto' }}>
         
         {activeTab === 'hero' && <HeroManager token={token} />}
         {activeTab === 'campaigns' && <CampaignManager token={token} />}
@@ -344,6 +375,7 @@ const AdminPanel = () => {
             <i className="fa-solid fa-floppy-disk"></i> Save Changes
           </button>
         </div>
+      </div>
       </div>
     </div>
   );
