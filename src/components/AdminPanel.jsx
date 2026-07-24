@@ -1,6 +1,9 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { API_URL } from '../api';
+import HeroManager from './admin/HeroManager';
+import CampaignManager from './admin/CampaignManager';
+import WorkManager from './admin/WorkManager';
 
 const AdminPanel = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -171,6 +174,9 @@ const AdminPanel = () => {
   const tabs = [
     { id: 'corporate', label: 'Corporate Profile', icon: 'fa-building' },
     { id: 'payment', label: 'Bank & UPI', icon: 'fa-building-columns' },
+    { id: 'hero', label: 'Hero Banner', icon: 'fa-images' },
+    { id: 'campaigns', label: 'Campaigns', icon: 'fa-bullhorn' },
+    { id: 'work', label: 'Our Work', icon: 'fa-briefcase' },
   ];
 
   return (
@@ -215,6 +221,10 @@ const AdminPanel = () => {
       {/* Panel */}
       <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', padding: '28px' }}>
         
+        {activeTab === 'hero' && <HeroManager token={token} />}
+        {activeTab === 'campaigns' && <CampaignManager token={token} />}
+        {activeTab === 'work' && <WorkManager token={token} />}
+
         {saved && (
           <div style={{
             background: 'rgba(74,222,128,0.15)', border: '1px solid rgba(74,222,128,0.3)',

@@ -23,6 +23,8 @@ export const CorporateProfile = sequelize.define('CorporateProfile', {
   fb: DataTypes.STRING,
   insta: DataTypes.STRING,
   linkedin: DataTypes.STRING,
+  xUrl: DataTypes.STRING,       // newly added
+  youtubeUrl: DataTypes.STRING, // newly added
   accountName: DataTypes.STRING,
   accountNo: DataTypes.STRING,
   ifsc: DataTypes.STRING,
@@ -37,4 +39,34 @@ export const AdminUser = sequelize.define('AdminUser', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   username: { type: DataTypes.STRING, unique: true },
   passwordHash: DataTypes.STRING,
+});
+
+export const HeroSlide = sequelize.define('HeroSlide', {
+  id: { type: DataTypes.STRING, primaryKey: true }, // Using string ID to match existing JSON e.g. "slide-1"
+  title: DataTypes.STRING,
+  motto: DataTypes.STRING,
+  img: DataTypes.STRING,
+  order: { type: DataTypes.INTEGER, defaultValue: 0 },
+});
+
+export const Campaign = sequelize.define('Campaign', {
+  id: { type: DataTypes.STRING, primaryKey: true }, // e.g. "shiksha"
+  title: DataTypes.STRING,
+  motto: DataTypes.STRING,
+  tag: DataTypes.STRING,
+  img: DataTypes.STRING,
+  desc: DataTypes.TEXT,
+  order: { type: DataTypes.INTEGER, defaultValue: 0 },
+});
+
+export const WorkActivity = sequelize.define('WorkActivity', {
+  id: { type: DataTypes.STRING, primaryKey: true }, // e.g. "work-education"
+  title: DataTypes.STRING,
+  motto: DataTypes.STRING,
+  statVal: DataTypes.STRING,
+  statLbl: DataTypes.STRING,
+  desc: DataTypes.TEXT,
+  bullets: DataTypes.JSON, // Array of strings stored as JSON
+  img: DataTypes.STRING,
+  order: { type: DataTypes.INTEGER, defaultValue: 0 },
 });

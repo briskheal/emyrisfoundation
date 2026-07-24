@@ -24,6 +24,26 @@ export async function GET(req) {
       await CorporateProfile.create({ name: 'Emyris Foundation' });
     }
 
+    // 4. Seed Phase 1 Data
+    const { HeroSlide, Campaign, WorkActivity } = require('../../../lib/db');
+    const fs = require('fs');
+    const path = require('path');
+
+    const seedData = async (Model, fileName) => {
+      const count = await Model.count();
+      if (count === 0) {
+        const filePath = path.join(process.cwd(), 'src', 'data', fileName);
+        if (fs.existsSync(filePath)) {
+          const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+          await Model.bulkCreate(data.map((item, index) => ({ ...item, order: index })));
+        }
+      }
+    };
+
+    await seedData(HeroSlide, 'heroSlides.json');
+    await seedData(Campaign, 'campaigns.json');
+    await seedData(WorkActivity, 'work.json');
+
     return NextResponse.json({ 
       success: true, 
       message: 'Database synced and admin credentials reset to: username "admin", password "Password@123"' 

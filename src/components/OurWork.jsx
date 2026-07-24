@@ -1,9 +1,21 @@
 'use client';
-import React, { useState } from 'react';
-import workList from '../data/work.json';
+import React, { useState, useEffect } from 'react';
 
 const OurWork = () => {
-  const [activeTab, setActiveTab] = useState(workList[0]?.id);
+  const [workList, setWorkList] = useState([]);
+  const [activeTab, setActiveTab] = useState('');
+
+  useEffect(() => {
+    fetch('/api/work')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setWorkList(data);
+          if (data.length > 0) setActiveTab(data[0].id);
+        }
+      })
+      .catch(err => console.error("Failed to load work", err));
+  }, []);
 
   const iconMap = {
     "work-education": "fa-graduation-cap",

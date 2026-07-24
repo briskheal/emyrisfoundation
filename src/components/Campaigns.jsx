@@ -1,10 +1,20 @@
 'use client';
-import React from 'react';
-import campaigns from '../data/campaigns.json';
+import React, { useState, useEffect } from 'react';
 import { useModals } from '../context/ModalContext';
 
 const Campaigns = () => {
   const { openModal } = useModals();
+  const [campaigns, setCampaigns] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/campaigns')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) setCampaigns(data);
+      })
+      .catch(err => console.error("Failed to load campaigns", err));
+  }, []);
+
   const tagColors = {
     "health": "red",
     "education": "",

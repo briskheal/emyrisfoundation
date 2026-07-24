@@ -19,6 +19,8 @@ const Footer = () => {
             <a href={corporate?.fb || '#'} id="pub-fb"><i className="fa-brands fa-facebook"></i></a>
             <a href={corporate?.insta || '#'} id="pub-insta"><i className="fa-brands fa-instagram"></i></a>
             <a href={corporate?.linkedin || '#'} id="pub-linkedin"><i className="fa-brands fa-linkedin"></i></a>
+            <a href={corporate?.xUrl || '#'} id="pub-x"><i className="fa-brands fa-x-twitter"></i></a>
+            <a href={corporate?.youtubeUrl || '#'} id="pub-youtube"><i className="fa-brands fa-youtube"></i></a>
           </div>
         </div>
         
