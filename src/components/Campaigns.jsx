@@ -1,10 +1,10 @@
 'use client';
 import React from 'react';
 import campaigns from '../data/campaigns.json';
-import { useDonateModal } from '../context/DonateModalContext';
+import { useModals } from '../context/ModalContext';
 
 const Campaigns = () => {
-  const { openDonateModal } = useDonateModal();
+  const { openModal } = useModals();
   const tagColors = {
     "health": "red",
     "education": "",
@@ -39,9 +39,7 @@ const Campaigns = () => {
                   <p>{c.desc}</p>
                   <div className="camp-actions">
                     {c.tag.toLowerCase() === 'education' ? (
-                      <button className="btn btn-primary btn-sm btn-donate-camp" onClick={openDonateModal}>
-                        Donate <i className="fa-solid fa-heart"></i>
-                      </button>
+                      <button className="btn btn-primary btn-sm btn-donate-camp" onClick={() => openModal('donate')}>Donate <i className="fa-solid fa-heart"></i></button>
                     ) : c.tag.toLowerCase() === 'welfare' ? (
                       <button className="btn btn-outline-orange btn-sm" onClick={() => window.location.href = '#contact'}>
                         Request Counsel

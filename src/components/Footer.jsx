@@ -1,11 +1,11 @@
 'use client';
 import React from 'react';
 import { useCorporate } from '../context/CorporateContext';
-import { useDonateModal } from '../context/DonateModalContext';
+import { useModals } from '../context/ModalContext';
 
 const Footer = () => {
   const { corporate } = useCorporate();
-  const { openDonateModal } = useDonateModal();
+  const { openModal } = useModals();
   return (
     <footer className="main-footer">
       <div className="container footer-grid">
@@ -44,7 +44,7 @@ const Footer = () => {
           <h4>Corporate Philanthropy</h4>
           <p>Registered Non-Profit Organisation eligible for up to 50% tax benefit under Section 80G. PAN: {corporate?.pan || 'Loading...'}.</p>
           <div className="newsletter-form">
-            <button className="btn btn-primary w-100" onClick={openDonateModal}>
+            <button className="btn btn-primary w-100" onClick={() => openModal('donate')}>
               Donate Online <i className="fa-solid fa-indian-rupee-sign"></i>
             </button>
           </div>

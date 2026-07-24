@@ -1,11 +1,11 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import heroSlides from '../data/heroSlides.json';
-import { useDonateModal } from '../context/DonateModalContext';
+import { useModals } from '../context/ModalContext';
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const { openDonateModal } = useDonateModal();
+  const { openModal } = useModals();
 
   useEffect(() => {
     if (heroSlides.length === 0) return;
@@ -37,7 +37,7 @@ const Hero = () => {
                   <h1 className="hero-title">{slide.title}</h1>
                   <p className="hero-desc">{slide.motto}</p>
                   <div className="hero-ctas">
-                    <button className="btn btn-primary" onClick={openDonateModal}>
+                    <button className="btn btn-primary" onClick={() => openModal('donate')}>
                       Donate Now <i className="fa-solid fa-indian-rupee-sign"></i>
                     </button>
                     <button className="btn btn-secondary" onClick={() => window.location.href = '#work'}>

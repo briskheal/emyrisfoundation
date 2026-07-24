@@ -1,13 +1,13 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useCorporate } from '../context/CorporateContext';
-import { useDonateModal } from '../context/DonateModalContext';
+import { useModals } from '../context/ModalContext';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { corporate } = useCorporate();
-  const { openDonateModal } = useDonateModal();
+  const { openModal } = useModals();
   return (
     <header className="main-header">
       <div className="container header-container">
@@ -99,7 +99,7 @@ const Header = () => {
         </nav>
 
         <div className="nav-cta-group">
-          <button className="btn btn-primary btn-donate" id="global-donate-btn" onClick={openDonateModal}>Donate Now <i className="fa-solid fa-heart"></i></button>
+          <button className="btn btn-primary btn-donate" id="global-donate-btn" onClick={() => openModal('donate')}>Donate Now <i className="fa-solid fa-heart"></i></button>
           <button className="mobile-nav-toggle" id="menu-toggle">
             <i className="fa-solid fa-bars"></i>
           </button>

@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
-import { useDonateModal } from '../context/DonateModalContext';
+import { useModals } from '../context/ModalContext';
 
 const GetInvolved = () => {
-  const { openDonateModal } = useDonateModal();
+  const { openModal } = useModals();
   return (
     <section id="get-involved" className="involved-section scroll-spy">
       <div className="container">
@@ -22,13 +22,14 @@ const GetInvolved = () => {
               <div className="support-icon"><i className="fa-solid fa-hands-helping"></i></div>
               <h4>Direct Service</h4>
               <p>Engage directly with the community by assisting in teaching, health services, environmental clean-ups, or campaigns.</p>
-              <button className="btn btn-outline-orange btn-sm btn-support-start">Start <i className="fa-solid fa-chevron-right"></i></button>
+              <button className="btn btn-outline-orange btn-sm btn-vol-start" onClick={() => openModal('volunteer')}>Join as Volunteer <i className="fa-solid fa-handshake-angle"></i></button>
+              <button className="btn btn-outline btn-sm btn-intern-start" onClick={() => openModal('internship')}>Apply for Internship <i className="fa-solid fa-graduation-cap"></i></button>
             </div>
             <div className="glass-card support-item">
               <div className="support-icon"><i className="fa-solid fa-circle-dollar-to-slot"></i></div>
               <h4>Financial &amp; In-Kind</h4>
               <p>Donate money directly to Shiksha Hi Surakhya or coordinate in-kind donation of books, clothes, and rations.</p>
-              <button className="btn btn-outline-orange btn-sm btn-support-start" onClick={openDonateModal}>Donate <i className="fa-solid fa-heart"></i></button>
+              <button className="btn btn-outline-orange btn-sm btn-support-start" onClick={() => openModal('donate')}>Donate <i className="fa-solid fa-heart"></i></button>
             </div>
             <div className="glass-card support-item">
               <div className="support-icon"><i className="fa-solid fa-bullhorn"></i></div>

@@ -8,6 +8,15 @@ const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 export async function POST(req) {
   try {
     const { username, password } = await req.json();
+
+    // First time setup check: if no admins exist, create the default admin
+    const adminCount = await AdminUser.count();
+    if (adminCount === 0) {
+      const defaultPassword = 'Password@123';
+      const passwordHash = await bcrypt.hash(defaultPassword, 10);
+      await AdminUser.create({ username: 'admin', passwordHash });
+    }
+
     const admin = await AdminUser.findOne({ where: { username } });
     
     if (!admin) {

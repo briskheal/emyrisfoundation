@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { CorporateProvider } from '../context/CorporateContext';
-import { DonateModalProvider } from '../context/DonateModalContext';
+import { ModalProvider } from '../context/ModalContext';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import TrustSeals from '../components/TrustSeals';
@@ -22,7 +22,7 @@ import Modals from '../components/Modals';
 export default function Home() {
   return (
     <CorporateProvider>
-      <DonateModalProvider>
+      <ModalProvider>
         <Header />
         <main id="app-content">
           <div id="public-views">
@@ -42,7 +42,7 @@ export default function Home() {
         </main>
         <Footer />
         <Modals />
-      </DonateModalProvider>
+      </ModalProvider>
     </CorporateProvider>
   );
 }
