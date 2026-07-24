@@ -15,9 +15,23 @@ const verifyAuth = (req) => {
   }
 };
 
+import fs from 'fs';
+import path from 'path';
+
 export async function GET() {
   try {
-    const slides = await HeroSlide.findAll({ order: [['order', 'ASC']] });
+    let slides = await HeroSlide.findAll({ order: [['order', 'ASC']] });
+    
+    // Auto-seed if empty
+    if (slides.length === 0) {
+      const filePath = path.join(process.cwd(), 'src', 'data', 'heroSlides.json');
+      if (fs.existsSync(filePath)) {
+        const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        await HeroSlide.bulkCreate(data.map((item, index) => ({ ...item, order: index })));
+        slides = await HeroSlide.findAll({ order: [['order', 'ASC']] });
+      }
+    }
+    
     return NextResponse.json(slides);
   } catch (err) {
     return NextResponse.json({ error: 'Failed to fetch hero slides' }, { status: 500 });

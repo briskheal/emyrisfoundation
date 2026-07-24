@@ -15,9 +15,23 @@ const verifyAuth = (req) => {
   }
 };
 
+import fs from 'fs';
+import path from 'path';
+
 export async function GET() {
   try {
-    const campaigns = await Campaign.findAll({ order: [['order', 'ASC']] });
+    let campaigns = await Campaign.findAll({ order: [['order', 'ASC']] });
+    
+    // Auto-seed if empty
+    if (campaigns.length === 0) {
+      const filePath = path.join(process.cwd(), 'src', 'data', 'campaigns.json');
+      if (fs.existsSync(filePath)) {
+        const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        await Campaign.bulkCreate(data.map((item, index) => ({ ...item, order: index })));
+        campaigns = await Campaign.findAll({ order: [['order', 'ASC']] });
+      }
+    }
+    
     return NextResponse.json(campaigns);
   } catch (err) {
     return NextResponse.json({ error: 'Failed to fetch campaigns' }, { status: 500 });

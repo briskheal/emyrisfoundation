@@ -15,9 +15,23 @@ const verifyAuth = (req) => {
   }
 };
 
+import fs from 'fs';
+import path from 'path';
+
 export async function GET() {
   try {
-    const works = await WorkActivity.findAll({ order: [['order', 'ASC']] });
+    let works = await WorkActivity.findAll({ order: [['order', 'ASC']] });
+    
+    // Auto-seed if empty
+    if (works.length === 0) {
+      const filePath = path.join(process.cwd(), 'src', 'data', 'work.json');
+      if (fs.existsSync(filePath)) {
+        const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        await WorkActivity.bulkCreate(data.map((item, index) => ({ ...item, order: index })));
+        works = await WorkActivity.findAll({ order: [['order', 'ASC']] });
+      }
+    }
+    
     return NextResponse.json(works);
   } catch (err) {
     return NextResponse.json({ error: 'Failed to fetch work activities' }, { status: 500 });
