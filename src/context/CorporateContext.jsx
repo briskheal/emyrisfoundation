@@ -10,7 +10,7 @@ export const CorporateProvider = ({ children }) => {
   const [corporate, setCorporate] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_URL}/corporate`)
+    fetch(`${API_URL}/corporate`, { cache: 'no-store' })
       .then(res => res.json())
       .then(data => setCorporate(data))
       .catch(err => console.error('Failed to fetch corporate data:', err));
