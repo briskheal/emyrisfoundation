@@ -10,8 +10,8 @@ const TrustSeals = () => {
         <div className="trust-badge-card">
           <div className="trust-badge-icon"><i className="fa-solid fa-file-shield"></i></div>
           <div className="trust-badge-text">
-            <h4>80G Tax Exempted</h4>
-            <p id="trust-80g-text">{corporate?.tax80g || 'Loading...'}</p>
+            <h4>PAN NO</h4>
+            <p id="trust-pan-text">{corporate?.pan || 'Loading...'}</p>
           </div>
         </div>
         <div className="trust-badge-card">
@@ -24,15 +24,15 @@ const TrustSeals = () => {
         <div className="trust-badge-card">
           <div className="trust-badge-icon"><i className="fa-solid fa-stamp"></i></div>
           <div className="trust-badge-text">
-            <h4>ISO 9001:2015</h4>
-            <p>Quality Management Certified</p>
+            <h4>CIN NO</h4>
+            <p id="trust-cin-text">{corporate?.cin || 'Loading...'}</p>
           </div>
         </div>
         <div className="trust-badge-card">
           <div className="trust-badge-icon"><i className="fa-solid fa-certificate"></i></div>
           <div className="trust-badge-text">
-            <h4>12A Registered</h4>
-            <p id="trust-12a-text">{corporate?.tax12a || 'Loading...'}</p>
+            <h4>TAN NO</h4>
+            <p id="trust-tan-text">{corporate?.tan || 'Loading...'}</p>
           </div>
         </div>
       </div>
