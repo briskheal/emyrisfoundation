@@ -32,7 +32,7 @@ export async function PUT(req) {
     }
 
     const body = await req.json();
-    await CorporateProfile.sync({ alter: true });
+    
     let profile = await CorporateProfile.findOne();
     
     if (profile) {

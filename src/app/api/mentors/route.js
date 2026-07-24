@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    await sequelize.sync({ alter: true });
+    
     let count = await Mentor.count();
     if (count === 0) {
       try {

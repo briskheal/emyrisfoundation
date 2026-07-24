@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    await sequelize.sync({ alter: true });
+    
     let count = await AboutContent.count();
     
     // Auto-seed default about content if empty
@@ -39,7 +39,7 @@ export async function PUT(req) {
     jwt.verify(token, JWT_SECRET);
 
     const body = await req.json();
-    await AboutContent.sync({ alter: true });
+    
     let content = await AboutContent.findOne();
     
     if (content) {
