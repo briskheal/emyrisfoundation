@@ -1,17 +1,18 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useModals } from '../context/ModalContext';
+import fallbackHeroSlides from '../data/heroSlides.json';
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [heroSlides, setHeroSlides] = useState([]);
+  const [heroSlides, setHeroSlides] = useState(fallbackHeroSlides);
   const { openModal } = useModals();
 
   useEffect(() => {
     fetch('/api/hero')
       .then(res => res.json())
       .then(data => {
-        if (Array.isArray(data)) setHeroSlides(data);
+        if (Array.isArray(data) && data.length > 0) setHeroSlides(data);
       })
       .catch(err => console.error("Failed to load hero slides", err));
   }, []);

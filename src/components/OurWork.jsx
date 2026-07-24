@@ -1,17 +1,18 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import fallbackWork from '../data/work.json';
 
 const OurWork = () => {
-  const [workList, setWorkList] = useState([]);
-  const [activeTab, setActiveTab] = useState('');
+  const [workList, setWorkList] = useState(fallbackWork);
+  const [activeTab, setActiveTab] = useState(fallbackWork[0]?.id || '');
 
   useEffect(() => {
     fetch('/api/work')
       .then(res => res.json())
       .then(data => {
-        if (Array.isArray(data)) {
+        if (Array.isArray(data) && data.length > 0) {
           setWorkList(data);
-          if (data.length > 0) setActiveTab(data[0].id);
+          setActiveTab(data[0].id);
         }
       })
       .catch(err => console.error("Failed to load work", err));

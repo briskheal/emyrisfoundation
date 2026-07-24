@@ -1,16 +1,17 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useModals } from '../context/ModalContext';
+import fallbackCampaigns from '../data/campaigns.json';
 
 const Campaigns = () => {
   const { openModal } = useModals();
-  const [campaigns, setCampaigns] = useState([]);
+  const [campaigns, setCampaigns] = useState(fallbackCampaigns);
 
   useEffect(() => {
     fetch('/api/campaigns')
       .then(res => res.json())
       .then(data => {
-        if (Array.isArray(data)) setCampaigns(data);
+        if (Array.isArray(data) && data.length > 0) setCampaigns(data);
       })
       .catch(err => console.error("Failed to load campaigns", err));
   }, []);
