@@ -18,6 +18,7 @@ const AdminPanel = () => {
   // Corporate form state
   const [corp, setCorp] = useState({});
   const [qrPreview, setQrPreview] = useState('');
+  const [logoPreview, setLogoPreview] = useState('');
 
   // Fetch initial data
   useEffect(() => {
@@ -26,6 +27,7 @@ const AdminPanel = () => {
       .then(data => {
         setCorp(data);
         setQrPreview(data.qrCode || '');
+        setLogoPreview(data.logo || '');
       })
       .catch(err => console.error('Error fetching corporate data:', err));
   }, []);
@@ -72,6 +74,30 @@ const AdminPanel = () => {
       if (data.success) {
         setQrPreview(data.url);
         setCorp(prev => ({ ...prev, qrCode: data.url }));
+      } else {
+        alert('Upload failed: ' + (data.error || 'Unknown error'));
+      }
+    } catch (err) {
+      alert('Upload failed due to network error.');
+    }
+  };
+
+  const handleLogoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (data.success) {
+        setLogoPreview(data.url);
+        setCorp(prev => ({ ...prev, logo: data.url }));
       } else {
         alert('Upload failed: ' + (data.error || 'Unknown error'));
       }
@@ -302,6 +328,30 @@ const AdminPanel = () => {
                   />
                 </div>
               ))}
+              
+              {/* Logo Upload */}
+              <div style={{ gridColumn: '1 / -1', marginTop: '10px' }}>
+                <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.82rem', marginBottom: '5px', display: 'block' }}>
+                  Foundation Logo Image
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+                  <label style={{
+                    padding: '10px 18px', background: 'rgba(249,115,22,0.15)', border: '1px solid rgba(249,115,22,0.3)',
+                    borderRadius: '8px', color: '#f97316', cursor: 'pointer', fontWeight: 600, fontSize: '0.88rem'
+                  }}>
+                    <i className="fa-solid fa-upload"></i> Upload Logo
+                    <input type="file" accept="image/*" onChange={handleLogoUpload} style={{ display: 'none' }} />
+                  </label>
+                  {logoPreview ? (
+                    <div style={{ background: 'white', padding: '8px', borderRadius: '8px', display: 'inline-block' }}>
+                      <img src={logoPreview} alt="Logo Preview" style={{ height: '40px', objectFit: 'contain', display: 'block' }} />
+                    </div>
+                  ) : (
+                    <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.85rem' }}>No logo uploaded yet</span>
+                  )}
+                </div>
+              </div>
+
             </div>
           </div>
         )}
