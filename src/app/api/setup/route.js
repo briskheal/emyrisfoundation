@@ -4,8 +4,8 @@ import bcrypt from 'bcrypt';
 
 export async function GET(req) {
   try {
-    // 1. Force sync the database to ensure tables exist
-    await sequelize.sync();
+    // 1. Force sync the database to ensure tables exist and schema is updated
+    await sequelize.sync({ alter: true });
 
     // 2. Upsert the admin user
     const defaultPassword = 'Password@123';
