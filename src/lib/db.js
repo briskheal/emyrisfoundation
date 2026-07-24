@@ -70,3 +70,37 @@ export const WorkActivity = sequelize.define('WorkActivity', {
   img: DataTypes.STRING,
   order: { type: DataTypes.INTEGER, defaultValue: 0 },
 });
+export const AboutContent = sequelize.define('AboutContent', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  title: DataTypes.STRING,
+  subtitle: DataTypes.STRING,
+  motto: DataTypes.STRING,
+  paragraph1: DataTypes.TEXT,
+  paragraph2: DataTypes.TEXT,
+});
+
+export const Director = sequelize.define('Director', {
+  id: { type: DataTypes.STRING, primaryKey: true },
+  name: DataTypes.STRING,
+  role: DataTypes.STRING,
+  bio: DataTypes.TEXT,
+  img: DataTypes.STRING,
+  order: { type: DataTypes.INTEGER, defaultValue: 0 },
+});
+
+export const Mentor = sequelize.define('Mentor', {
+  id: { type: DataTypes.STRING, primaryKey: true },
+  name: DataTypes.STRING,
+  role: DataTypes.STRING,
+  bio: DataTypes.TEXT,
+  img: DataTypes.STRING,
+  order: { type: DataTypes.INTEGER, defaultValue: 0 },
+});
+
+export const Publication = sequelize.define('Publication', {
+  id: { type: DataTypes.STRING, primaryKey: true },
+  title: DataTypes.STRING,
+  year: DataTypes.STRING,
+  pdfLink: DataTypes.STRING,
+  order: { type: DataTypes.INTEGER, defaultValue: 0 },
+});

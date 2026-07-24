@@ -1,23 +1,45 @@
 'use client';
-import React from 'react';
-import directors from '../data/directors.json';
-import mentors from '../data/mentors.json';
+import React, { useState, useEffect } from 'react';
 
 const AboutUs = () => {
+  const [about, setAbout] = useState({});
+  const [directors, setDirectors] = useState([]);
+  const [mentors, setMentors] = useState([]);
+
+  useEffect(() => {
+    // Fetch About Content
+    fetch('/api/about', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => setAbout(data))
+      .catch(console.error);
+
+    // Fetch Directors
+    fetch('/api/directors', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => setDirectors(data))
+      .catch(console.error);
+
+    // Fetch Mentors
+    fetch('/api/mentors', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => setMentors(data))
+      .catch(console.error);
+  }, []);
+
   return (
     <section id="about" className="about-section scroll-spy">
       <div className="container">
         <div className="section-title-wrapper text-center">
-          <span className="section-subtitle">Who We Are</span>
-          <h2 className="section-title">Cultivating Growth & Generosity</h2>
+          <span className="section-subtitle">{about.subtitle || 'Who We Are'}</span>
+          <h2 className="section-title">{about.title || 'Cultivating Growth & Generosity'}</h2>
           <div className="title-underline"></div>
         </div>
 
         <div id="about-vision" className="about-vision-grid">
           <div className="vision-text-block">
-            <h3>"Together We Grow"</h3>
-            <p className="lead-para">The Emyris Foundation, with its inspiring motto "Together We Grow," is dedicated to fostering community development and personal growth through collaborative efforts. We focus on empowering individuals by providing resources, education, and support systems to help them reach their full potential.</p>
-            <p>We encourage people from all walks of life to work together, share knowledge, and build a more inclusive and supportive society. Whether through workshops, community projects, or mentorship programs, the foundation aims to create environments where everyone can thrive and contribute to a brighter future.</p>
+            <h3>"{about.motto || 'Together We Grow'}"</h3>
+            <p className="lead-para">{about.paragraph1 || 'The Emyris Foundation is dedicated to fostering community development and personal growth through collaborative efforts. We focus on empowering individuals by providing resources, education, and support systems to help them reach their full potential.'}</p>
+            <p>{about.paragraph2 || 'We encourage people from all walks of life to work together, share knowledge, and build a more inclusive and supportive society. Whether through workshops, community projects, or mentorship programs, the foundation aims to create environments where everyone can thrive and contribute to a brighter future.'}</p>
             
             <div className="values-grid">
               <div className="value-card">
@@ -68,8 +90,8 @@ const AboutUs = () => {
               <div key={d.id} className="profile-card director-card glass-card">
                 <div className="profile-header">
                   <div className="profile-avatar">
-                    {d.photo ? (
-                      <img src={d.photo} className="profile-avatar-img" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}} alt={d.name} />
+                    {d.img ? (
+                      <img src={d.img} className="profile-avatar-img" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}} alt={d.name} />
                     ) : (
                       <i className="fa-solid fa-user-tie"></i>
                     )}
@@ -95,8 +117,8 @@ const AboutUs = () => {
               <div key={m.id} className="profile-card mentor-card glass-card">
                 <div className="profile-header">
                   <div className="profile-avatar mentor-avatar">
-                    {m.photo ? (
-                      <img src={m.photo} className="profile-avatar-img" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}} alt={m.name} />
+                    {m.img ? (
+                      <img src={m.img} className="profile-avatar-img" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}} alt={m.name} />
                     ) : (
                       <i className="fa-solid fa-user-graduate"></i>
                     )}
@@ -107,7 +129,6 @@ const AboutUs = () => {
                   </div>
                 </div>
                 <div className="mentor-details">
-                  <span className="qualification">{m.qual}</span>
                   <p>{m.bio}</p>
                 </div>
               </div>
@@ -126,4 +147,3 @@ const AboutUs = () => {
 };
 
 export default AboutUs;
-

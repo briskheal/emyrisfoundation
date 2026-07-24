@@ -1,8 +1,16 @@
 'use client';
-import React from 'react';
-import publications from '../data/publications.json';
+import React, { useState, useEffect } from 'react';
 
 const Publications = () => {
+  const [publications, setPublications] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/publications', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => setPublications(data))
+      .catch(console.error);
+  }, []);
+
   return (
     <section id="publications" className="publications-section scroll-spy">
       <div className="container">
@@ -18,10 +26,16 @@ const Publications = () => {
               <div className="pub-card-icon"><i className="fa-solid fa-file-pdf"></i></div>
               <div className="pub-card-content">
                   <h4>{pub.title}</h4>
-                  <p>{pub.desc}</p>
-                  <button className="btn btn-outline-orange btn-sm btn-pub-download">
-                    Download PDF <i className="fa-solid fa-download"></i>
-                  </button>
+                  <p>{pub.year || 'Corporate Document'}</p>
+                  {pub.pdfLink ? (
+                    <a href={pub.pdfLink} target="_blank" rel="noopener noreferrer" className="btn btn-outline-orange btn-sm btn-pub-download">
+                      Download PDF <i className="fa-solid fa-download"></i>
+                    </a>
+                  ) : (
+                    <button className="btn btn-outline-orange btn-sm btn-pub-download" disabled style={{ opacity: 0.5 }}>
+                      Coming Soon <i className="fa-solid fa-clock"></i>
+                    </button>
+                  )}
               </div>
             </div>
           ))}
@@ -32,4 +46,3 @@ const Publications = () => {
 };
 
 export default Publications;
-
