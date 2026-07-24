@@ -5,7 +5,7 @@ export const metadata = {
   title: 'Emyris Foundation | Together We Grow',
   description: 'Fostering community development, education, and health initiatives to ensure everyone can grow and thrive.',
   icons: {
-    icon: '/emyris_logo.png',
+    icon: '/emyris_logo.webp',
   },
 };
 

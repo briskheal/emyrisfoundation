@@ -1,7 +1,7 @@
 [
-  { "id": "slide-1", "title": "Education & Enlightenment", "motto": "Education is Enlightenment", "img": "/Emyris Foundation Photos/emyris_hero_education.png" },
-  { "id": "slide-2", "title": "Healthcare Reach for All", "motto": "Healthcare Reach for All", "img": "/Emyris Foundation Photos/emyris_hero_healthcare.png" },
-  { "id": "slide-3", "title": "Livelihood & Skilling", "motto": "From Struggle to Strength: Elevating Lives", "img": "/Emyris Foundation Photos/emyris_hero_livelihood.png" },
-  { "id": "slide-4", "title": "Women Empowerment & Self-Defense", "motto": "Her Rights, Her Choices, Her Voice", "img": "/Emyris Foundation Photos/emyris_hero_women.png" },
-  { "id": "slide-5", "title": "Farmer's Connect & Eco-Farming", "motto": "Empowering Earth's Stewards", "img": "/Emyris Foundation Photos/emyris_hero_farmers.png" }
+  { "id": "slide-1", "title": "Education & Enlightenment", "motto": "Education is Enlightenment", "img": "/Emyris Foundation Photos/emyris_hero_education.webp" },
+  { "id": "slide-2", "title": "Healthcare Reach for All", "motto": "Healthcare Reach for All", "img": "/Emyris Foundation Photos/emyris_hero_healthcare.webp" },
+  { "id": "slide-3", "title": "Livelihood & Skilling", "motto": "From Struggle to Strength: Elevating Lives", "img": "/Emyris Foundation Photos/emyris_hero_livelihood.webp" },
+  { "id": "slide-4", "title": "Women Empowerment & Self-Defense", "motto": "Her Rights, Her Choices, Her Voice", "img": "/Emyris Foundation Photos/emyris_hero_women.webp" },
+  { "id": "slide-5", "title": "Farmer's Connect & Eco-Farming", "motto": "Empowering Earth's Stewards", "img": "/Emyris Foundation Photos/emyris_hero_farmers.webp" }
 ]

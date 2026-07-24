@@ -51,16 +51,29 @@ const AdminPanel = () => {
     setCorp(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleQrUpload = (e) => {
+  const handleQrUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      const dataUrl = ev.target.result;
-      setQrPreview(dataUrl);
-      setCorp(prev => ({ ...prev, qrCode: dataUrl }));
-    };
-    reader.readAsDataURL(file);
+
+    // Show a loading state if desired (or just proceed)
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (data.success) {
+        setQrPreview(data.url);
+        setCorp(prev => ({ ...prev, qrCode: data.url }));
+      } else {
+        alert('Upload failed: ' + (data.error || 'Unknown error'));
+      }
+    } catch (err) {
+      alert('Upload failed due to network error.');
+    }
   };
 
   const handleSave = async () => {
@@ -110,7 +123,7 @@ const AdminPanel = () => {
           borderRadius: '16px', padding: '40px', width: '100%', maxWidth: '400px',
           backdropFilter: 'blur(20px)', textAlign: 'center'
         }}>
-          <img src="/emyris_logo.png" alt="Emyris Logo" style={{width: '70px', marginBottom: '15px'}} />
+          <img src="/emyris_logo.webp" alt="Emyris Logo" style={{width: '70px', marginBottom: '15px'}} />
           <h2 style={{color: 'white', marginBottom: '6px', fontFamily: 'Outfit, sans-serif'}}>Admin Portal</h2>
           <p style={{color: 'rgba(255,255,255,0.5)', marginBottom: '28px', fontSize: '0.9rem'}}>Emyris Foundation — Restricted Access</p>
           <form onSubmit={handleLogin}>
@@ -165,7 +178,7 @@ const AdminPanel = () => {
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '30px', flexWrap: 'wrap', gap: '10px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <img src="/emyris_logo.png" alt="Logo" style={{ width: '42px' }} />
+          <img src="/emyris_logo.webp" alt="Logo" style={{ width: '42px' }} />
           <div>
             <h2 style={{ color: 'white', margin: 0, fontFamily: 'Outfit, sans-serif', fontSize: '1.3rem' }}>Emyris Admin Panel</h2>
             <p style={{ color: 'rgba(255,255,255,0.4)', margin: 0, fontSize: '0.8rem' }}>Foundation Management System</p>

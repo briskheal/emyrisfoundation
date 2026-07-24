@@ -12,7 +12,7 @@ const Header = () => {
     <header className="main-header">
       <div className="container header-container">
         <a href="#" className="logo-area" id="brand-logo">
-          <img src={corporate?.logo || '/emyris_logo.png'} alt={`${corporate?.name || 'Emyris'} Logo`} className="nav-logo" id="pub-header-logo" />
+          <img src={corporate?.logo || '/emyris_logo.webp'} alt={`${corporate?.name || 'Emyris'} Logo`} className="nav-logo" id="pub-header-logo" />
           <div className="logo-info">
             <span className="logo-text" id="pub-header-name">
               Emyris<span className="highlight">Foundation</span>

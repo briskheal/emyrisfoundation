@@ -10,7 +10,7 @@ const Footer = () => {
     <footer className="main-footer">
       <div className="container footer-grid">
         <div className="footer-brand">
-          <img src={corporate?.logo || '/emyris_logo.png'} alt={`${corporate?.name || 'Emyris'} Logo`} className="footer-logo" id="pub-footer-logo" />
+          <img src={corporate?.logo || '/emyris_logo.webp'} alt={`${corporate?.name || 'Emyris'} Logo`} className="footer-logo" id="pub-footer-logo" />
           <span className="logo-text" id="pub-footer-name">Emyris<span className="highlight">Foundation</span></span>
           <p id="pub-footer-desc">
             Motto: "Together We Grow" — Fostering community development, education, and health initiatives to ensure everyone can grow and thrive.
