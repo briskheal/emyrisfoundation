@@ -1,0 +1,10 @@
+[
+  { "id": "job-1", "title": "Project Manager", "dept": "PROGRAM STAFF", "loc": "Bhubaneswar", "desc": "Oversee planning, development, and execution of education and healthcare programs. Min 3 years experience in management required." },
+  { "id": "job-2", "title": "Community Organizer", "dept": "PROGRAM STAFF", "loc": "Baroda", "desc": "Mobilize local community structures. Focus on women empowerment groups and organic farming connect. Communication in regional languages preferred." },
+  { "id": "job-3", "title": "Fundraising Coordinator", "dept": "DEVELOPMENT/FUNDRAISING", "loc": "Ahmedabad", "desc": "Organize awareness walks, corporate donation events, and retail donor programs. Strong communication skills required." },
+  { "id": "job-4", "title": "Grant Writer", "dept": "DEVELOPMENT/FUNDRAISING", "loc": "Baroda", "desc": "Develop proposals for corporate CSR packages and government grants. Proven track record of securing funds." },
+  { "id": "job-5", "title": "Marketing Manager", "dept": "COMMUNICATIONS AND MARKETING", "loc": "Baroda", "desc": "Develop branding campaigns, manage media relations, and increase NGO public outreach." },
+  { "id": "job-6", "title": "Content Creator", "dept": "COMMUNICATIONS AND MARKETING", "loc": "Baroda", "desc": "Produce short videos, blogs, and newsletter write-ups for Emyris Foundation channels." },
+  { "id": "job-7", "title": "HR Manager", "dept": "ADMIN", "loc": "Baroda", "desc": "Manage recruitment, volunteer onboarding, and staff welfare schemes. Experience in MS Office required." },
+  { "id": "job-8", "title": "Education Specialist", "dept": "PROGRAM STAFF", "loc": "Guwahati", "desc": "Design curriculum, evaluate teaching resources, and lead volunteer teachers in remote slum schools." }
+]

@@ -1,0 +1,38 @@
+[
+  {
+      "id": "gujarat",
+      "name": "Gujarat",
+      "hq": "Baroda & Ahmedabad",
+      "volunteers": 48,
+      "coordinator": "Amit Patel",
+      "phone": "+91 98765 43210",
+      "programs": [
+          "Baroda Livelihood Training Center",
+          "Ahmedabad Community Volunteer Program",
+          "Rural Farmer's Connect & Soil-testing camp"
+      ]
+  },
+  {
+      "id": "odisha",
+      "name": "Odisha",
+      "hq": "Bhubaneswar & Cuttack",
+      "volunteers": 32,
+      "coordinator": "Dr. Durga Prasad Mishra",
+      "phone": "+91 99988 87766",
+      "programs": [
+          "Bhubaneswar Primary Health Clinic",
+          "Inclusive Special Needs Resource Center"
+      ]
+  },
+  {
+      "id": "assam",
+      "name": "Assam",
+      "hq": "Guwahati Slums",
+      "volunteers": 18,
+      "coordinator": "Ms. Silla Padhi",
+      "phone": "+91 98765 43211",
+      "programs": [
+          "Guwahati Slum School Infrastructure Project"
+      ]
+  }
+]

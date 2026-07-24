@@ -1,0 +1,330 @@
+'use client';
+import React, { useState, useEffect } from 'react';
+import { API_URL } from '../api';
+
+const AdminPanel = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('admin');
+  const [token, setToken] = useState(null);
+  const [loginError, setLoginError] = useState('');
+  const [activeTab, setActiveTab] = useState('corporate');
+  const [saved, setSaved] = useState(false);
+
+  // Corporate form state
+  const [corp, setCorp] = useState({});
+  const [qrPreview, setQrPreview] = useState('');
+
+  // Fetch initial data
+  useEffect(() => {
+    fetch(`${API_URL}/corporate`)
+      .then(res => res.json())
+      .then(data => {
+        setCorp(data);
+        setQrPreview(data.qrCode || '');
+      })
+      .catch(err => console.error('Error fetching corporate data:', err));
+  }, []);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`${API_URL}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setToken(data.token);
+        setIsLoggedIn(true);
+        setLoginError('');
+      } else {
+        setLoginError(data.error || 'Login failed');
+      }
+    } catch (error) {
+      setLoginError('Server error');
+    }
+  };
+
+  const handleCorpChange = (field, value) => {
+    setCorp(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleQrUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const dataUrl = ev.target.result;
+      setQrPreview(dataUrl);
+      setCorp(prev => ({ ...prev, qrCode: dataUrl }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleSave = async () => {
+    try {
+      const res = await fetch(`${API_URL}/corporate`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(corp)
+      });
+      if (res.ok) {
+        setSaved(true);
+        setTimeout(() => setSaved(false), 3000);
+      } else {
+        alert('Failed to save changes');
+      }
+    } catch (error) {
+      alert('Server error saving changes');
+    }
+  };
+
+  const handleDownloadCSV = () => {
+    // Build CSV from corp object — key, value pairs
+    const rows = Object.entries(corp)
+      .filter(([key]) => key !== 'qrCode' && key !== 'logo') // skip binary fields
+      .map(([key, val]) => `"${key}","${String(val || '').replace(/"/g, '""')}"`);
+    const csvContent = ['Field,Value', ...rows].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'emyris_corporate_profile.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  if (!isLoggedIn) {
+    return (
+      <div style={{
+        minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
+        background: 'linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%)'
+      }}>
+        <div style={{
+          background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
+          borderRadius: '16px', padding: '40px', width: '100%', maxWidth: '400px',
+          backdropFilter: 'blur(20px)', textAlign: 'center'
+        }}>
+          <img src="/emyris_logo.png" alt="Emyris Logo" style={{width: '70px', marginBottom: '15px'}} />
+          <h2 style={{color: 'white', marginBottom: '6px', fontFamily: 'Outfit, sans-serif'}}>Admin Portal</h2>
+          <p style={{color: 'rgba(255,255,255,0.5)', marginBottom: '28px', fontSize: '0.9rem'}}>Emyris Foundation — Restricted Access</p>
+          <form onSubmit={handleLogin}>
+              <input
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+                style={{
+                  width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)',
+                  background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '1rem',
+                  marginBottom: '12px', boxSizing: 'border-box', outline: 'none'
+                }}
+                required
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                style={{
+                  width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)',
+                  background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '1rem',
+                  marginBottom: '12px', boxSizing: 'border-box', outline: 'none'
+                }}
+                required
+              />
+            {loginError && <p style={{color: '#f87171', marginBottom: '10px', fontSize: '0.88rem'}}>{loginError}</p>}
+            <button type="submit" style={{
+              width: '100%', padding: '12px', background: 'linear-gradient(135deg, #f97316, #ea580c)',
+              color: 'white', border: 'none', borderRadius: '8px', fontWeight: 700,
+              fontSize: '1rem', cursor: 'pointer', fontFamily: 'Outfit, sans-serif'
+            }}>
+              Login <i className="fa-solid fa-arrow-right-to-bracket"></i>
+            </button>
+          </form>
+          <p style={{marginTop: '20px', fontSize: '0.78rem', color: 'rgba(255,255,255,0.3)'}}>
+            Authorised personnel only. All actions are logged.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const tabs = [
+    { id: 'corporate', label: 'Corporate Profile', icon: 'fa-building' },
+    { id: 'payment', label: 'Bank & UPI', icon: 'fa-building-columns' },
+  ];
+
+  return (
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%)', padding: '20px', fontFamily: 'Inter, sans-serif' }}>
+      {/* Header */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '30px', flexWrap: 'wrap', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <img src="/emyris_logo.png" alt="Logo" style={{ width: '42px' }} />
+          <div>
+            <h2 style={{ color: 'white', margin: 0, fontFamily: 'Outfit, sans-serif', fontSize: '1.3rem' }}>Emyris Admin Panel</h2>
+            <p style={{ color: 'rgba(255,255,255,0.4)', margin: 0, fontSize: '0.8rem' }}>Foundation Management System</p>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <a href="/" style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.85rem', textDecoration: 'none' }}>
+            <i className="fa-solid fa-arrow-left"></i> Back to Site
+          </a>
+          <button onClick={() => setIsLoggedIn(false)} style={{
+            background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)',
+            color: '#f87171', borderRadius: '8px', padding: '8px 16px', cursor: 'pointer', fontSize: '0.85rem'
+          }}>
+            <i className="fa-solid fa-right-from-bracket"></i> Logout
+          </button>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div style={{ display: 'flex', gap: '8px', marginBottom: '24px', flexWrap: 'wrap' }}>
+        {tabs.map(t => (
+          <button key={t.id} onClick={() => setActiveTab(t.id)} style={{
+            padding: '10px 20px', borderRadius: '10px', border: 'none', cursor: 'pointer',
+            fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: '0.88rem',
+            background: activeTab === t.id ? 'linear-gradient(135deg, #f97316, #ea580c)' : 'rgba(255,255,255,0.06)',
+            color: activeTab === t.id ? 'white' : 'rgba(255,255,255,0.6)',
+            transition: 'all 0.2s'
+          }}>
+            <i className={`fa-solid ${t.icon}`}></i> {t.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Panel */}
+      <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', padding: '28px' }}>
+        
+        {saved && (
+          <div style={{
+            background: 'rgba(74,222,128,0.15)', border: '1px solid rgba(74,222,128,0.3)',
+            borderRadius: '10px', padding: '12px 18px', marginBottom: '20px', color: '#4ade80', fontWeight: 600
+          }}>
+            <i className="fa-solid fa-circle-check"></i> Changes saved successfully. Use <strong>Download CSV</strong> to export a backup.
+          </div>
+        )}
+
+        {/* Corporate Profile Tab */}
+        {activeTab === 'corporate' && (
+          <div>
+            <h3 style={{ color: 'white', marginBottom: '20px' }}><i className="fa-solid fa-building" style={{ color: '#f97316' }}></i> Foundation Corporate Profile</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
+              {[
+                { label: 'Foundation Name', field: 'name' },
+                { label: 'Primary Email', field: 'email' },
+                { label: 'Phone 1', field: 'phone1' },
+                { label: 'Phone 2', field: 'phone2' },
+                { label: 'Address', field: 'address' },
+                { label: 'PAN Number', field: 'pan' },
+                { label: 'TAN Number', field: 'tan' },
+                { label: 'CIN No', field: 'cin' },
+                { label: 'CSR Regn. No', field: 'niti' },
+                { label: '80G Tax Info', field: 'tax80g' },
+                { label: '12A Status', field: 'tax12a' },
+                { label: 'Facebook URL', field: 'fb' },
+                { label: 'Instagram URL', field: 'insta' },
+                { label: 'LinkedIn URL', field: 'linkedin' },
+              ].map(({ label, field }) => (
+                <div key={field}>
+                  <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.82rem', marginBottom: '5px', display: 'block' }}>{label}</label>
+                  <input
+                    type="text"
+                    value={corp[field] || ''}
+                    onChange={e => handleCorpChange(field, e.target.value)}
+                    style={{
+                      width: '100%', padding: '10px 14px', borderRadius: '8px',
+                      border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.06)',
+                      color: 'white', fontSize: '0.92rem', boxSizing: 'border-box', outline: 'none'
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Bank & UPI Tab */}
+        {activeTab === 'payment' && (
+          <div>
+            <h3 style={{ color: 'white', marginBottom: '20px' }}><i className="fa-solid fa-building-columns" style={{ color: '#f97316' }}></i> Bank Account &amp; UPI Settings</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
+              {[
+                { label: 'Account Holder Name', field: 'accountName' },
+                { label: 'Account Number', field: 'accountNo' },
+                { label: 'IFSC Code', field: 'ifsc' },
+                { label: 'Bank Name', field: 'bankName' },
+                { label: 'Branch', field: 'bankBranch' },
+                { label: 'UPI ID (e.g. emyris@hdfc)', field: 'upiId' },
+              ].map(({ label, field }) => (
+                <div key={field}>
+                  <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.82rem', marginBottom: '5px', display: 'block' }}>{label}</label>
+                  <input
+                    type="text"
+                    value={corp[field] || ''}
+                    onChange={e => handleCorpChange(field, e.target.value)}
+                    style={{
+                      width: '100%', padding: '10px 14px', borderRadius: '8px',
+                      border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.06)',
+                      color: 'white', fontSize: '0.92rem', boxSizing: 'border-box', outline: 'none'
+                    }}
+                  />
+                </div>
+              ))}
+              {/* QR Upload */}
+              <div style={{ gridColumn: '1 / -1' }}>
+                <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.82rem', marginBottom: '5px', display: 'block' }}>
+                  UPI QR Code Image
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+                  <label style={{
+                    padding: '10px 18px', background: 'rgba(249,115,22,0.15)', border: '1px solid rgba(249,115,22,0.3)',
+                    borderRadius: '8px', color: '#f97316', cursor: 'pointer', fontWeight: 600, fontSize: '0.88rem'
+                  }}>
+                    <i className="fa-solid fa-upload"></i> Upload QR Image
+                    <input type="file" accept="image/*" onChange={handleQrUpload} style={{ display: 'none' }} />
+                  </label>
+                  {qrPreview ? (
+                    <div style={{ background: 'white', padding: '8px', borderRadius: '8px', display: 'inline-block' }}>
+                      <img src={qrPreview} alt="QR Preview" style={{ width: '100px', height: '100px', objectFit: 'contain', display: 'block' }} />
+                    </div>
+                  ) : (
+                    <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.85rem' }}>No QR code uploaded yet</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Save & Download Buttons — Separate */}
+        <div style={{ marginTop: '28px', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '20px', display: 'flex', justifyContent: 'flex-end', gap: '12px', flexWrap: 'wrap' }}>
+          <button onClick={handleDownloadCSV} style={{
+            padding: '12px 28px', background: 'rgba(255,255,255,0.06)',
+            color: 'rgba(255,255,255,0.8)', border: '1px solid rgba(255,255,255,0.15)',
+            borderRadius: '10px', fontWeight: 600, fontSize: '0.92rem',
+            cursor: 'pointer', fontFamily: 'Outfit, sans-serif'
+          }}>
+            <i className="fa-solid fa-file-csv"></i> Download CSV
+          </button>
+          <button onClick={handleSave} style={{
+            padding: '12px 28px', background: 'linear-gradient(135deg, #f97316, #ea580c)',
+            color: 'white', border: 'none', borderRadius: '10px', fontWeight: 700,
+            fontSize: '0.92rem', cursor: 'pointer', fontFamily: 'Outfit, sans-serif'
+          }}>
+            <i className="fa-solid fa-floppy-disk"></i> Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AdminPanel;
+

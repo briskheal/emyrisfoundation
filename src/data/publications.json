@@ -1,0 +1,6 @@
+[
+  { "id": "pub-1", "title": "Annual Report 2024-25", "desc": "Comprehensive operations summary, audited financial statements, balance sheets, and program resource deployment.", "file": "Annual-Report-2024-25" },
+  { "id": "pub-2", "title": "80G Registration Copy", "desc": "Income Tax Department order certifying tax deductibility status under Section 80G of the IT Act.", "file": "80G-Tax-Exemption-Order" },
+  { "id": "pub-3", "title": "12A Exemption Certificate", "desc": "Certificate of registration under Section 12A (a) of the Income Tax Act for charitable entities.", "file": "12A-Exemption-Registration" },
+  { "id": "pub-4", "title": "Strategy Blueprint 2026", "desc": "Long-term strategic objectives, growth metrics, target villages, and resource scaling pathways.", "file": "Strategy-Blueprint-2026" }
+]
