@@ -22,8 +22,16 @@ export async function POST(req) {
       await fs.mkdir(uploadsDir, { recursive: true });
     }
 
-    // Generate unique filename
+    const isPdf = file.name.toLowerCase().endsWith('.pdf') || file.type === 'application/pdf';
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+
+    if (isPdf) {
+      const filename = `doc-${uniqueSuffix}.pdf`;
+      const filepath = path.join(uploadsDir, filename);
+      await fs.writeFile(filepath, buffer);
+      return NextResponse.json({ success: true, url: `/uploads/${filename}` });
+    }
+
     const filename = `img-${uniqueSuffix}.webp`;
     const filepath = path.join(uploadsDir, filename);
 
