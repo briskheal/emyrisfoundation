@@ -64,6 +64,7 @@ const AdminPanel = () => {
   const handleQrUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    e.target.value = ''; // Reset input so same file can be re-uploaded
 
     // Show a loading state if desired (or just proceed)
     const formData = new FormData();
@@ -89,6 +90,7 @@ const AdminPanel = () => {
   const handleLogoUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    e.target.value = ''; // Reset input to allow re-uploading the same file
 
     const formData = new FormData();
     formData.append('file', file);

@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
-import sharp from 'sharp';
 
 export async function POST(req) {
   try {
@@ -22,23 +21,12 @@ export async function POST(req) {
       await fs.mkdir(uploadsDir, { recursive: true });
     }
 
-    const isPdf = file.name.toLowerCase().endsWith('.pdf') || file.type === 'application/pdf';
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-
-    if (isPdf) {
-      const filename = `doc-${uniqueSuffix}.pdf`;
-      const filepath = path.join(uploadsDir, filename);
-      await fs.writeFile(filepath, buffer);
-      return NextResponse.json({ success: true, url: `/api/media/${filename}` });
-    }
-
-    const filename = `img-${uniqueSuffix}.webp`;
+    const ext = path.extname(file.name).toLowerCase() || '.bin';
+    const filename = `media-${uniqueSuffix}${ext}`;
     const filepath = path.join(uploadsDir, filename);
 
-    // Convert to webp using sharp
-    await sharp(buffer)
-      .webp({ quality: 80 })
-      .toFile(filepath);
+    await fs.writeFile(filepath, buffer);
 
     return NextResponse.json({ 
       success: true, 
