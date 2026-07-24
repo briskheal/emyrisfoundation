@@ -342,7 +342,7 @@ const AdminPanel = () => {
               ))}
               
               {/* Logo Upload */}
-              <div style={{ gridColumn: '1 / -1', marginTop: '10px' }}>
+              <div>
                 <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.82rem', marginBottom: '5px', display: 'block' }}>
                   Foundation Logo Image
                 </label>
