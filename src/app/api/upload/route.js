@@ -29,7 +29,7 @@ export async function POST(req) {
       const filename = `doc-${uniqueSuffix}.pdf`;
       const filepath = path.join(uploadsDir, filename);
       await fs.writeFile(filepath, buffer);
-      return NextResponse.json({ success: true, url: `/uploads/${filename}` });
+      return NextResponse.json({ success: true, url: `/api/media/${filename}` });
     }
 
     const filename = `img-${uniqueSuffix}.webp`;
@@ -42,7 +42,7 @@ export async function POST(req) {
 
     return NextResponse.json({ 
       success: true, 
-      url: `/uploads/${filename}` 
+      url: `/api/media/${filename}` 
     });
 
   } catch (error) {
