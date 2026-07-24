@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { compressImage } from '../../lib/imageCompressor';
 
 const MentorManager = ({ token }) => {
   const [items, setItems] = useState([]);
@@ -25,11 +26,15 @@ const MentorManager = ({ token }) => {
   }, []);
 
   const handleUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setUploading(true);
+    const rawFile = e.target.files[0];
+    if (!rawFile) return;
+    e.target.value = '';
+
+    const file = await compressImage(rawFile, 800, 0.8);
     const form = new FormData();
     form.append('file', file);
+    setUploading(true);
+
     try {
       const res = await fetch('/api/upload', { method: 'POST', body: form });
       const data = await res.json();

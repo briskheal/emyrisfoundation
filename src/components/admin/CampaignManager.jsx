@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { compressImage } from '../../lib/imageCompressor';
 
 const CampaignManager = ({ token }) => {
   const [campaigns, setCampaigns] = useState([]);
@@ -25,11 +26,15 @@ const CampaignManager = ({ token }) => {
   }, []);
 
   const handleUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setUploading(true);
+    const rawFile = e.target.files[0];
+    if (!rawFile) return;
+    e.target.value = '';
+
+    const file = await compressImage(rawFile, 1200, 0.85);
     const form = new FormData();
     form.append('file', file);
+    setUploading(true);
+
     try {
       const res = await fetch('/api/upload', {
         method: 'POST',

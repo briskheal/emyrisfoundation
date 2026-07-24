@@ -8,6 +8,7 @@ import AboutManager from './admin/AboutManager';
 import DirectorManager from './admin/DirectorManager';
 import MentorManager from './admin/MentorManager';
 import PublicationManager from './admin/PublicationManager';
+import { compressImage } from '../lib/imageCompressor';
 
 const AdminPanel = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -62,11 +63,11 @@ const AdminPanel = () => {
   };
 
   const handleQrUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    const rawFile = e.target.files[0];
+    if (!rawFile) return;
     e.target.value = ''; // Reset input so same file can be re-uploaded
 
-    // Show a loading state if desired (or just proceed)
+    const file = await compressImage(rawFile);
     const formData = new FormData();
     formData.append('file', file);
 
@@ -88,10 +89,11 @@ const AdminPanel = () => {
   };
 
   const handleLogoUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    const rawFile = e.target.files[0];
+    if (!rawFile) return;
     e.target.value = ''; // Reset input to allow re-uploading the same file
 
+    const file = await compressImage(rawFile);
     const formData = new FormData();
     formData.append('file', file);
 
