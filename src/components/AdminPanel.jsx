@@ -346,20 +346,19 @@ const AdminPanel = () => {
                 <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.82rem', marginBottom: '5px', display: 'block' }}>
                   Foundation Logo Image
                 </label>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
-                  <label style={{
-                    padding: '10px 18px', background: 'rgba(249,115,22,0.15)', border: '1px solid rgba(249,115,22,0.3)',
-                    borderRadius: '8px', color: '#f97316', cursor: 'pointer', fontWeight: 600, fontSize: '0.88rem'
-                  }}>
-                    <i className="fa-solid fa-upload"></i> Upload Logo
+                <div style={{
+                  width: '100%', padding: '6px 14px', borderRadius: '8px',
+                  border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.06)',
+                  boxSizing: 'border-box', display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: '42.5px'
+                }}>
+                  <label style={{ color: '#f97316', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem', margin: 0, flexShrink: 0 }}>
+                    <i className="fa-solid fa-upload"></i> Upload
                     <input type="file" accept="image/*" onChange={handleLogoUpload} style={{ display: 'none' }} />
                   </label>
                   {logoPreview ? (
-                    <div style={{ background: 'white', padding: '8px', borderRadius: '8px', display: 'inline-block' }}>
-                      <img src={logoPreview} alt="Logo Preview" style={{ height: '40px', objectFit: 'contain', display: 'block' }} />
-                    </div>
+                    <img src={logoPreview} alt="Logo Preview" style={{ height: '24px', objectFit: 'contain', background: 'white', padding: '2px', borderRadius: '4px' }} />
                   ) : (
-                    <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.85rem' }}>No logo uploaded yet</span>
+                    <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.8rem' }}>No file</span>
                   )}
                 </div>
               </div>
