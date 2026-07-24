@@ -101,7 +101,19 @@ const AdminPanel = () => {
       const data = await res.json();
       if (data.success) {
         setLogoPreview(data.url);
-        setCorp(prev => ({ ...prev, logo: data.url }));
+        setCorp(prev => {
+          const updated = { ...prev, logo: data.url };
+          fetch(`${API_URL}/corporate`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(updated)
+          }).catch(console.error);
+          return updated;
+        });
+        alert('Logo uploaded and saved to database successfully!');
       } else {
         alert('Upload failed: ' + (data.error || 'Unknown error'));
       }
