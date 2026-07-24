@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CorporateProvider } from '../context/CorporateContext';
 import { ModalProvider } from '../context/ModalContext';
 import Header from '../components/Header';
@@ -20,6 +20,23 @@ import Footer from '../components/Footer';
 import Modals from '../components/Modals';
 
 export default function Home() {
+  useEffect(() => {
+    const handleHashClick = (e) => {
+      const target = e.target.closest('a');
+      if (target && target.hash && target.hash.startsWith('#') && target.origin === window.location.origin) {
+        // Only prevent default if it's an internal hash link
+        const element = document.querySelector(target.hash);
+        if (element) {
+          e.preventDefault();
+          element.scrollIntoView({ behavior: 'smooth' });
+          window.history.pushState(null, '', target.hash);
+        }
+      }
+    };
+    document.addEventListener('click', handleHashClick);
+    return () => document.removeEventListener('click', handleHashClick);
+  }, []);
+
   return (
     <CorporateProvider>
       <ModalProvider>
