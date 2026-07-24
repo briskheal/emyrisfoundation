@@ -285,6 +285,8 @@ const AdminPanel = () => {
                 { label: 'Facebook URL', field: 'fb' },
                 { label: 'Instagram URL', field: 'insta' },
                 { label: 'LinkedIn URL', field: 'linkedin' },
+                { label: 'X (Twitter) URL', field: 'xUrl' },
+                { label: 'YouTube URL', field: 'youtubeUrl' },
               ].map(({ label, field }) => (
                 <div key={field}>
                   <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.82rem', marginBottom: '5px', display: 'block' }}>{label}</label>
