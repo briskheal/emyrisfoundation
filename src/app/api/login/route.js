@@ -17,15 +17,15 @@ export async function POST(req) {
       await AdminUser.create({ username: 'admin', passwordHash });
     }
 
-    const admin = await AdminUser.findOne({ where: { username } });
+    const admin = await AdminUser.findOne({ where: { username: username.toLowerCase() } });
     
     if (!admin) {
-      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+      return NextResponse.json({ error: `User not found: ${username}` }, { status: 401 });
     }
     
     const isMatch = await bcrypt.compare(password, admin.passwordHash);
     if (!isMatch) {
-      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+      return NextResponse.json({ error: `Password mismatch for user: ${username}` }, { status: 401 });
     }
 
     const token = jwt.sign({ id: admin.id, username: admin.username }, JWT_SECRET, { expiresIn: '1d' });
