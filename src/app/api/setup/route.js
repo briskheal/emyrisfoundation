@@ -1,40 +1,42 @@
 import { NextResponse } from 'next/server';
-import { sequelize, AdminUser, CorporateProfile } from '../../../lib/db';
+import { sequelize, AdminUser, CorporateProfile, HeroSlide, Campaign, WorkActivity } from '../../../lib/db';
 import bcrypt from 'bcrypt';
+import fs from 'fs';
+import path from 'path';
 
-export async function GET(req) {
+export const dynamic = 'force-dynamic';
+
+export async function GET() {
   try {
-    // 1. Force sync the database to ensure tables exist and schema is updated
-    await sequelize.sync();
+    // 1. Sync database schema — alter:true safely ADDS new columns without wiping data
+    await sequelize.sync({ alter: true });
 
-    // 2. Upsert the admin user
+    // 2. Upsert superadmin
     const defaultPassword = 'Omrutam@1306';
     const passwordHash = await bcrypt.hash(defaultPassword, 10);
-    
-    const adminCount = await AdminUser.count({ where: { username: 'admin' }});
+    const adminCount = await AdminUser.count({ where: { username: 'admin' } });
     if (adminCount === 0) {
-      await AdminUser.create({ username: 'admin', passwordHash });
+      await AdminUser.create({ username: 'admin', passwordHash, role: 'superadmin' });
     } else {
-      await AdminUser.update({ passwordHash }, { where: { username: 'admin' }});
+      await AdminUser.update({ passwordHash, role: 'superadmin' }, { where: { username: 'admin' } });
     }
 
-    // 3. Ensure a blank corporate profile exists if none
-    const juniorCount = await AdminUser.count({ where: { username: 'junior' }});
+    // 3. Create junior admin if not exists
+    const juniorCount = await AdminUser.count({ where: { username: 'junior' } });
     if (juniorCount === 0) {
       const juniorHash = await bcrypt.hash('Junior@123', 10);
       await AdminUser.create({ username: 'junior', passwordHash: juniorHash, role: 'junior' });
+    } else {
+      await AdminUser.update({ role: 'junior' }, { where: { username: 'junior' } });
     }
 
+    // 4. Ensure a blank corporate profile exists
     const corpCount = await CorporateProfile.count();
     if (corpCount === 0) {
       await CorporateProfile.create({ name: 'Emyris Foundation' });
     }
 
-    // 4. Seed Phase 1 Data
-    const { HeroSlide, Campaign, WorkActivity } = require('../../../lib/db');
-    const fs = require('fs');
-    const path = require('path');
-
+    // 5. Seed Phase 1 static data from JSON files
     const seedData = async (Model, fileName) => {
       const count = await Model.count();
       if (count === 0) {
@@ -50,11 +52,10 @@ export async function GET(req) {
     await seedData(Campaign, 'campaigns.json');
     await seedData(WorkActivity, 'work.json');
 
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Database synced and admin credentials reset to: username "admin", password "Omrutam@1306"' 
+    return NextResponse.json({
+      success: true,
+      message: 'Database synced. Admin: admin/Omrutam@1306 | Junior: junior/Junior@123'
     });
-
   } catch (error) {
     console.error('Setup error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
