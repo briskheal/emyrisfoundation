@@ -14,7 +14,7 @@ export async function POST(req) {
     if (adminCount === 0) {
       const defaultPassword = 'Omrutam@1306';
       const passwordHash = await bcrypt.hash(defaultPassword, 10);
-      await AdminUser.create({ username: 'admin', passwordHash });
+      await AdminUser.create({ username: 'admin', passwordHash, role: 'superadmin' });
     }
 
     const admin = await AdminUser.findOne({ where: { username: username.toLowerCase() } });
@@ -29,8 +29,9 @@ export async function POST(req) {
       return NextResponse.json({ error: `Password mismatch for user: ${username}` }, { status: 401 });
     }
 
-    const token = jwt.sign({ id: admin.id, username: admin.username }, JWT_SECRET, { expiresIn: '1d' });
-    return NextResponse.json({ token, message: 'Logged in successfully' });
+    const role = admin.role || 'superadmin';
+    const token = jwt.sign({ id: admin.id, username: admin.username, role }, JWT_SECRET, { expiresIn: '1d' });
+    return NextResponse.json({ token, role, username: admin.username, message: 'Logged in successfully' });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });

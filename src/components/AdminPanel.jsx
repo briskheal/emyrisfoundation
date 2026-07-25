@@ -8,6 +8,11 @@ import AboutManager from './admin/AboutManager';
 import DirectorManager from './admin/DirectorManager';
 import MentorManager from './admin/MentorManager';
 import PublicationManager from './admin/PublicationManager';
+import MenuManager from './admin/MenuManager';
+import HeroStatManager from './admin/HeroStatManager';
+import PresenceManager from './admin/PresenceManager';
+import ContentManager from './admin/ContentManager';
+import DonationsManager from './admin/DonationsManager';
 import { compressImage } from '../lib/imageCompressor';
 
 const AdminPanel = () => {
@@ -15,6 +20,7 @@ const AdminPanel = () => {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('admin');
   const [token, setToken] = useState(null);
+  const [userRole, setUserRole] = useState('superadmin');
   const [loginError, setLoginError] = useState('');
   const [activeTab, setActiveTab] = useState('corporate');
   const [saved, setSaved] = useState(false);
@@ -49,8 +55,11 @@ const AdminPanel = () => {
       const data = await res.json();
       if (res.ok) {
         setToken(data.token);
+        setUserRole(data.role || 'superadmin');
         setIsLoggedIn(true);
         setLoginError('');
+        // Set default tab based on role
+        setActiveTab(data.role === 'junior' ? 'hero' : 'corporate');
       } else {
         setLoginError(data.error || 'Login failed');
       }
@@ -222,17 +231,28 @@ const AdminPanel = () => {
     );
   }
 
-  const tabs = [
+  // RBAC: superadmin-only tabs
+  const superAdminOnly = ['corporate', 'payment', 'donations'];
+
+  const allTabs = [
     { id: 'corporate', label: 'Corporate Profile', icon: 'fa-building' },
     { id: 'payment', label: 'Bank & UPI', icon: 'fa-building-columns' },
+    { id: 'donations', label: 'Donations & Donors', icon: 'fa-hand-holding-heart' },
     { id: 'hero', label: 'Hero Banner', icon: 'fa-images' },
+    { id: 'hero-stats', label: 'Hero Stats', icon: 'fa-chart-bar' },
     { id: 'about', label: 'About Us', icon: 'fa-users' },
     { id: 'directors', label: 'Directors', icon: 'fa-user-tie' },
     { id: 'mentors', label: 'Mentors', icon: 'fa-chalkboard-user' },
     { id: 'work', label: 'Our Work', icon: 'fa-briefcase' },
     { id: 'campaigns', label: 'Campaigns', icon: 'fa-bullhorn' },
     { id: 'publications', label: 'Publications', icon: 'fa-file-pdf' },
+    { id: 'presence', label: 'Presence / Locations', icon: 'fa-location-dot' },
+    { id: 'content', label: 'Page Content', icon: 'fa-align-left' },
+    { id: 'menus', label: 'Menu Manager', icon: 'fa-bars' },
   ];
+
+  // Filter tabs by role
+  const tabs = allTabs.filter(t => userRole === 'superadmin' || !superAdminOnly.includes(t.id));
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: 'linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%)', fontFamily: 'Inter, sans-serif' }}>
@@ -299,8 +319,13 @@ const AdminPanel = () => {
             <i className="fa-solid fa-bars"></i>
           </button>
           <h2 style={{ color: 'white', margin: 0, fontFamily: 'Outfit, sans-serif', fontSize: '1.5rem' }}>
-            {tabs.find(t => t.id === activeTab)?.label}
+            {allTabs.find(t => t.id === activeTab)?.label}
           </h2>
+          {userRole === 'junior' && (
+            <span style={{ marginLeft: '16px', padding: '4px 12px', borderRadius: '20px', background: 'rgba(249,115,22,0.15)', color: '#f97316', border: '1px solid rgba(249,115,22,0.3)', fontSize: '0.75rem', fontWeight: 600 }}>
+              <i className="fa-solid fa-user-shield"></i> Junior Admin
+            </span>
+          )}
         </div>
 
         {/* Panel */}
@@ -313,6 +338,18 @@ const AdminPanel = () => {
         {activeTab === 'campaigns' && <CampaignManager token={token} />}
         {activeTab === 'publications' && <PublicationManager token={token} />}
         {activeTab === 'work' && <WorkManager token={token} />}
+        {activeTab === 'hero-stats' && <HeroStatManager token={token} />}
+        {activeTab === 'presence' && <PresenceManager token={token} />}
+        {activeTab === 'content' && <ContentManager token={token} />}
+        {activeTab === 'menus' && <MenuManager token={token} />}
+        {activeTab === 'donations' && userRole === 'superadmin' && <DonationsManager token={token} />}
+        {activeTab === 'donations' && userRole !== 'superadmin' && (
+          <div style={{ textAlign: 'center', padding: '60px', color: '#ef4444' }}>
+            <i className="fa-solid fa-lock" style={{ fontSize: '3rem', marginBottom: '15px' }}></i>
+            <h3>Access Denied</h3>
+            <p style={{ color: 'rgba(255,255,255,0.5)' }}>This section is restricted to Super Admins only.</p>
+          </div>
+        )}
 
         {saved && (
           <div style={{
