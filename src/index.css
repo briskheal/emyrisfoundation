@@ -2645,13 +2645,32 @@ textarea.form-control {
     font-size: 0.75rem;
     color: rgba(255, 255, 255, 0.6);
     margin: 0;
+    word-break: break-all;
 }
 
 @media (max-width: 1024px) {
     .trust-container { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 576px) {
-    .trust-container { grid-template-columns: 1fr; }
+    .trust-container { 
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 15px;
+        padding-bottom: 10px; /* space for scrollbar */
+        -webkit-overflow-scrolling: touch;
+        /* Hide scrollbar for cleaner look */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .trust-container::-webkit-scrollbar {
+        display: none;
+    }
+    .trust-badge-card {
+        min-width: 80vw;
+        scroll-snap-align: center;
+        flex-shrink: 0;
+    }
 }
 
 /* Publications & Document Center Styles */
