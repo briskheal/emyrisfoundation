@@ -2577,7 +2577,7 @@ textarea.form-control {
     .carousel-nav.prev { left: 15px; }
     .carousel-nav.next { right: 15px; }
     
-    .stats-container { flex-direction: column; height: auto; padding: 20px 0; gap: 15px; }
+    .stats-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 20px 10px; height: auto; }
     .stat-divider { display: none; }
     .stats-bar { height: auto; position: static; }
     
