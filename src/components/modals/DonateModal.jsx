@@ -9,6 +9,18 @@ const DonateModal = () => {
   const [frequency, setFrequency] = useState('One Time');
   const [payMode, setPayMode] = useState('upi');
   const [receiptId, setReceiptId] = useState('');
+  
+  const [formData, setFormData] = useState({
+    donorName: '',
+    dob: '',
+    email: '',
+    phone: '',
+    address: '',
+    pincode: '',
+    pan: ''
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   if (activeModal !== 'donate') return null;
 
@@ -17,15 +29,51 @@ const DonateModal = () => {
     e.preventDefault();
     setStep(3);
   };
-  const handlePayment = () => {
-    // Simulate payment
+  
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handlePayment = async () => {
+    setSubmitting(true);
+    setError('');
+    
+    const mockTxnId = `TXN-${Math.floor(Math.random() * 100000000)}`;
     const mockReceipt = `EM-80G-${Math.floor(Math.random() * 1000000)}`;
-    setReceiptId(mockReceipt);
-    setStep(4); // Success screen
+
+    try {
+      const res = await fetch('/api/donations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          donorName: formData.donorName,
+          email: formData.email,
+          phone: formData.phone,
+          pan: formData.pan,
+          amount: amount,
+          txnId: mockTxnId
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to process donation. Please try again.');
+      }
+
+      setReceiptId(mockReceipt);
+      setStep(4); // Success screen
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleClose = () => {
     setStep(1);
+    setAmount(1000);
+    setFrequency('One Time');
+    setFormData({ donorName: '', dob: '', email: '', phone: '', address: '', pincode: '', pan: '' });
+    setError('');
     closeModal();
   };
 
@@ -76,7 +124,7 @@ const DonateModal = () => {
             </div>
             <div className="modal-action-footer">
               <div></div>
-              <button className="btn btn-primary" onClick={handleNextStep1}>Next Step <i className="fa-solid fa-arrow-right"></i></button>
+              <button className="btn btn-primary" onClick={handleNextStep1} disabled={!amount || amount <= 0}>Next Step <i className="fa-solid fa-arrow-right"></i></button>
             </div>
           </div>
         )}
@@ -89,36 +137,36 @@ const DonateModal = () => {
               <div className="form-row">
                 <div className="form-group">
                   <label>Full Name *</label>
-                  <input type="text" className="form-control" required />
+                  <input type="text" name="donorName" value={formData.donorName} onChange={handleInputChange} className="form-control" required />
                 </div>
                 <div className="form-group">
                   <label>Date of Birth *</label>
-                  <input type="date" className="form-control" required />
+                  <input type="date" name="dob" value={formData.dob} onChange={handleInputChange} className="form-control" required />
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group">
                   <label>Email Address *</label>
-                  <input type="email" className="form-control" required />
+                  <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="form-control" required />
                 </div>
                 <div className="form-group">
                   <label>Phone Number *</label>
-                  <input type="tel" className="form-control" placeholder="+91 xxxxxxxxxx" required />
+                  <input type="tel" name="phone" value={formData.phone} onChange={handleInputChange} className="form-control" placeholder="+91 xxxxxxxxxx" required />
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group flex-2">
                   <label>Address *</label>
-                  <input type="text" className="form-control" required />
+                  <input type="text" name="address" value={formData.address} onChange={handleInputChange} className="form-control" required />
                 </div>
                 <div className="form-group">
                   <label>Pincode *</label>
-                  <input type="text" className="form-control" required />
+                  <input type="text" name="pincode" value={formData.pincode} onChange={handleInputChange} className="form-control" required />
                 </div>
               </div>
               <div className="form-group">
                 <label>PAN Number * (Required for 80G)</label>
-                <input type="text" className="form-control uppercase" placeholder="ABCDE1234F" pattern="[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}" required />
+                <input type="text" name="pan" value={formData.pan} onChange={handleInputChange} className="form-control uppercase" placeholder="ABCDE1234F" pattern="[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}" required />
               </div>
               <div className="form-group checkbox-group" style={{ marginTop: '15px' }}>
                 <input type="checkbox" id="d-agree" required defaultChecked />
@@ -147,6 +195,7 @@ const DonateModal = () => {
               </div>
             </div>
             <h3 className="form-subtitle" style={{ marginTop: '15px' }}>Select Payment Mode</h3>
+            {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
             <div className="payment-tabs">
               <button className={`pay-tab ${payMode === 'upi' ? 'active' : ''}`} onClick={() => setPayMode('upi')}><i className="fa-solid fa-qrcode"></i> UPI / QR</button>
               <button className={`pay-tab ${payMode === 'card' ? 'active' : ''}`} onClick={() => setPayMode('card')}><i className="fa-solid fa-credit-card"></i> Card</button>
@@ -180,8 +229,10 @@ const DonateModal = () => {
               )}
             </div>
             <div className="modal-action-footer" style={{ marginTop: '25px' }}>
-              <button className="btn btn-outline" onClick={() => setStep(2)}><i className="fa-solid fa-arrow-left"></i> Back</button>
-              <button className="btn btn-primary" onClick={handlePayment}>Complete Payment <i className="fa-solid fa-circle-check"></i></button>
+              <button className="btn btn-outline" onClick={() => setStep(2)} disabled={submitting}><i className="fa-solid fa-arrow-left"></i> Back</button>
+              <button className="btn btn-primary" onClick={handlePayment} disabled={submitting}>
+                {submitting ? 'Processing...' : 'Complete Payment'} <i className="fa-solid fa-circle-check"></i>
+              </button>
             </div>
           </div>
         )}
@@ -190,7 +241,7 @@ const DonateModal = () => {
         {step === 4 && (
           <div className="donate-step-panel active text-center">
             <i className="fa-solid fa-circle-check success-check-icon"></i>
-            <h2>Thank You, Generous Donor!</h2>
+            <h2>Thank You, {formData.donorName.split(' ')[0]}!</h2>
             <p className="lead-para">Your payment simulation was successful.</p>
             <div className="receipt-box glass-card">
               <p>Receipt ID: <strong>{receiptId}</strong></p>
