@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { ConflictBanner, LastEditedBadge } from '../../lib/useConflictSave';
 import { compressImage } from '../../lib/imageCompressor';
 
 const WorkManager = ({ token }) => {
   const [works, setWorks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [conflictInfo, setConflictInfo] = useState(null);
+  const [loadedAt, setLoadedAt] = useState(null);
   const [editing, setEditing] = useState(null);
   
   const [formData, setFormData] = useState({ title: '', motto: '', statVal: '', statLbl: '', desc: '', bullets: [''], img: '' });
@@ -78,6 +81,7 @@ const WorkManager = ({ token }) => {
         },
         body: JSON.stringify({ ...formData, bullets: cleanBullets, id: isNew ? undefined : editing.id })
       });
+      if (res.status === 409) { const d = await res.json(); setConflictInfo(d); return; }
       if (res.ok) {
         setEditing(null);
         setFormData({ title: '', motto: '', statVal: '', statLbl: '', desc: '', bullets: [''], img: '' });

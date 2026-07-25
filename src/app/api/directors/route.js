@@ -43,7 +43,8 @@ export async function POST(req) {
     const token = req.headers.get('authorization')?.split(' ')[1];
     jwt.verify(token, JWT_SECRET);
     const body = await req.json();
-    const item = await Director.create(body);
+    const decoded2 = jwt.verify(req.headers.get('authorization')?.split(' ')[1], JWT_SECRET);
+    const item = await Director.create({ ...body, updatedBy: decoded2.username || 'unknown' });
     return NextResponse.json({ message: 'Created', item });
   } catch (error) {
     return NextResponse.json({ error: 'Unauthorized or error' }, { status: 401 });
@@ -53,13 +54,32 @@ export async function POST(req) {
 export async function PUT(req) {
   try {
     const token = req.headers.get('authorization')?.split(' ')[1];
-    jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const updatedBy = decoded.username || 'unknown';
+
     const body = await req.json();
-    const item = await Director.findByPk(body.id);
+    const { lastKnownUpdatedAt, ...data } = body;
+
+    const item = await Director.findByPk(data.id);
     if (!item) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-    await item.update(body);
+
+    // Conflict detection: someone else saved after this user loaded the record
+    if (lastKnownUpdatedAt) {
+      const dbTime = new Date(item.updatedAt).getTime();
+      const clientTime = new Date(lastKnownUpdatedAt).getTime();
+      if (dbTime > clientTime) {
+        return NextResponse.json({
+          conflict: true,
+          updatedBy: item.updatedBy || 'unknown',
+          updatedAt: item.updatedAt,
+        }, { status: 409 });
+      }
+    }
+
+    await item.update({ ...data, updatedBy });
     return NextResponse.json({ message: 'Updated', item });
   } catch (error) {
+    console.error('PUT error:', error);
     return NextResponse.json({ error: 'Unauthorized or error' }, { status: 401 });
   }
 }

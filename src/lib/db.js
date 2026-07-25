@@ -23,8 +23,8 @@ export const CorporateProfile = sequelize.define('CorporateProfile', {
   fb: DataTypes.STRING,
   insta: DataTypes.STRING,
   linkedin: DataTypes.STRING,
-  xUrl: DataTypes.STRING,       // newly added
-  youtubeUrl: DataTypes.STRING, // newly added
+  xUrl: DataTypes.STRING,
+  youtubeUrl: DataTypes.STRING,
   accountName: DataTypes.STRING,
   accountNo: DataTypes.STRING,
   ifsc: DataTypes.STRING,
@@ -33,6 +33,7 @@ export const CorporateProfile = sequelize.define('CorporateProfile', {
   upiId: DataTypes.STRING,
   qrCode: DataTypes.TEXT,
   logo: DataTypes.TEXT,
+  updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
 });
 
 export const AdminUser = sequelize.define('AdminUser', {
@@ -43,34 +44,38 @@ export const AdminUser = sequelize.define('AdminUser', {
 });
 
 export const HeroSlide = sequelize.define('HeroSlide', {
-  id: { type: DataTypes.STRING, primaryKey: true }, // Using string ID to match existing JSON e.g. "slide-1"
+  id: { type: DataTypes.STRING, primaryKey: true },
   title: DataTypes.STRING,
   motto: DataTypes.STRING,
   img: DataTypes.STRING,
   order: { type: DataTypes.INTEGER, defaultValue: 0 },
+  updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
 });
 
 export const Campaign = sequelize.define('Campaign', {
-  id: { type: DataTypes.STRING, primaryKey: true }, // e.g. "shiksha"
+  id: { type: DataTypes.STRING, primaryKey: true },
   title: DataTypes.STRING,
   motto: DataTypes.STRING,
   tag: DataTypes.STRING,
   img: DataTypes.STRING,
   desc: DataTypes.TEXT,
   order: { type: DataTypes.INTEGER, defaultValue: 0 },
+  updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
 });
 
 export const WorkActivity = sequelize.define('WorkActivity', {
-  id: { type: DataTypes.STRING, primaryKey: true }, // e.g. "work-education"
+  id: { type: DataTypes.STRING, primaryKey: true },
   title: DataTypes.STRING,
   motto: DataTypes.STRING,
   statVal: DataTypes.STRING,
   statLbl: DataTypes.STRING,
   desc: DataTypes.TEXT,
-  bullets: DataTypes.JSON, // Array of strings stored as JSON
+  bullets: DataTypes.JSON,
   img: DataTypes.STRING,
   order: { type: DataTypes.INTEGER, defaultValue: 0 },
+  updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
 });
+
 export const AboutContent = sequelize.define('AboutContent', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   title: DataTypes.STRING,
@@ -78,6 +83,7 @@ export const AboutContent = sequelize.define('AboutContent', {
   motto: DataTypes.STRING,
   paragraph1: DataTypes.TEXT,
   paragraph2: DataTypes.TEXT,
+  updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
 });
 
 export const Director = sequelize.define('Director', {
@@ -87,6 +93,7 @@ export const Director = sequelize.define('Director', {
   bio: DataTypes.TEXT,
   img: DataTypes.STRING,
   order: { type: DataTypes.INTEGER, defaultValue: 0 },
+  updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
 });
 
 export const Mentor = sequelize.define('Mentor', {
@@ -96,6 +103,7 @@ export const Mentor = sequelize.define('Mentor', {
   bio: DataTypes.TEXT,
   img: DataTypes.STRING,
   order: { type: DataTypes.INTEGER, defaultValue: 0 },
+  updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
 });
 
 export const Publication = sequelize.define('Publication', {
@@ -104,6 +112,7 @@ export const Publication = sequelize.define('Publication', {
   year: DataTypes.STRING,
   pdfLink: DataTypes.STRING,
   order: { type: DataTypes.INTEGER, defaultValue: 0 },
+  updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
 });
 
 // -- PHASE 3 DYNAMIC MODELS --
@@ -114,6 +123,7 @@ export const MenuLink = sequelize.define('MenuLink', {
   url: DataTypes.STRING,
   parentMenu: DataTypes.STRING,
   order: { type: DataTypes.INTEGER, defaultValue: 0 },
+  updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
 });
 
 export const HeroStat = sequelize.define('HeroStat', {
@@ -121,6 +131,7 @@ export const HeroStat = sequelize.define('HeroStat', {
   value: DataTypes.STRING,
   label: DataTypes.STRING,
   order: { type: DataTypes.INTEGER, defaultValue: 0 },
+  updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
 });
 
 export const PresenceLocation = sequelize.define('PresenceLocation', {
@@ -132,6 +143,7 @@ export const PresenceLocation = sequelize.define('PresenceLocation', {
   phone: DataTypes.STRING,
   programs: DataTypes.JSON,
   order: { type: DataTypes.INTEGER, defaultValue: 0 },
+  updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
 });
 
 export const SectionContent = sequelize.define('SectionContent', {
@@ -139,6 +151,7 @@ export const SectionContent = sequelize.define('SectionContent', {
   title: DataTypes.STRING,
   subtitle: DataTypes.STRING,
   content: DataTypes.TEXT,
+  updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
 });
 
 export const Donation = sequelize.define('Donation', {

@@ -33,15 +33,34 @@ export async function POST(req) {
 
 export async function PUT(req) {
   try {
-    const authHeader = req.headers.get('authorization');
-    if (!authHeader) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-    jwt.verify(authHeader.split(' ')[1], JWT_SECRET);
+    const token = req.headers.get('authorization')?.split(' ')[1];
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const updatedBy = decoded.username || 'unknown';
 
     const body = await req.json();
-    await HeroStat.update(body, { where: { id: body.id } });
-    return NextResponse.json({ success: true });
+    const { lastKnownUpdatedAt, ...data } = body;
+
+    const item = await HeroStat.findByPk(data.id);
+    if (!item) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+
+    // Conflict detection: someone else saved after this user loaded the record
+    if (lastKnownUpdatedAt) {
+      const dbTime = new Date(item.updatedAt).getTime();
+      const clientTime = new Date(lastKnownUpdatedAt).getTime();
+      if (dbTime > clientTime) {
+        return NextResponse.json({
+          conflict: true,
+          updatedBy: item.updatedBy || 'unknown',
+          updatedAt: item.updatedAt,
+        }, { status: 409 });
+      }
+    }
+
+    await item.update({ ...data, updatedBy });
+    return NextResponse.json({ message: 'Updated', item });
   } catch (error) {
-    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+    console.error('PUT error:', error);
+    return NextResponse.json({ error: 'Unauthorized or error' }, { status: 401 });
   }
 }
 

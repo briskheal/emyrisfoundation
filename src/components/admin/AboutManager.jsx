@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { ConflictBanner, LastEditedBadge } from '../../lib/useConflictSave';
 import { API_URL } from '../../api';
 
 const AboutManager = ({ token }) => {
   const [content, setContent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [conflictInfo, setConflictInfo] = useState(null);
+  const [loadedAt, setLoadedAt] = useState(null);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -28,13 +31,14 @@ const AboutManager = ({ token }) => {
     setSaving(true);
     try {
       const res = await fetch(`${API_URL}/about`, {
-        method: 'PUT',
+        method: 'PUT', // conflict-aware
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(content)
       });
+      if (res.status === 409) { const d = await res.json(); setConflictInfo(d); return; }
       if (res.ok) {
         setMessage('About section updated successfully!');
         setTimeout(() => setMessage(''), 3000);

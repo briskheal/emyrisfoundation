@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { ConflictBanner, LastEditedBadge } from '../../lib/useConflictSave';
 
 const HeroStatManager = ({ token }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [conflictInfo, setConflictInfo] = useState(null);
+  const [loadedAt, setLoadedAt] = useState(null);
   const [editing, setEditing] = useState(null);
   const [formData, setFormData] = useState({ id: '', value: '', label: '' });
 
@@ -24,8 +27,9 @@ const HeroStatManager = ({ token }) => {
       const res = await fetch('/api/hero-stats', {
         method,
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({ ...formData, lastKnownUpdatedAt: loadedAt })
       });
+      if (res.status === 409) { const d = await res.json(); setConflictInfo(d); return; }
       if (res.ok) {
         setFormData({ id: '', value: '', label: '' });
         setEditing(null);

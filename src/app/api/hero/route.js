@@ -52,14 +52,35 @@ export async function POST(req) {
 }
 
 export async function PUT(req) {
-  if (!verifyAuth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
-    const data = await req.json();
-    const { id, ...updates } = data;
-    await HeroSlide.update(updates, { where: { id } });
-    return NextResponse.json({ success: true });
-  } catch (err) {
-    return NextResponse.json({ error: 'Failed to update slide' }, { status: 500 });
+    const token = req.headers.get('authorization')?.split(' ')[1];
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const updatedBy = decoded.username || 'unknown';
+
+    const body = await req.json();
+    const { lastKnownUpdatedAt, ...data } = body;
+
+    const item = await HeroSlide.findByPk(data.id);
+    if (!item) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+
+    // Conflict detection: someone else saved after this user loaded the record
+    if (lastKnownUpdatedAt) {
+      const dbTime = new Date(item.updatedAt).getTime();
+      const clientTime = new Date(lastKnownUpdatedAt).getTime();
+      if (dbTime > clientTime) {
+        return NextResponse.json({
+          conflict: true,
+          updatedBy: item.updatedBy || 'unknown',
+          updatedAt: item.updatedAt,
+        }, { status: 409 });
+      }
+    }
+
+    await item.update({ ...data, updatedBy });
+    return NextResponse.json({ message: 'Updated', item });
+  } catch (error) {
+    console.error('PUT error:', error);
+    return NextResponse.json({ error: 'Unauthorized or error' }, { status: 401 });
   }
 }
 
