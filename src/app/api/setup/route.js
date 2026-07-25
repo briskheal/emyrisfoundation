@@ -19,6 +19,12 @@ export async function GET(req) {
     }
 
     // 3. Ensure a blank corporate profile exists if none
+    const juniorCount = await AdminUser.count({ where: { username: 'junior' }});
+    if (juniorCount === 0) {
+      const juniorHash = await bcrypt.hash('Junior@123', 10);
+      await AdminUser.create({ username: 'junior', passwordHash: juniorHash, role: 'junior' });
+    }
+
     const corpCount = await CorporateProfile.count();
     if (corpCount === 0) {
       await CorporateProfile.create({ name: 'Emyris Foundation' });
