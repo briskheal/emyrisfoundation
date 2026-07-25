@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState } from 'react';
 import { useModals } from '../../context/ModalContext';
 
@@ -78,7 +78,7 @@ const DonateModal = () => {
   };
 
   return (
-    <div className="modal-overlay" id="donate-modal" style={{ display: 'flex' }}>
+    <div className="modal-overlay open" id="donate-modal" style={{ display: 'flex' }}>
       <div className="modal-card donate-modal-card glass-card">
         <button className="modal-close-btn" onClick={handleClose}><i className="fa-solid fa-xmark"></i></button>
         
@@ -110,7 +110,7 @@ const DonateModal = () => {
             <div className="amount-grid">
               {[1000, 3000, 6000, 12000].map(val => (
                 <button key={val} className={`amount-btn ${amount === val ? 'active' : ''}`} onClick={() => setAmount(val)}>
-                  <span className="amt">₹ {val.toLocaleString()}</span>
+                  <span className="amt">â‚¹ {val.toLocaleString()}</span>
                   <span className="amt-desc">Support package</span>
                 </button>
               ))}
@@ -187,7 +187,7 @@ const DonateModal = () => {
               <h4>Donation Summary</h4>
               <div className="summary-line">
                 <span>Contribution Amount:</span>
-                <strong className="text-orange">₹ {amount.toLocaleString()}</strong>
+                <strong className="text-orange">â‚¹ {amount.toLocaleString()}</strong>
               </div>
               <div className="summary-line">
                 <span>Frequency:</span>

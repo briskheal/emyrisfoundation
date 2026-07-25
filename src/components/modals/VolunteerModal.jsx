@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState } from 'react';
 import { useModals } from '../../context/ModalContext';
 
@@ -49,7 +49,7 @@ const VolunteerModal = () => {
   };
 
   return (
-    <div className="modal-overlay" id="volunteer-modal" style={{ display: 'flex' }}>
+    <div className="modal-overlay open" id="volunteer-modal" style={{ display: 'flex' }}>
       <div className="modal-card glass-card">
         <button className="modal-close-btn" onClick={handleClose}><i className="fa-solid fa-xmark"></i></button>
         
@@ -58,7 +58,7 @@ const VolunteerModal = () => {
             <div className="modal-header text-center">
               <i className="fa-solid fa-people-carry-box vol-header-icon"></i>
               <h2>Volunteer Registration</h2>
-              <p>Register as partner in progress – "Together We Grow"</p>
+              <p>Register as partner in progress â€“ "Together We Grow"</p>
             </div>
             <form onSubmit={handleSubmit}>
               <div className="form-group">

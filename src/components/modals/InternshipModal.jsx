@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState } from 'react';
 import { useModals } from '../../context/ModalContext';
 
@@ -83,7 +83,7 @@ Personality: ${formData.personality}`
   };
 
   return (
-    <div className="modal-overlay" id="internship-modal" style={{ display: 'flex' }}>
+    <div className="modal-overlay open" id="internship-modal" style={{ display: 'flex' }}>
       <div className="modal-card glass-card">
         <button className="modal-close-btn" onClick={handleClose}><i className="fa-solid fa-xmark"></i></button>
 

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import React, { useState } from 'react';
 import { useModals } from '../../context/ModalContext';
 
@@ -51,7 +51,7 @@ const ConsentModal = () => {
   };
 
   return (
-    <div className="modal-overlay" id="consent-modal" style={{ display: 'flex' }}>
+    <div className="modal-overlay open" id="consent-modal" style={{ display: 'flex' }}>
       <div className="modal-card glass-card">
         <button className="modal-close-btn" onClick={handleClose}><i className="fa-solid fa-xmark"></i></button>
 
