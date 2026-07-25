@@ -3104,6 +3104,64 @@ textarea.form-control {
     padding: 6px;
 }
 
+/* New Gallery Filter Select */
+.gallery-filter-select {
+    background: rgba(11, 25, 44, 0.8);
+    color: var(--white);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    font-family: var(--font-body);
+    cursor: pointer;
+    outline: none;
+    transition: var(--transition-fast);
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 35px;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat, repeat;
+    background-position: right .7em top 50%, 0 0;
+    background-size: .65em auto, 100%;
+}
+.gallery-filter-select:hover, .gallery-filter-select:focus {
+    border-color: var(--primary-orange);
+    box-shadow: 0 0 10px rgba(255, 107, 53, 0.2);
+}
+
+.gallery-fixed-container {
+    background: rgba(11, 25, 44, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius-lg);
+    padding: 20px;
+}
+
+.gallery-fixed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-orange) rgba(255, 255, 255, 0.05);
+}
+.gallery-fixed-grid::-webkit-scrollbar {
+    width: 6px;
+}
+.gallery-fixed-grid::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+.gallery-fixed-grid::-webkit-scrollbar-thumb {
+    background: var(--primary-orange);
+    border-radius: 10px;
+}
+.gallery-fixed-grid .netflix-card {
+    flex: none;
+    width: 100%;
+}
+
 .gallery-item-meta h4 {
     font-size: 1rem;
     color: var(--white);
