@@ -14,11 +14,21 @@ export async function POST(req) {
     // Ensure tables exist with latest schema (adds role column if missing)
     await sequelize.sync({ alter: true });
 
-    // First time setup: if no admins exist, create the default admin
-    const adminCount = await AdminUser.count();
-    if (adminCount === 0) {
-      const passwordHash = await bcrypt.hash('Omrutam@1306', 10);
-      await AdminUser.create({ username: 'admin', passwordHash, role: 'superadmin' });
+    // Hardcoded default credentials — always ensure both accounts exist
+    const defaultAccounts = [
+      { username: 'admin', password: 'Omrutam@1306', role: 'superadmin' },
+      { username: 'junior', password: 'Junior@123', role: 'junior' },
+    ];
+
+    for (const acc of defaultAccounts) {
+      const exists = await AdminUser.findOne({ where: { username: acc.username } });
+      if (!exists) {
+        const hash = await bcrypt.hash(acc.password, 10);
+        await AdminUser.create({ username: acc.username, passwordHash: hash, role: acc.role });
+      } else if (!exists.role) {
+        // Fix existing rows that are missing the role column
+        await exists.update({ role: acc.role });
+      }
     }
 
     const admin = await AdminUser.findOne({ where: { username: username.toLowerCase() } });
@@ -28,8 +38,9 @@ export async function POST(req) {
     }
 
     const cleanPassword = (password || '').trim();
-    const isMatch = (cleanPassword === 'Omrutam@1306' && admin.username === 'admin')
-      || (await bcrypt.compare(cleanPassword, admin.passwordHash));
+
+    // Check against bcrypt hash
+    const isMatch = await bcrypt.compare(cleanPassword, admin.passwordHash);
 
     if (!isMatch) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
