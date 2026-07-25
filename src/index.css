@@ -2535,10 +2535,21 @@ textarea.form-control {
         background: var(--white);
         flex-direction: column;
         align-items: flex-start;
-        padding: 30px;
+        padding: 30px 30px 100px 30px;
         gap: 20px;
         transition: var(--transition-smooth);
         overflow-y: auto;
+    }
+    
+    .nav-menu::-webkit-scrollbar {
+        width: 6px;
+    }
+    .nav-menu::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+    }
+    .nav-menu::-webkit-scrollbar-thumb {
+        background: var(--primary-orange);
+        border-radius: 10px;
     }
     
     .nav-menu.open {
