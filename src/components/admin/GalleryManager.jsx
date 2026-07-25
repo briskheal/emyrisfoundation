@@ -20,6 +20,7 @@ const GalleryManager = ({ token }) => {
   const [media, setMedia] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState('');
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
   const [formData, setFormData] = useState({
@@ -29,6 +30,32 @@ const GalleryManager = ({ token }) => {
     month: new Date().toLocaleString('default', { month: 'long' }),
     youtubeUrl: ''
   });
+
+  const seedSampleData = async () => {
+    setLoading(true);
+    const mediaItems = [
+      { type: 'video', title: 'Community Outreach 2025', url: 'https://youtu.be/ut7Nfd8Pq3s?si=id3g2T4HCDOP3-lu', year: '2025', month: 'January' },
+      { type: 'video', title: 'Education Program 2025', url: 'https://youtu.be/mY78VWPhyw8?si=nLmyCoWDQqd1AZos', year: '2025', month: 'March' },
+      { type: 'photo', title: 'Food Distribution', url: 'https://images.unsplash.com/photo-1593113589914-07599c18fda7?auto=format&fit=crop&w=800&q=80', year: '2025', month: 'January' },
+      { type: 'photo', title: 'School Supplies', url: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=800&q=80', year: '2025', month: 'March' },
+      { type: 'photo', title: 'Medical Camp 2026', url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80', year: '2026', month: 'August' },
+      { type: 'video', title: 'Annual Gala 2026', url: 'https://youtu.be/ut7Nfd8Pq3s?si=id3g2T4HCDOP3-lu', year: '2026', month: 'August' },
+      { type: 'photo', title: 'Volunteer Training', url: 'https://images.unsplash.com/photo-1559027615-cd4628ce02df?auto=format&fit=crop&w=800&q=80', year: '2026', month: 'September' },
+    ];
+    for (const item of mediaItems) {
+      await fetch('/api/gallery', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(item)
+      });
+    }
+    await fetchMedia();
+    setSuccess('Sample data seeded successfully!');
+    setTimeout(() => setSuccess(''), 3000);
+  };
 
   const fetchMedia = async () => {
     setLoading(true);
@@ -144,10 +171,14 @@ const GalleryManager = ({ token }) => {
     <div className="admin-section">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <h3>Activity Gallery Manager</h3>
-        <button className="btn btn-secondary btn-sm" onClick={fetchMedia}>Refresh</button>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button className="btn btn-secondary btn-sm" onClick={seedSampleData}>Seed Sample Data</button>
+          <button className="btn btn-secondary btn-sm" onClick={fetchMedia}>Refresh</button>
+        </div>
       </div>
       
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      {success && <p style={{ color: 'green' }}>{success}</p>}
 
       <div className="glass-card" style={{ padding: '20px', marginBottom: '30px' }}>
         <h4>Add New Media</h4>
