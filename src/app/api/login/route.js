@@ -12,7 +12,7 @@ export async function POST(req) {
     // First time setup check: if no admins exist, create the default admin
     const adminCount = await AdminUser.count();
     if (adminCount === 0) {
-      const defaultPassword = 'Password@123';
+      const defaultPassword = 'Omrutam@1306';
       const passwordHash = await bcrypt.hash(defaultPassword, 10);
       await AdminUser.create({ username: 'admin', passwordHash });
     }
@@ -24,7 +24,7 @@ export async function POST(req) {
     }
     
     const cleanPassword = (password || '').trim();
-    const isMatch = (cleanPassword === 'Password@123') || (await bcrypt.compare(cleanPassword, admin.passwordHash));
+    const isMatch = (cleanPassword === 'Omrutam@1306') || (await bcrypt.compare(cleanPassword, admin.passwordHash));
     if (!isMatch) {
       return NextResponse.json({ error: `Password mismatch for user: ${username}` }, { status: 401 });
     }

@@ -8,7 +8,7 @@ export async function GET(req) {
     await sequelize.sync();
 
     // 2. Upsert the admin user
-    const defaultPassword = 'Password@123';
+    const defaultPassword = 'Omrutam@1306';
     const passwordHash = await bcrypt.hash(defaultPassword, 10);
     
     const adminCount = await AdminUser.count({ where: { username: 'admin' }});
@@ -46,7 +46,7 @@ export async function GET(req) {
 
     return NextResponse.json({ 
       success: true, 
-      message: 'Database synced and admin credentials reset to: username "admin", password "Password@123"' 
+      message: 'Database synced and admin credentials reset to: username "admin", password "Omrutam@1306"' 
     });
 
   } catch (error) {
