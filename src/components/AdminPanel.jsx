@@ -18,6 +18,7 @@ const AdminPanel = () => {
   const [loginError, setLoginError] = useState('');
   const [activeTab, setActiveTab] = useState('corporate');
   const [saved, setSaved] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   // Corporate form state
@@ -127,6 +128,7 @@ const AdminPanel = () => {
   };
 
   const handleSave = async () => {
+    setSaving(true);
     try {
       const res = await fetch(`${API_URL}/corporate`, {
         method: 'PUT',
@@ -144,6 +146,8 @@ const AdminPanel = () => {
       }
     } catch (error) {
       alert('Server error saving changes');
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -446,12 +450,19 @@ const AdminPanel = () => {
           }}>
             <i className="fa-solid fa-file-csv"></i> Download CSV
           </button>
-          <button onClick={handleSave} style={{
+          <button onClick={handleSave} disabled={saving} style={{
             padding: '12px 28px', background: 'linear-gradient(135deg, #f97316, #ea580c)',
             color: 'white', border: 'none', borderRadius: '10px', fontWeight: 700,
-            fontSize: '0.92rem', cursor: 'pointer', fontFamily: 'Outfit, sans-serif'
+            fontSize: '0.92rem', cursor: 'pointer', fontFamily: 'Outfit, sans-serif',
+            opacity: saving ? 0.7 : 1, transition: 'all 0.3s ease'
           }}>
-            <i className="fa-solid fa-floppy-disk"></i> Save Changes
+            {saving ? (
+              <><i className="fa-solid fa-spinner fa-spin"></i> Saving...</>
+            ) : saved ? (
+              <><i className="fa-solid fa-check"></i> Saved!</>
+            ) : (
+              <><i className="fa-solid fa-floppy-disk"></i> Save Changes</>
+            )}
           </button>
         </div>
       </div>
