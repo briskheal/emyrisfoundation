@@ -1,6 +1,21 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
 
+// Helper function to extract YouTube ID
+export const getYoutubeEmbedUrl = (url) => {
+  if (!url) return '';
+  let videoId = '';
+  if (url.includes('youtu.be/')) {
+    videoId = url.split('youtu.be/')[1]?.split('?')[0];
+  } else if (url.includes('youtube.com/watch')) {
+    const urlParams = new URLSearchParams(url.split('?')[1]);
+    videoId = urlParams.get('v');
+  } else if (url.includes('youtube.com/embed/')) {
+    return url;
+  }
+  return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+};
+
 const GalleryManager = ({ token }) => {
   const [media, setMedia] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +26,8 @@ const GalleryManager = ({ token }) => {
     type: 'photo',
     title: '',
     year: new Date().getFullYear().toString(),
-    month: new Date().toLocaleString('default', { month: 'long' })
+    month: new Date().toLocaleString('default', { month: 'long' }),
+    youtubeUrl: ''
   });
 
   const fetchMedia = async () => {
@@ -41,29 +57,43 @@ const GalleryManager = ({ token }) => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    const file = fileInputRef.current?.files[0];
-    if (!file) {
-      alert('Please select a file to upload');
-      return;
-    }
-
+    
     setUploading(true);
-    const data = new FormData();
-    data.append('file', file);
+    let finalUrl = '';
 
     try {
-      // 1. Upload file
-      const uploadRes = await fetch('/api/upload', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` },
-        body: data
-      });
+      if (formData.type === 'photo') {
+        const file = fileInputRef.current?.files[0];
+        if (!file) {
+          alert('Please select an image file to upload');
+          setUploading(false);
+          return;
+        }
+        
+        const data = new FormData();
+        data.append('file', file);
+  
+        // Upload file
+        const uploadRes = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` },
+          body: data
+        });
+  
+        if (!uploadRes.ok) throw new Error('File upload failed');
+        const uploadData = await uploadRes.json();
+        finalUrl = uploadData.url;
+      } else {
+        // Video
+        if (!formData.youtubeUrl) {
+          alert('Please provide a valid YouTube URL');
+          setUploading(false);
+          return;
+        }
+        finalUrl = formData.youtubeUrl;
+      }
 
-      if (!uploadRes.ok) throw new Error('File upload failed');
-      const uploadData = await uploadRes.json();
-      const fileUrl = uploadData.url;
-
-      // 2. Save media record
+      // Save media record
       const mediaRes = await fetch('/api/gallery', {
         method: 'POST',
         headers: {
@@ -71,14 +101,17 @@ const GalleryManager = ({ token }) => {
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          ...formData,
-          url: fileUrl
+          type: formData.type,
+          title: formData.title,
+          year: formData.year,
+          month: formData.month,
+          url: finalUrl
         })
       });
 
       if (mediaRes.ok) {
-        setFormData({ ...formData, title: '' });
-        fileInputRef.current.value = '';
+        setFormData({ ...formData, title: '', youtubeUrl: '' });
+        if (fileInputRef.current) fileInputRef.current.value = '';
         fetchMedia();
       } else {
         throw new Error('Failed to save media record');
@@ -117,13 +150,13 @@ const GalleryManager = ({ token }) => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
       <div className="glass-card" style={{ padding: '20px', marginBottom: '30px' }}>
-        <h4>Upload New Media</h4>
+        <h4>Add New Media</h4>
         <form onSubmit={handleUpload} style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginTop: '15px' }}>
           <div style={{ flex: '1 1 200px' }}>
             <label style={{ display: 'block', marginBottom: '5px' }}>Media Type</label>
             <select name="type" value={formData.type} onChange={handleInputChange} style={{ width: '100%', padding: '8px' }}>
               <option value="photo">Photo</option>
-              <option value="video">Video</option>
+              <option value="video">YouTube Video</option>
             </select>
           </div>
           <div style={{ flex: '1 1 200px' }}>
@@ -142,13 +175,22 @@ const GalleryManager = ({ token }) => {
               {months.map(m => <option key={m} value={m}>{m}</option>)}
             </select>
           </div>
-          <div style={{ flex: '1 1 300px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>File</label>
-            <input type="file" ref={fileInputRef} accept={formData.type === 'photo' ? 'image/*' : 'video/*'} style={{ width: '100%', padding: '6px' }} />
-          </div>
+          
+          {formData.type === 'photo' ? (
+            <div style={{ flex: '1 1 100%' }}>
+              <label style={{ display: 'block', marginBottom: '5px' }}>Image File</label>
+              <input type="file" ref={fileInputRef} accept="image/*" style={{ width: '100%', padding: '6px' }} />
+            </div>
+          ) : (
+            <div style={{ flex: '1 1 100%' }}>
+              <label style={{ display: 'block', marginBottom: '5px' }}>YouTube URL</label>
+              <input type="text" name="youtubeUrl" value={formData.youtubeUrl} onChange={handleInputChange} placeholder="https://www.youtube.com/watch?v=..." style={{ width: '100%', padding: '8px' }} />
+            </div>
+          )}
+
           <div style={{ flex: '1 1 100%', display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
             <button type="submit" className="btn btn-primary" disabled={uploading}>
-              {uploading ? 'Uploading...' : 'Upload Media'}
+              {uploading ? 'Processing...' : (formData.type === 'photo' ? 'Upload Photo' : 'Add Video')}
             </button>
           </div>
         </form>
@@ -160,7 +202,7 @@ const GalleryManager = ({ token }) => {
             {item.type === 'photo' ? (
               <img src={item.url} alt={item.title} style={{ width: '100%', height: '150px', objectFit: 'cover', borderRadius: '4px' }} />
             ) : (
-              <video src={item.url} style={{ width: '100%', height: '150px', objectFit: 'cover', borderRadius: '4px' }} controls />
+              <iframe src={getYoutubeEmbedUrl(item.url)} style={{ width: '100%', height: '150px', border: 'none', borderRadius: '4px' }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
             )}
             <div style={{ marginTop: '10px' }}>
               <p style={{ margin: 0, fontWeight: 'bold', fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.title || 'Untitled'}</p>
@@ -168,7 +210,7 @@ const GalleryManager = ({ token }) => {
             </div>
             <button 
               onClick={() => handleDelete(item.id)}
-              style={{ position: 'absolute', top: '15px', right: '15px', background: 'red', color: 'white', border: 'none', borderRadius: '50%', width: '25px', height: '25px', cursor: 'pointer' }}
+              style={{ position: 'absolute', top: '15px', right: '15px', background: 'red', color: 'white', border: 'none', borderRadius: '50%', width: '25px', height: '25px', cursor: 'pointer', zIndex: 10 }}
               title="Delete"
             >
               <i className="fa-solid fa-xmark"></i>
