@@ -16,6 +16,7 @@ import DonationsManager from './admin/DonationsManager';
 import ContactSubmissionsManager from './admin/ContactSubmissionsManager';
 import ApplicationManager from './admin/ApplicationManager';
 import CampaignRegistrationManager from './admin/CampaignRegistrationManager';
+import GalleryManager from './admin/GalleryManager';
 import { compressImage } from '../lib/imageCompressor';
 
 const AdminPanel = () => {
@@ -272,6 +273,7 @@ const AdminPanel = () => {
     { id: 'contact_subs', label: 'Contact Submissions', icon: 'fa-envelope-open-text' },
     { id: 'applications', label: 'Applications', icon: 'fa-file-signature' },
     { id: 'campaign_regs', label: 'Campaign Regs.', icon: 'fa-clipboard-user' },
+    { id: 'gallery', label: 'Activity Gallery', icon: 'fa-images' },
   ];
 
   // Filter tabs by role
@@ -368,6 +370,7 @@ const AdminPanel = () => {
         {activeTab === 'contact_subs' && <ContactSubmissionsManager token={token} />}
         {activeTab === 'applications' && <ApplicationManager token={token} />}
         {activeTab === 'campaign_regs' && <CampaignRegistrationManager token={token} />}
+        {activeTab === 'gallery' && <GalleryManager token={token} />}
         {activeTab === 'donations' && userRole === 'superadmin' && <DonationsManager token={token} />}
         {activeTab === 'donations' && userRole !== 'superadmin' && (
           <div style={{ textAlign: 'center', padding: '60px', color: '#ef4444' }}>

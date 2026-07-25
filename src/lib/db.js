@@ -165,3 +165,45 @@ export const Donation = sequelize.define('Donation', {
   status: { type: DataTypes.STRING, defaultValue: 'Pending' },
   date: { type: DataTypes.DATE, defaultValue: Sequelize.NOW },
 });
+
+export const ContactSubmission = sequelize.define('ContactSubmission', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  name: DataTypes.STRING,
+  email: DataTypes.STRING,
+  phone: DataTypes.STRING,
+  message: DataTypes.TEXT,
+  date: { type: DataTypes.DATE, defaultValue: Sequelize.NOW },
+});
+
+export const ApplicationSubmission = sequelize.define('ApplicationSubmission', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  type: DataTypes.STRING,
+  position: DataTypes.STRING,
+  name: DataTypes.STRING,
+  email: DataTypes.STRING,
+  phone: DataTypes.STRING,
+  resumeUrl: DataTypes.STRING,
+  message: DataTypes.TEXT,
+  ipAddress: DataTypes.STRING,
+  date: { type: DataTypes.DATE, defaultValue: Sequelize.NOW },
+});
+
+export const CampaignRegistration = sequelize.define('CampaignRegistration', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  campaign: DataTypes.STRING,
+  name: DataTypes.STRING,
+  email: DataTypes.STRING,
+  phone: DataTypes.STRING,
+  ipAddress: DataTypes.STRING,
+  date: { type: DataTypes.DATE, defaultValue: Sequelize.NOW },
+});
+
+export const GalleryMedia = sequelize.define('GalleryMedia', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  type: DataTypes.STRING,
+  title: DataTypes.STRING,
+  url: DataTypes.STRING,
+  year: DataTypes.STRING,
+  month: DataTypes.STRING,
+  date: { type: DataTypes.DATE, defaultValue: Sequelize.NOW },
+});
