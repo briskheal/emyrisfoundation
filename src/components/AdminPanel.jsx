@@ -26,6 +26,7 @@ const AdminPanel = () => {
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
   // Corporate form state
   const [corp, setCorp] = useState({});
@@ -202,18 +203,34 @@ const AdminPanel = () => {
                 }}
                 required
               />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                style={{
-                  width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.2)',
-                  background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '1rem',
-                  marginBottom: '12px', boxSizing: 'border-box', outline: 'none'
-                }}
-                required
-              />
+              <div style={{ position: 'relative', marginBottom: '12px' }}>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  style={{
+                    width: '100%', padding: '12px 44px 12px 16px', borderRadius: '8px',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    background: 'rgba(255,255,255,0.08)', color: 'white', fontSize: '1rem',
+                    boxSizing: 'border-box', outline: 'none'
+                  }}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)',
+                    background: 'none', border: 'none', cursor: 'pointer',
+                    color: showPassword ? '#f97316' : 'rgba(255,255,255,0.4)',
+                    fontSize: '1rem', padding: '4px', transition: 'color 0.2s'
+                  }}
+                  title={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  <i className={`fa-solid ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                </button>
+              </div>
             {loginError && <p style={{color: '#f87171', marginBottom: '10px', fontSize: '0.88rem'}}>{loginError}</p>}
             <button type="submit" style={{
               width: '100%', padding: '12px', background: 'linear-gradient(135deg, #f97316, #ea580c)',
