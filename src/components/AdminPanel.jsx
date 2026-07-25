@@ -285,6 +285,7 @@ const AdminPanel = () => {
       {/* Sidebar */}
       <div style={{
         width: sidebarOpen ? '260px' : '0px',
+        height: '100vh',
         background: 'rgba(255,255,255,0.03)',
         borderRight: sidebarOpen ? '1px solid rgba(255,255,255,0.08)' : 'none',
         transition: 'all 0.3s ease',
