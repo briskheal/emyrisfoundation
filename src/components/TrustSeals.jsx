@@ -4,36 +4,27 @@ import { useCorporate } from '../context/CorporateContext';
 
 const TrustSeals = () => {
   const { corporate } = useCorporate();
+  
+  const seals = [
+    { icon: "fa-solid fa-file-shield", title: "PAN NO", id: "trust-pan-text", text: corporate?.pan || 'Loading...' },
+    { icon: "fa-solid fa-circle-check", title: "CSR Regn. No.", id: "trust-darpan-text", text: corporate?.niti || 'Loading...' },
+    { icon: "fa-solid fa-stamp", title: "CIN NO", id: "trust-cin-text", text: corporate?.cin || 'Loading...' },
+    { icon: "fa-solid fa-certificate", title: "TAN NO", id: "trust-tan-text", text: corporate?.tan || 'Loading...' }
+  ];
+
   return (
     <section className="trust-seals-section">
       <div className="container trust-container">
-        <div className="trust-badge-card">
-          <div className="trust-badge-icon"><i className="fa-solid fa-file-shield"></i></div>
-          <div className="trust-badge-text">
-            <h4>PAN NO</h4>
-            <p id="trust-pan-text">{corporate?.pan || 'Loading...'}</p>
-          </div>
-        </div>
-        <div className="trust-badge-card">
-          <div className="trust-badge-icon"><i className="fa-solid fa-circle-check"></i></div>
-          <div className="trust-badge-text">
-            <h4>CSR Regn. No.</h4>
-            <p id="trust-darpan-text">{corporate?.niti || 'Loading...'}</p>
-          </div>
-        </div>
-        <div className="trust-badge-card">
-          <div className="trust-badge-icon"><i className="fa-solid fa-stamp"></i></div>
-          <div className="trust-badge-text">
-            <h4>CIN NO</h4>
-            <p id="trust-cin-text">{corporate?.cin || 'Loading...'}</p>
-          </div>
-        </div>
-        <div className="trust-badge-card">
-          <div className="trust-badge-icon"><i className="fa-solid fa-certificate"></i></div>
-          <div className="trust-badge-text">
-            <h4>TAN NO</h4>
-            <p id="trust-tan-text">{corporate?.tan || 'Loading...'}</p>
-          </div>
+        <div className="trust-marquee-track">
+          {[...seals, ...seals].map((seal, idx) => (
+            <div key={idx} className={`trust-badge-card ${idx >= seals.length ? 'duplicate-seal' : ''}`}>
+              <div className="trust-badge-icon"><i className={seal.icon}></i></div>
+              <div className="trust-badge-text">
+                <h4>{seal.title}</h4>
+                <p id={idx < seals.length ? seal.id : undefined}>{seal.text}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -41,4 +32,3 @@ const TrustSeals = () => {
 };
 
 export default TrustSeals;
-

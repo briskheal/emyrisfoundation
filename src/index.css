@@ -2613,6 +2613,11 @@ textarea.form-control {
 }
 
 .trust-container {
+    overflow: hidden;
+    width: 100%;
+}
+
+.trust-marquee-track {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
@@ -2628,6 +2633,10 @@ textarea.form-control {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.05);
     transition: var(--transition-fast);
+}
+
+.duplicate-seal {
+    display: none !important;
 }
 
 .trust-badge-card:hover {
@@ -2656,26 +2665,26 @@ textarea.form-control {
 }
 
 @media (max-width: 1024px) {
-    .trust-container { grid-template-columns: repeat(2, 1fr); }
+    .trust-marquee-track { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 576px) {
-    .trust-container { 
+    .trust-marquee-track { 
         display: flex;
         flex-wrap: nowrap;
-        overflow-x: auto;
         gap: 15px;
-        scroll-snap-type: x mandatory;
-        padding-bottom: 10px;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
+        width: max-content;
+        animation: trustMarqueeScroll 20s linear infinite;
     }
-    .trust-container::-webkit-scrollbar {
-        display: none;
+    .duplicate-seal {
+        display: flex !important;
+    }
+    @keyframes trustMarqueeScroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-50% - 7.5px)); }
     }
     .trust-badge-card {
-        flex: 0 0 250px;
-        scroll-snap-align: start;
-        padding: 15px 15px;
+        width: max-content;
+        padding: 12px 25px;
         gap: 10px;
     }
     .trust-badge-icon {
@@ -2683,9 +2692,11 @@ textarea.form-control {
     }
     .trust-badge-text h4 {
         font-size: 0.85rem;
+        white-space: nowrap;
     }
     .trust-badge-text p {
         font-size: 0.75rem;
+        white-space: nowrap;
     }
 }
 
