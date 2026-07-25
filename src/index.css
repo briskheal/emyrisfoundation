@@ -2585,6 +2585,9 @@ textarea.form-control {
     .stat-divider { display: none; }
     .stats-bar { height: auto; position: static; }
     
+    .hero-section { height: auto; min-height: 100vh; }
+    .carousel-container { height: 100vh; }
+    
     .directors-grid { grid-template-columns: 1fr; }
     .campaigns-grid { grid-template-columns: 1fr; }
     .involved-dual-grid { grid-template-columns: 1fr; padding: 30px; }
