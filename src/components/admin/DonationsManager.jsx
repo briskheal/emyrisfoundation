@@ -29,6 +29,34 @@ const DonationsManager = ({ token }) => {
     } catch (err) { console.error(err); }
   };
 
+  const handleDownloadCSV = () => {
+    const headers = ['ID', 'Donor Name', 'Phone', 'Email', 'PAN', 'Amount (INR)', 'Txn ID', 'Date', 'Status'];
+    const rows = filtered.map(d => {
+      return [
+        d.id,
+        `"${String(d.donorName || '').replace(/"/g, '""')}"`,
+        `"${String(d.phone || '').replace(/"/g, '""')}"`,
+        `"${String(d.email || '').replace(/"/g, '""')}"`,
+        `"${String(d.pan || '').replace(/"/g, '""')}"`,
+        parseFloat(d.amount || 0),
+        `"${String(d.txnId || '').replace(/"/g, '""')}"`,
+        `"${new Date(d.date).toLocaleDateString('en-IN')}"`,
+        `"${d.status}"`
+      ].join(',');
+    });
+
+    const csvContent = [headers.join(','), ...rows].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'donations_donor_report.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   const filtered = filter === 'All' ? donations : donations.filter(d => d.status === filter);
 
   const statusColor = { Pending: '#f97316', Verified: '#22c55e', Failed: '#ef4444' };
@@ -56,14 +84,19 @@ const DonationsManager = ({ token }) => {
         ))}
       </div>
 
-      {/* Filter */}
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
-        {['All', 'Pending', 'Verified', 'Failed'].map(f => (
-          <button key={f} onClick={() => setFilter(f)}
-            style={{ padding: '6px 16px', borderRadius: '20px', border: `1px solid ${filter === f ? '#15F5BA' : 'rgba(255,255,255,0.2)'}`, background: filter === f ? 'rgba(21,245,186,0.15)' : 'transparent', color: filter === f ? '#15F5BA' : '#fff', cursor: 'pointer', fontSize: '0.85rem' }}>
-            {f}
-          </button>
-        ))}
+      {/* Filter and Export */}
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          {['All', 'Pending', 'Verified', 'Failed'].map(f => (
+            <button key={f} onClick={() => setFilter(f)}
+              style={{ padding: '6px 16px', borderRadius: '20px', border: `1px solid ${filter === f ? '#15F5BA' : 'rgba(255,255,255,0.2)'}`, background: filter === f ? 'rgba(21,245,186,0.15)' : 'transparent', color: filter === f ? '#15F5BA' : '#fff', cursor: 'pointer', fontSize: '0.85rem' }}>
+              {f}
+            </button>
+          ))}
+        </div>
+        <button onClick={handleDownloadCSV} style={{ padding: '6px 16px', borderRadius: '20px', border: 'none', background: '#15F5BA', color: '#0B192C', fontWeight: 600, cursor: 'pointer', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <i className="fa-solid fa-file-csv"></i> Export CSV
+        </button>
       </div>
 
       {/* Table */}
@@ -100,13 +133,13 @@ const DonationsManager = ({ token }) => {
                       {d.status !== 'Verified' && (
                         <button onClick={() => updateStatus(d.id, 'Verified')}
                           style={{ padding: '4px 10px', borderRadius: '4px', background: '#22c55e22', color: '#22c55e', border: '1px solid #22c55e', cursor: 'pointer', fontSize: '0.75rem' }}>
-                          ✓ Verify
+                          <i className="fa-solid fa-check"></i> Verify
                         </button>
                       )}
                       {d.status !== 'Failed' && (
                         <button onClick={() => updateStatus(d.id, 'Failed')}
                           style={{ padding: '4px 10px', borderRadius: '4px', background: '#ef444422', color: '#ef4444', border: '1px solid #ef4444', cursor: 'pointer', fontSize: '0.75rem' }}>
-                          ✗ Reject
+                          <i className="fa-solid fa-xmark"></i> Reject
                         </button>
                       )}
                     </div>
