@@ -13,16 +13,18 @@ const getYoutubeEmbedUrl = (url) => {
   } else if (url.includes('youtube.com/embed/')) {
     return url;
   }
-  return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+  return videoId ? `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1` : url;
+};
+
+const monthOrder = {
+  "January": 1, "February": 2, "March": 3, "April": 4, "May": 5, "June": 6,
+  "July": 7, "August": 8, "September": 9, "October": 10, "November": 11, "December": 12
 };
 
 const ActivityGallery = () => {
   const [media, setMedia] = useState([]);
   const [loading, setLoading] = useState(true);
-  
   const [filterType, setFilterType] = useState('all');
-  const [filterYear, setFilterYear] = useState('all');
-  const [filterMonth, setFilterMonth] = useState('all');
 
   useEffect(() => {
     const fetchGallery = async () => {
@@ -40,81 +42,115 @@ const ActivityGallery = () => {
     fetchGallery();
   }, []);
 
-  // Derive dynamic filters from the fetched media
-  const availableYears = [...new Set(media.map(m => m.year))].sort((a, b) => b.localeCompare(a));
-  const availableMonths = [...new Set(media.map(m => m.month))]; // Could sort by month index
+  // Filter media based on selected media type
+  const filteredMedia = media.filter(m => filterType === 'all' || m.type === filterType);
 
-  // Filter media based on selected filters
-  const filteredMedia = media.filter(m => {
-    if (filterType !== 'all' && m.type !== filterType) return false;
-    if (filterYear !== 'all' && m.year !== filterYear) return false;
-    if (filterMonth !== 'all' && m.month !== filterMonth) return false;
-    return true;
-  });
+  // Group by Year -> Month
+  const groupedMedia = filteredMedia.reduce((acc, item) => {
+    if (!acc[item.year]) acc[item.year] = {};
+    if (!acc[item.year][item.month]) acc[item.year][item.month] = [];
+    acc[item.year][item.month].push(item);
+    return acc;
+  }, {});
+
+  const sortedYears = Object.keys(groupedMedia).sort((a, b) => b.localeCompare(a));
 
   return (
     <section id="activity-gallery" className="gallery-section scroll-spy">
-      <div className="container">
+      <div className="container" style={{ maxWidth: '1400px' }}>
         <div className="section-title-wrapper text-center">
           <span className="section-subtitle">Visual Archives</span>
-          <h2 className="section-title">Activity Gallery</h2>
+          <h2 className="section-title">Our Activities</h2>
           <div className="title-underline"></div>
         </div>
         
-        {/* Horizontal Stacked Filters */}
-        <div className="gallery-filters-top">
-          <div className="filter-group-horizontal">
+        {/* Master Media Filter */}
+        <div className="gallery-filters-top" style={{ marginBottom: '40px' }}>
+          <div className="filter-group-horizontal" style={{ background: 'rgba(11, 25, 44, 0.4)', padding: '10px', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
             <button className={`filter-chip gallery-filter-btn ${filterType === 'all' ? 'active' : ''}`} onClick={() => setFilterType('all')}>All Media</button>
             <button className={`filter-chip gallery-filter-btn ${filterType === 'photo' ? 'active' : ''}`} onClick={() => setFilterType('photo')}><i className="fa-solid fa-image"></i> Photos</button>
             <button className={`filter-chip gallery-filter-btn ${filterType === 'video' ? 'active' : ''}`} onClick={() => setFilterType('video')}><i className="fa-solid fa-brands fa-youtube"></i> Videos</button>
           </div>
-          
-          <div className="filter-group-horizontal">
-            <button className={`filter-chip gallery-year-btn ${filterYear === 'all' ? 'active' : ''}`} onClick={() => setFilterYear('all')}>All Years</button>
-            {availableYears.map(year => (
-              <button key={year} className={`filter-chip gallery-year-btn ${filterYear === year ? 'active' : ''}`} onClick={() => setFilterYear(year)}>
-                {year}
-              </button>
-            ))}
-          </div>
-          
-          <div className="filter-group-horizontal">
-            <button className={`filter-chip gallery-month-btn ${filterMonth === 'all' ? 'active' : ''}`} onClick={() => setFilterMonth('all')}>All Months</button>
-            {availableMonths.map(month => (
-              <button key={month} className={`filter-chip gallery-month-btn ${filterMonth === month ? 'active' : ''}`} onClick={() => setFilterMonth(month)}>
-                {month}
-              </button>
-            ))}
-          </div>
         </div>
 
-        {/* Gallery Grid */}
-        <div className="gallery-grid" id="gallery-grid-container" style={{ marginTop: '30px' }}>
+        {/* Netflix Style Rows */}
+        <div className="netflix-archive-container">
           {loading ? (
-            <p className="text-center" style={{ width: '100%', padding: '40px' }}>Loading gallery...</p>
-          ) : filteredMedia.length > 0 ? (
-            filteredMedia.map(item => (
-              <div key={item.id} className="gallery-item glass-card" style={{ padding: '10px' }}>
-                {item.type === 'photo' ? (
-                  <img src={item.url} alt={item.title} style={{ width: '100%', height: '220px', objectFit: 'cover', borderRadius: '4px' }} />
-                ) : (
-                  <iframe 
-                    src={getYoutubeEmbedUrl(item.url)} 
-                    style={{ width: '100%', height: '220px', border: 'none', borderRadius: '4px' }} 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowFullScreen>
-                  </iframe>
-                )}
-                <div style={{ marginTop: '15px', padding: '0 5px 5px 5px' }}>
-                  <h4 style={{ margin: '0 0 5px 0', fontSize: '1.1rem', color: 'var(--primary-blue)', fontWeight: 700 }}>{item.title || 'Untitled'}</h4>
-                  <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                    <i className="fa-regular fa-calendar"></i> {item.month} {item.year}
-                  </p>
+            <div className="loading-state">
+              <i className="fa-solid fa-circle-notch fa-spin"></i>
+              <p>Loading archives...</p>
+            </div>
+          ) : sortedYears.length > 0 ? (
+            sortedYears.map(year => {
+              const sortedMonths = Object.keys(groupedMedia[year]).sort((a, b) => monthOrder[b] - monthOrder[a]);
+              return (
+                <div key={year} className="netflix-year-block">
+                  <h3 className="netflix-year-title">{year} Overview</h3>
+                  
+                  {sortedMonths.map(month => (
+                    <div key={`${year}-${month}`} className="netflix-month-row">
+                      <h4 className="netflix-row-title">{month} <span className="netflix-row-count">({groupedMedia[year][month].length})</span></h4>
+                      
+                      <div className="netflix-track-wrapper">
+                        <button className="netflix-scroll-btn prev" onClick={(e) => {
+                          const track = e.currentTarget.nextElementSibling;
+                          track.scrollBy({ left: -400, behavior: 'smooth' });
+                        }}>
+                          <i className="fa-solid fa-chevron-left"></i>
+                        </button>
+                        
+                        <div className="netflix-track">
+                          {groupedMedia[year][month].map(item => (
+                            <div key={item.id} className="netflix-card">
+                              <div className="netflix-card-media">
+                                {item.type === 'photo' ? (
+                                  <img src={item.url} alt={item.title} loading="lazy" />
+                                ) : (
+                                  <div className="netflix-video-wrapper">
+                                    <iframe 
+                                      src={getYoutubeEmbedUrl(item.url)} 
+                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                      allowFullScreen
+                                      title={item.title}
+                                    ></iframe>
+                                    <div className="video-overlay-blocker"></div>
+                                  </div>
+                                )}
+                                <div className="netflix-card-overlay">
+                                  <div className="overlay-content">
+                                    <div className="media-type-badge">
+                                      {item.type === 'photo' ? <i className="fa-solid fa-camera"></i> : <i className="fa-solid fa-play"></i>}
+                                    </div>
+                                    <h5 className="media-title">{item.title || 'Activity Archive'}</h5>
+                                    {item.type === 'video' && (
+                                      <a href={item.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm watch-btn">
+                                        Watch on YouTube
+                                      </a>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        
+                        <button className="netflix-scroll-btn next" onClick={(e) => {
+                          const track = e.currentTarget.previousElementSibling;
+                          track.scrollBy({ left: 400, behavior: 'smooth' });
+                        }}>
+                          <i className="fa-solid fa-chevron-right"></i>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
-            ))
+              );
+            })
           ) : (
-            <p className="text-center" style={{ width: '100%', padding: '40px' }}>No media found for the selected filters.</p>
+            <div className="empty-state">
+              <i className="fa-regular fa-folder-open"></i>
+              <p>No visual archives found.</p>
+            </div>
           )}
         </div>
       </div>
