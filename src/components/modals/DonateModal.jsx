@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import React, { useState } from 'react';
 import { useModals } from '../../context/ModalContext';
 
@@ -115,7 +115,7 @@ const DonateModal = () => {
                 </button>
               ))}
             </div>
-            <div className="form-group" style={{ marginTop: '15px' }}>
+            <div className="form-group" style={{ marginTop: '10px' }}>
               <label>Or Enter Custom Amount (INR)</label>
               <div className="input-icon-wrapper">
                 <i className="fa-solid fa-indian-rupee-sign"></i>
@@ -168,11 +168,11 @@ const DonateModal = () => {
                 <label>PAN Number * (Required for 80G)</label>
                 <input type="text" name="pan" value={formData.pan} onChange={handleInputChange} className="form-control uppercase" placeholder="ABCDE1234F" pattern="[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}" required />
               </div>
-              <div className="form-group checkbox-group" style={{ marginTop: '15px' }}>
+              <div className="form-group checkbox-group" style={{ marginTop: '10px' }}>
                 <input type="checkbox" id="d-agree" required defaultChecked />
                 <label htmlFor="d-agree" className="checkbox-label">You agree that Emyris Foundation can reach out to you through WhatsApp/Email/SMS/Phone.</label>
               </div>
-              <div className="modal-action-footer" style={{ marginTop: '20px' }}>
+              <div className="modal-action-footer" style={{ marginTop: '10px' }}>
                 <button type="button" className="btn btn-outline" onClick={() => setStep(1)}><i className="fa-solid fa-arrow-left"></i> Back</button>
                 <button type="submit" className="btn btn-primary">Proceed to Payment <i className="fa-solid fa-arrow-right"></i></button>
               </div>
@@ -194,13 +194,13 @@ const DonateModal = () => {
                 <strong>{frequency}</strong>
               </div>
             </div>
-            <h3 className="form-subtitle" style={{ marginTop: '15px' }}>Select Payment Mode</h3>
+            <h3 className="form-subtitle" style={{ marginTop: '10px' }}>Select Payment Mode</h3>
             {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
             <div className="payment-tabs">
               <button className={`pay-tab ${payMode === 'upi' ? 'active' : ''}`} onClick={() => setPayMode('upi')}><i className="fa-solid fa-qrcode"></i> UPI / QR</button>
               <button className={`pay-tab ${payMode === 'card' ? 'active' : ''}`} onClick={() => setPayMode('card')}><i className="fa-solid fa-credit-card"></i> Card</button>
             </div>
-            <div className="payment-tab-contents" style={{ marginTop: '15px' }}>
+            <div className="payment-tab-contents" style={{ marginTop: '10px' }}>
               {payMode === 'upi' && (
                 <div className="pay-panel active text-center">
                   <p>Scan this QR code using BHIM, GPAY, PHONEPE or PAYTM to simulate donation</p>
@@ -228,7 +228,7 @@ const DonateModal = () => {
                 </div>
               )}
             </div>
-            <div className="modal-action-footer" style={{ marginTop: '25px' }}>
+            <div className="modal-action-footer" style={{ marginTop: '15px' }}>
               <button className="btn btn-outline" onClick={() => setStep(2)} disabled={submitting}><i className="fa-solid fa-arrow-left"></i> Back</button>
               <button className="btn btn-primary" onClick={handlePayment} disabled={submitting}>
                 {submitting ? 'Processing...' : 'Complete Payment'} <i className="fa-solid fa-circle-check"></i>
@@ -247,7 +247,7 @@ const DonateModal = () => {
               <p>Receipt ID: <strong>{receiptId}</strong></p>
               <p>We have recorded your details and sent an 80G tax certificate to your registered email.</p>
             </div>
-            <button className="btn btn-primary" onClick={handleClose} style={{ marginTop: '20px' }}>Return to Site</button>
+            <button className="btn btn-primary" onClick={handleClose} style={{ marginTop: '15px' }}>Return to Site</button>
           </div>
         )}
       </div>
