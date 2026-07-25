@@ -110,7 +110,7 @@ const DonateModal = () => {
             <div className="amount-grid">
               {[1000, 3000, 6000, 12000].map(val => (
                 <button key={val} className={`amount-btn ${amount === val ? 'active' : ''}`} onClick={() => setAmount(val)}>
-                  <span className="amt">â‚¹ {val.toLocaleString()}</span>
+                  <span className="amt">₹ {val.toLocaleString()}</span>
                   <span className="amt-desc">Support package</span>
                 </button>
               ))}
@@ -187,7 +187,7 @@ const DonateModal = () => {
               <h4>Donation Summary</h4>
               <div className="summary-line">
                 <span>Contribution Amount:</span>
-                <strong className="text-orange">â‚¹ {amount.toLocaleString()}</strong>
+                <strong className="text-orange">₹ {amount.toLocaleString()}</strong>
               </div>
               <div className="summary-line">
                 <span>Frequency:</span>
