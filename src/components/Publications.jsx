@@ -7,7 +7,7 @@ const Publications = () => {
   useEffect(() => {
     fetch('/api/publications', { cache: 'no-store' })
       .then(res => res.json())
-      .then(data => setPublications(data))
+      .then(data => { if (Array.isArray(data)) setPublications(data); })
       .catch(console.error);
   }, []);
 

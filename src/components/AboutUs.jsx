@@ -10,19 +10,19 @@ const AboutUs = () => {
     // Fetch About Content
     fetch('/api/about', { cache: 'no-store' })
       .then(res => res.json())
-      .then(data => setAbout(data))
+      .then(data => { if (data && !data.error) setAbout(data); })
       .catch(console.error);
 
     // Fetch Directors
     fetch('/api/directors', { cache: 'no-store' })
       .then(res => res.json())
-      .then(data => setDirectors(data))
+      .then(data => { if (Array.isArray(data)) setDirectors(data); })
       .catch(console.error);
 
     // Fetch Mentors
     fetch('/api/mentors', { cache: 'no-store' })
       .then(res => res.json())
-      .then(data => setMentors(data))
+      .then(data => { if (Array.isArray(data)) setMentors(data); })
       .catch(console.error);
   }, []);
 
