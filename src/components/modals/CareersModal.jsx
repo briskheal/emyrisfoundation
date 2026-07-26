@@ -50,7 +50,7 @@ const CareersModal = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', margin: '15px' }}>
               {jobs.map(job => (
                 <div key={job.id} style={{ 
-                  backgroundColor: 'rgba(255, 255, 255, 0.08)', 
+                  backgroundColor: '#040D1A', 
                   padding: '24px', 
                   borderRadius: '12px', 
                   boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
