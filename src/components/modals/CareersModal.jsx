@@ -27,17 +27,18 @@ const CareersModal = () => {
 
   return (
     <div className="modal-overlay open" onClick={closeModal} style={{ zIndex: 1100, display: 'flex' }}>
-      <div className="modal-content donate-modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '800px', backgroundColor: 'var(--bg-light)' }}>
-        <button className="modal-close" onClick={closeModal}>
-          <i className="fa-solid fa-times"></i>
+      <div className="modal-card glass-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '800px' }}>
+        <button className="modal-close-btn" onClick={closeModal}>
+          <i className="fa-solid fa-xmark"></i>
         </button>
 
-        <div className="modal-header">
-          <h3>Work With Us</h3>
+        <div className="modal-header text-center">
+          <i className="fa-solid fa-briefcase vol-header-icon"></i>
+          <h2>Work With Us</h2>
           <p>Join our mission and make an impact. Explore our current open positions below.</p>
         </div>
 
-        <div className="modal-body" style={{ padding: '20px', maxHeight: '60vh', overflowY: 'auto' }}>
+        <div className="modal-body" style={{ maxHeight: '60vh', overflowY: 'auto', padding: '10px 5px' }}>
           {loading ? (
             <div style={{ textAlign: 'center', padding: '40px' }}>Loading open positions...</div>
           ) : jobs.length === 0 ? (
@@ -49,11 +50,11 @@ const CareersModal = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
               {jobs.map(job => (
                 <div key={job.id} style={{ 
-                  backgroundColor: 'var(--white)', 
+                  backgroundColor: '#f8f9fa', 
                   padding: '24px', 
                   borderRadius: '12px', 
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
-                  border: '1px solid rgba(0,0,0,0.04)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+                  border: '1px solid rgba(0,0,0,0.1)',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '16px'
