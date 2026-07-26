@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs/promises';
 import path from 'path';
+import sharp from 'sharp';
 
 export async function POST(req) {
   try {
@@ -22,11 +23,22 @@ export async function POST(req) {
     }
 
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const ext = path.extname(file.name).toLowerCase() || '.bin';
-    const filename = `media-${uniqueSuffix}${ext}`;
-    const filepath = path.join(uploadsDir, filename);
+    let finalBuffer = buffer;
+    let filename = '';
 
-    await fs.writeFile(filepath, buffer);
+    // Auto-compress and convert images to webp
+    if (file.type.startsWith('image/')) {
+      finalBuffer = await sharp(buffer)
+        .webp({ quality: 80 })
+        .toBuffer();
+      filename = `media-${uniqueSuffix}.webp`;
+    } else {
+      const ext = path.extname(file.name).toLowerCase() || '.bin';
+      filename = `media-${uniqueSuffix}${ext}`;
+    }
+
+    const filepath = path.join(uploadsDir, filename);
+    await fs.writeFile(filepath, finalBuffer);
 
     return NextResponse.json({ 
       success: true, 
