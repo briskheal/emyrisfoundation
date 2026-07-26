@@ -191,7 +191,7 @@ const AdminPanel = () => {
           borderRadius: '16px', padding: '40px', width: '100%', maxWidth: '400px',
           backdropFilter: 'blur(20px)', textAlign: 'center'
         }}>
-          <img src="/emyris_logo.webp" alt="Emyris Logo" style={{width: '70px', marginBottom: '15px'}} />
+          <img src={corp?.logo || '/emyris_logo.webp'} alt="Emyris Logo" style={{width: '70px', objectFit: 'contain', marginBottom: '15px'}} />
           <h2 style={{color: 'white', marginBottom: '6px', fontFamily: 'Outfit, sans-serif'}}>Admin Portal</h2>
           <p style={{color: 'rgba(255,255,255,0.5)', marginBottom: '28px', fontSize: '0.9rem'}}>Emyris Foundation — Restricted Access</p>
           <form onSubmit={handleLogin}>
@@ -294,7 +294,7 @@ const AdminPanel = () => {
         flexDirection: 'column'
       }}>
         <div style={{ padding: '24px', display: 'flex', alignItems: 'center', gap: '12px', borderBottom: '1px solid rgba(255,255,255,0.05)', whiteSpace: 'nowrap' }}>
-          <img src="/emyris_logo.webp" alt="Logo" style={{ width: '40px' }} />
+          <img src={corp?.logo || '/emyris_logo.webp'} alt="Logo" style={{ width: '40px', objectFit: 'contain' }} />
           <div>
             <h2 style={{ color: 'white', margin: 0, fontFamily: 'Outfit, sans-serif', fontSize: '1.2rem' }}>Emyris Admin</h2>
             <p style={{ color: 'rgba(255,255,255,0.4)', margin: 0, fontSize: '0.75rem' }}>Management System</p>
@@ -412,6 +412,7 @@ const AdminPanel = () => {
                 { label: 'LinkedIn URL', field: 'linkedin' },
                 { label: 'X (Twitter) URL', field: 'xUrl' },
                 { label: 'YouTube URL', field: 'youtubeUrl' },
+                { label: 'Operational Centers (comma-separated)', field: 'operationalCenters' },
               ].map(({ label, field }) => (
                 <div key={field}>
                   <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.82rem', marginBottom: '5px', display: 'block' }}>{label}</label>
@@ -466,7 +467,6 @@ const AdminPanel = () => {
                 { label: 'Bank Name', field: 'bankName' },
                 { label: 'Branch', field: 'bankBranch' },
                 { label: 'UPI ID (e.g. emyris@hdfc)', field: 'upiId' },
-                { label: 'Operational Centers (comma-separated)', field: 'operationalCenters' },
               ].map(({ label, field }) => (
                 <div key={field}>
                   <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.82rem', marginBottom: '5px', display: 'block' }}>{label}</label>
