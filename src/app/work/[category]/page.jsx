@@ -45,13 +45,13 @@ export default async function WorkCategoryPage({ params }) {
         </section>
 
         {/* WHY SECTION */}
-        <section className="work-detail-why" style={{ padding: '80px 0' }}>
+        <section className="work-detail-why" style={{ padding: '40px 0' }}>
           <div className="container">
-            <div className="section-title-wrapper text-center">
-              <h2 className="section-title">{data.whyTitle}</h2>
+            <div className="section-title-wrapper text-center" style={{ marginBottom: '20px' }}>
+              <h2 className="section-title" style={{ fontSize: '1.8rem' }}>{data.whyTitle}</h2>
               <div className="title-underline"></div>
             </div>
-            <div className="glass-card" style={{ padding: '40px', marginTop: '30px', fontSize: '1.1rem', lineHeight: '1.8' }}>
+            <div className="glass-card" style={{ padding: '25px', marginTop: '15px', fontSize: '0.95rem', lineHeight: '1.6' }}>
               {data.whyText.split('\n').map((para, idx) => (
                 <p key={idx} style={{ marginBottom: '15px' }}>{para}</p>
               ))}
@@ -61,10 +61,10 @@ export default async function WorkCategoryPage({ params }) {
 
         {/* SDG GRID */}
         {data.sdgGrid && data.sdgGrid.length > 0 && (
-          <section className="work-detail-grid" style={{ padding: '60px 0', backgroundColor: 'rgba(0,0,0,0.2)' }}>
+          <section className="work-detail-grid" style={{ padding: '40px 0', backgroundColor: 'rgba(0,0,0,0.2)' }}>
             <div className="container">
-              <div className="section-title-wrapper text-center">
-                <h2 className="section-title">What We Do</h2>
+              <div className="section-title-wrapper text-center" style={{ marginBottom: '20px' }}>
+                <h2 className="section-title" style={{ fontSize: '1.8rem' }}>What We Do</h2>
                 <div className="title-underline"></div>
               </div>
               <div className="horizontal-scroll-container sdg-scroll">
@@ -83,10 +83,10 @@ export default async function WorkCategoryPage({ params }) {
 
         {/* REACH & PRESENCE */}
         {data.reachStats && data.reachStats.length > 0 && (
-          <section className="work-detail-reach" style={{ padding: '80px 0' }}>
+          <section className="work-detail-reach" style={{ padding: '40px 0' }}>
             <div className="container">
-              <div className="section-title-wrapper text-center">
-                <h2 className="section-title">Reach & Presence</h2>
+              <div className="section-title-wrapper text-center" style={{ marginBottom: '20px' }}>
+                <h2 className="section-title" style={{ fontSize: '1.8rem' }}>Reach & Presence</h2>
                 <div className="title-underline"></div>
               </div>
               <div className="reach-stats-flex">
@@ -105,10 +105,10 @@ export default async function WorkCategoryPage({ params }) {
 
         {/* IMPACT PHOTOS */}
         {data.impactMedia && data.impactMedia.length > 0 && (
-          <section className="work-detail-impact" style={{ padding: '60px 0', backgroundColor: 'rgba(0,0,0,0.2)' }}>
+          <section className="work-detail-impact" style={{ padding: '40px 0', backgroundColor: 'rgba(0,0,0,0.2)' }}>
             <div className="container">
-              <div className="section-title-wrapper text-center">
-                <h2 className="section-title">Impact 23-24</h2>
+              <div className="section-title-wrapper text-center" style={{ marginBottom: '20px' }}>
+                <h2 className="section-title" style={{ fontSize: '1.8rem' }}>Impact 23-24</h2>
                 <div className="title-underline"></div>
               </div>
               <div className="impact-gallery">
@@ -124,10 +124,10 @@ export default async function WorkCategoryPage({ params }) {
 
         {/* TOGETHER WE ARE GROWING (TESTIMONIALS) */}
         {data.testimonials && data.testimonials.length > 0 && (
-          <section className="work-detail-testimonials" style={{ padding: '80px 0' }}>
+          <section className="work-detail-testimonials" style={{ padding: '40px 0' }}>
             <div className="container">
-              <div className="section-title-wrapper text-center">
-                <h2 className="section-title">Together We Are Growing</h2>
+              <div className="section-title-wrapper text-center" style={{ marginBottom: '20px' }}>
+                <h2 className="section-title" style={{ fontSize: '1.8rem' }}>Together We Are Growing</h2>
                 <div className="title-underline"></div>
               </div>
               <div className="horizontal-scroll-container">
@@ -147,10 +147,10 @@ export default async function WorkCategoryPage({ params }) {
 
         {/* VIDEOS */}
         {data.videos && data.videos.length > 0 && (
-          <section className="work-detail-videos" style={{ padding: '60px 0', backgroundColor: 'rgba(0,0,0,0.2)' }}>
+          <section className="work-detail-videos" style={{ padding: '40px 0', backgroundColor: 'rgba(0,0,0,0.2)' }}>
             <div className="container">
-              <div className="section-title-wrapper text-center">
-                <h2 className="section-title">Their Success, Our Happiness</h2>
+              <div className="section-title-wrapper text-center" style={{ marginBottom: '20px' }}>
+                <h2 className="section-title" style={{ fontSize: '1.8rem' }}>Their Success, Our Happiness</h2>
                 <div className="title-underline"></div>
               </div>
               <div className="horizontal-scroll-container">
