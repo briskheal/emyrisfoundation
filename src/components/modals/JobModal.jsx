@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import React, { useState } from 'react';
 import { useModals } from '../../context/ModalContext';
 
@@ -8,29 +8,70 @@ const JobModal = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
+  const [num1, setNum1] = useState(0);
+  const [num2, setNum2] = useState(0);
+  const [captcha, setCaptcha] = useState('');
+  const [file, setFile] = useState(null);
+
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', city: '', pincode: '', experience: '' });
 
   if (activeModal !== 'job') return null;
 
+  React.useEffect(() => {
+    if (activeModal === 'job') {
+      setNum1(Math.floor(Math.random() * 10) + 1);
+      setNum2(Math.floor(Math.random() * 10) + 1);
+      setCaptcha('');
+      setFile(null);
+    }
+  }, [activeModal]);
+
   const jobTitle = modalData || 'Position Name';
+
+  const handleFileChange = (e) => {
+    const selected = e.target.files[0];
+    if (selected) {
+      if (selected.size > 5 * 1024 * 1024) {
+        setError('File size exceeds 5MB limit.');
+        setFile(null);
+        e.target.value = '';
+      } else {
+        setError('');
+        setFile(selected);
+      }
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+
+    if (parseInt(captcha) !== num1 + num2) {
+      setError('Incorrect CAPTCHA answer.');
+      setLoading(false);
+      return;
+    }
+
+    if (!file) {
+      setError('Please upload your CV / Resume.');
+      setLoading(false);
+      return;
+    }
+
     try {
-      const payload = {
-        type: 'job',
-        position: jobTitle,
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        details: `City: ${formData.city}\nPincode: ${formData.pincode}\nExperience:\n${formData.experience}`
-      };
+      const payload = new FormData();
+      payload.append('type', 'job');
+      payload.append('position', jobTitle);
+      payload.append('name', formData.name);
+      payload.append('email', formData.email);
+      payload.append('phone', formData.phone);
+      payload.append('details', `City: ${formData.city}\nPincode: ${formData.pincode}\nExperience:\n${formData.experience}`);
+      payload.append('resume', file);
+      
       const res = await fetch('/api/apply', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: payload
       });
       const data = await res.json();
       if (res.ok) {
@@ -91,6 +132,15 @@ const JobModal = () => {
               <div className="form-group">
                 <label>Experience / Why are you suitable for this role? *</label>
                 <textarea className="form-control" rows="3" required placeholder="Describe your relevant corporate or NGO experience..." value={formData.experience} onChange={e => setFormData({...formData, experience: e.target.value})}></textarea>
+              </div>
+              
+              <div className="form-group">
+                <label>Upload your CV / Resume (Max 5MB) *</label>
+                <input type="file" className="form-control" accept=".pdf,.doc,.docx" onChange={handleFileChange} required />
+              </div>
+              <div className="form-group">
+                <label>Security Check: What is {num1} + {num2}? *</label>
+                <input type="number" className="form-control" value={captcha} onChange={e => setCaptcha(e.target.value)} required />
               </div>
               
               {error && <div style={{ color: '#ef4444', marginBottom: '10px', fontSize: '0.9rem' }}>{error}</div>}

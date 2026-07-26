@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import React, { useState } from 'react';
 import { useModals } from '../../context/ModalContext';
 
@@ -8,14 +8,33 @@ const VolunteerModal = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
+  const [num1, setNum1] = useState(0);
+  const [num2, setNum2] = useState(0);
+  const [captcha, setCaptcha] = useState('');
+
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', address: '', pincode: '', capacity: '' });
 
   if (activeModal !== 'volunteer') return null;
+
+  React.useEffect(() => {
+    if (activeModal === 'volunteer') {
+      setNum1(Math.floor(Math.random() * 10) + 1);
+      setNum2(Math.floor(Math.random() * 10) + 1);
+      setCaptcha('');
+    }
+  }, [activeModal]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+
+    if (parseInt(captcha) !== num1 + num2) {
+      setError('Incorrect CAPTCHA answer.');
+      setLoading(false);
+      return;
+    }
+
     try {
       const payload = {
         type: 'volunteer',
@@ -86,15 +105,19 @@ const VolunteerModal = () => {
                 </div>
               </div>
               <div className="form-group">
-                <label>Capacity I am interested to support in *</label>
+                <label>In what capacity can you volunteer? *</label>
                 <select className="form-select" required value={formData.capacity} onChange={e => setFormData({...formData, capacity: e.target.value})}>
-                  <option value="" disabled>Select Area of Interest</option>
-                  <option value="Direct Service">Direct Service (Teaching, Health support, planting)</option>
-                  <option value="Admin">Administrative support (Office, Scheduling)</option>
-                  <option value="Fundraising">Fundraising Events</option>
-                  <option value="Advocacy / Media">Advocacy &amp; Social Media Campaigns</option>
-                  <option value="Skill-based">Skill-based Consulting (IT, Marketing, Finance)</option>
+                  <option value="" disabled>Select option...</option>
+                  <option value="Online / Remote">Online / Remote Tasks</option>
+                  <option value="On-ground (Weekends)">On-ground (Weekends)</option>
+                  <option value="On-ground (Flexible)">On-ground (Flexible)</option>
+                  <option value="Skill-based (Design, Tech, etc.)">Skill-based (Design, Tech, etc.)</option>
                 </select>
+              </div>
+
+              <div className="form-group">
+                <label>Security Check: What is {num1} + {num2}? *</label>
+                <input type="number" className="form-control" value={captcha} onChange={e => setCaptcha(e.target.value)} required />
               </div>
               
               {error && <div style={{ color: '#ef4444', marginBottom: '10px', fontSize: '0.9rem' }}>{error}</div>}

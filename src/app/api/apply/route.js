@@ -9,8 +9,31 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(req) {
   try {
-    const body = await req.json();
-    const { type, position, name, email, phone, details } = body;
+    const contentType = req.headers.get('content-type') || '';
+    
+    let type, position, name, email, phone, details, attachment;
+    
+    if (contentType.includes('multipart/form-data')) {
+      const formData = await req.formData();
+      type = formData.get('type');
+      position = formData.get('position');
+      name = formData.get('name');
+      email = formData.get('email');
+      phone = formData.get('phone');
+      details = formData.get('details');
+      
+      const file = formData.get('resume');
+      if (file && typeof file !== 'string' && file.size > 0) {
+        const buffer = Buffer.from(await file.arrayBuffer());
+        attachment = {
+          filename: file.name,
+          content: buffer
+        };
+      }
+    } else {
+      const body = await req.json();
+      ({ type, position, name, email, phone, details } = body);
+    }
 
     if (!type || !name || !email) {
       return NextResponse.json({ error: 'Type, name, and email are required.' }, { status: 400 });
@@ -26,7 +49,7 @@ export async function POST(req) {
       details
     });
 
-    await sendCareerEmail({ type, name, email, phone, position, details });
+    await sendCareerEmail({ type, name, email, phone, position, details, attachment });
 
     return NextResponse.json({ success: true, message: 'Application submitted successfully!' });
   } catch (error) {

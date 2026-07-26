@@ -4,10 +4,25 @@ import React, { useState } from 'react';
 const Contact = () => {
   const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', phone: '', message: '' });
   const [status, setStatus] = useState({ loading: false, success: false, error: '' });
+  const [num1, setNum1] = useState(0);
+  const [num2, setNum2] = useState(0);
+  const [captcha, setCaptcha] = useState('');
+
+  React.useEffect(() => {
+    setNum1(Math.floor(Math.random() * 10) + 1);
+    setNum2(Math.floor(Math.random() * 10) + 1);
+    setCaptcha('');
+  }, [status.success]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus({ loading: true, success: false, error: '' });
+    
+    if (parseInt(captcha) !== num1 + num2) {
+      setStatus({ loading: false, success: false, error: 'Incorrect CAPTCHA answer.' });
+      return;
+    }
+    
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -95,10 +110,16 @@ const Contact = () => {
                 </div>
               </div>
               <div className="form-group">
-                <label htmlFor="c-message">Message *</label>
-                <textarea id="c-message" className="form-control" rows="3" required placeholder="Describe your query..." value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})}></textarea>
-              </div>
-              {status.error && <div style={{ color: '#ef4444', marginBottom: '10px', fontSize: '0.9rem' }}>{status.error}</div>}
+              <label htmlFor="message">How can we help you?</label>
+              <textarea id="message" rows="4" className="form-control" placeholder="Tell us more about your inquiry..." required value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})}></textarea>
+            </div>
+            
+            <div className="form-group">
+              <label>Security Check: What is {num1} + {num2}? *</label>
+              <input type="number" className="form-control" value={captcha} onChange={e => setCaptcha(e.target.value)} required />
+            </div>
+
+            {status.error && <div className="form-error" style={{ color: '#ef4444', marginBottom: '15px' }}>{status.error}</div>}
               {status.success && <div style={{ color: '#15F5BA', marginBottom: '10px', fontSize: '0.9rem' }}><i className="fa-solid fa-circle-check"></i> Message sent successfully! We will get back to you soon.</div>}
               <button type="submit" className="btn btn-primary w-100" style={{marginTop: '10px'}} disabled={status.loading}>
                 {status.loading ? 'Sending...' : <>Send Message <i className="fa-solid fa-paper-plane"></i></>}

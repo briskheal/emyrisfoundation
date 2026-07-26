@@ -47,9 +47,10 @@ export async function sendContactEmail({ firstName, lastName, email, phone, subj
 /**
  * Send a career/internship/volunteer application email to career@emyrisfoundation.com
  */
-export async function sendCareerEmail({ type, name, email, phone, position, details }) {
+export async function sendCareerEmail({ type, name, email, phone, position, details, attachment }) {
   const typeLabel = { job: 'Job Application', internship: 'Internship Application', volunteer: 'Volunteer Registration' }[type] || type;
-  return transporter.sendMail({
+  
+  const mailOptions = {
     from: `"Emyris Foundation Website" <${process.env.ZOHO_USER}>`,
     to: 'career@emyrisfoundation.com',
     replyTo: email,
@@ -70,7 +71,13 @@ export async function sendCareerEmail({ type, name, email, phone, position, deta
           <p style="margin-top: 16px; color: #999; font-size: 0.85rem;">Sent from emyrisfoundation.com</p>
         </div>
       </div>`,
-  });
+  };
+
+  if (attachment) {
+    mailOptions.attachments = [attachment];
+  }
+
+  return transporter.sendMail(mailOptions);
 }
 
 /**

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import React, { useState } from 'react';
 import { useModals } from '../../context/ModalContext';
 
@@ -7,6 +7,10 @@ const InternshipModal = () => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [num1, setNum1] = useState(0);
+  const [num2, setNum2] = useState(0);
+  const [captcha, setCaptcha] = useState('');
+  const [file, setFile] = useState(null);
 
   const [formData, setFormData] = useState({
     name: '', email: '', phone: '', whatsapp: '', city: '', profile: '',
@@ -15,6 +19,14 @@ const InternshipModal = () => {
   });
 
   if (activeModal !== 'internship') return null;
+
+  React.useEffect(() => {
+    if (activeModal === 'internship' && step === 3) {
+      setNum1(Math.floor(Math.random() * 10) + 1);
+      setNum2(Math.floor(Math.random() * 10) + 1);
+      setCaptcha('');
+    }
+  }, [activeModal, step]);
 
   const handleNextStep1 = (e) => { e.preventDefault(); setStep(2); };
   const handleNextStep2 = (e) => { e.preventDefault(); setStep(3); };
@@ -25,6 +37,20 @@ const InternshipModal = () => {
       setFormData({ ...formData, reasons: [...formData.reasons, value] });
     } else {
       setFormData({ ...formData, reasons: formData.reasons.filter(r => r !== value) });
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const selected = e.target.files[0];
+    if (selected) {
+      if (selected.size > 5 * 1024 * 1024) {
+        setError('File size exceeds 5MB limit.');
+        setFile(null);
+        e.target.value = '';
+      } else {
+        setError('');
+        setFile(selected);
+      }
     }
   };
 
@@ -39,26 +65,32 @@ const InternshipModal = () => {
       return;
     }
 
+    if (parseInt(captcha) !== num1 + num2) {
+      setError('Incorrect CAPTCHA answer.');
+      setLoading(false);
+      return;
+    }
+
+    if (!file) {
+      setError('Please upload your CV / Resume.');
+      setLoading(false);
+      return;
+    }
+
     try {
-      const payload = {
-        type: 'internship',
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        details: `WhatsApp: ${formData.whatsapp}
-City: ${formData.city}
-Profile: ${formData.profile}
-Availability: ${formData.availability} (${formData.days})
-Duration: ${formData.duration}
-Reasons: ${formData.reasons.join(', ')}
-Activity Preference: ${formData.activityType}
-Personality: ${formData.personality}`
-      };
+      const payload = new FormData();
+      payload.append('type', 'internship');
+      payload.append('name', formData.name);
+      payload.append('email', formData.email);
+      payload.append('phone', formData.phone);
+      
+      const detailsStr = `WhatsApp: ${formData.whatsapp}\nCity: ${formData.city}\nProfile: ${formData.profile}\nAvailability: ${formData.availability} (${formData.days})\nDuration: ${formData.duration}\nReasons: ${formData.reasons.join(', ')}\nActivity Preference: ${formData.activityType}\nPersonality: ${formData.personality}`;
+      payload.append('details', detailsStr);
+      payload.append('resume', file);
       
       const res = await fetch('/api/apply', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: payload
       });
       const data = await res.json();
       if (res.ok) {
@@ -224,8 +256,12 @@ Personality: ${formData.personality}`
                 </div>
               </div>
               <div className="form-group">
-                <label>Upload your CV / Resume *</label>
-                <input type="file" className="form-control" accept=".pdf,.doc,.docx" />
+                <label>Upload your CV / Resume (Max 5MB) *</label>
+                <input type="file" className="form-control" accept=".pdf,.doc,.docx" onChange={handleFileChange} required />
+              </div>
+              <div className="form-group">
+                <label>Security Check: What is {num1} + {num2}? *</label>
+                <input type="number" className="form-control" value={captcha} onChange={e => setCaptcha(e.target.value)} required />
               </div>
               
               {error && <div style={{ color: '#ef4444', marginBottom: '10px', fontSize: '0.9rem' }}>{error}</div>}
