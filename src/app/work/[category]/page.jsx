@@ -158,11 +158,11 @@ export default async function WorkCategoryPage({ params }) {
                   {data.videos.map((vid, idx) => (
                     <div key={idx} className="glass-card video-card">
                       <iframe 
-                        width="100%" 
-                        height="180" 
-                        src={vid.url} 
-                        title={vid.title} 
-                        frameBorder="0" 
+                        width="100%"
+                        height="140"
+                        src={vid.url}
+                        title={vid.title}
+                        frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                         allowFullScreen>
                       </iframe>
