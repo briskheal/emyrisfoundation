@@ -9,7 +9,7 @@ const CareersModal = () => {
 
   useEffect(() => {
     if (activeModal === 'careers') {
-      fetch('/api/jobs')
+      fetch(`/api/jobs?t=${Date.now()}`)
         .then(res => res.json())
         .then(data => {
           // Filter to only show active jobs
