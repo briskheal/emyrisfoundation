@@ -3681,8 +3681,8 @@ textarea.form-control {
   min-width: max-content;
 }
 .testimonial-card {
-  width: 160px;
-  padding: 10px;
+  width: 140px;
+  padding: 0 10px;
   scroll-snap-align: start;
   flex-shrink: 0;
 }
