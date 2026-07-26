@@ -134,7 +134,7 @@ export default async function WorkCategoryPage({ params }) {
                 <div className="testimonial-flex">
                   {data.testimonials.map((t, idx) => (
                     <div key={idx} className="glass-card testimonial-card">
-                      <i className="fa-solid fa-quote-left quote-icon" style={{ color: 'var(--primary-orange)', fontSize: '2rem', marginBottom: '15px' }}></i>
+                      <i className="fa-solid fa-quote-left quote-icon" style={{ color: 'var(--primary-orange)', fontSize: '1.2rem', marginBottom: '5px' }}></i>
                       <p className="testi-text">"{t.text}"</p>
                       <h4 className="testi-author">- {t.name}</h4>
                     </div>

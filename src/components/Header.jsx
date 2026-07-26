@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCorporate } from '../context/CorporateContext';
 import { useModals } from '../context/ModalContext';
+import Link from 'next/link';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,7 +29,7 @@ const Header = () => {
   return (
     <header className={`main-header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container header-container">
-        <a href="#" className="logo-area" id="brand-logo">
+        <Link href="/" className="logo-area" id="brand-logo">
           <img src={corporate?.logo || '/emyris_logo.webp'} alt={`${corporate?.name || 'Emyris'} Logo`} className="nav-logo" id="pub-header-logo" />
           <div className="logo-info">
             <span className="logo-text" id="pub-header-name">
@@ -36,71 +37,71 @@ const Header = () => {
             </span>
             <span className="logo-tagline" id="pub-header-tagline">Together We Grow</span>
           </div>
-        </a>
+        </Link>
         
         <nav className={`nav-menu ${mobileMenuOpen ? 'open' : ''}`} id="nav-links">
           <div className={`nav-dropdown ${activeDropdown === 'about' ? 'active' : ''}`}>
-            <a href="#about" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'about')}>About Us <i className="fa-solid fa-chevron-down"></i></a>
+            <Link href="/#about" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'about')}>About Us <i className="fa-solid fa-chevron-down"></i></Link>
             <div className="dropdown-menu">
-              <a href="#about-vision" onClick={() => setMobileMenuOpen(false)}>Vision & Mission</a>
-              <a href="#about-leadership" onClick={() => setMobileMenuOpen(false)}>Leadership Team</a>
-              <a href="#about-mentors" onClick={() => setMobileMenuOpen(false)}>Our Mentors</a>
+              <Link href="/#about-vision" onClick={() => setMobileMenuOpen(false)}>Vision & Mission</Link>
+              <Link href="/#about-leadership" onClick={() => setMobileMenuOpen(false)}>Leadership Team</Link>
+              <Link href="/#about-mentors" onClick={() => setMobileMenuOpen(false)}>Our Mentors</Link>
             </div>
           </div>
 
           <div className={`nav-dropdown ${activeDropdown === 'work' ? 'active' : ''}`}>
-            <a href="#work" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'work')}>Our Work <i className="fa-solid fa-chevron-down"></i></a>
+            <Link href="/#work" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'work')}>Our Work <i className="fa-solid fa-chevron-down"></i></Link>
             <div className="dropdown-menu">
-              <a href="#work" onClick={() => setMobileMenuOpen(false)}>Education</a>
-              <a href="#work" onClick={() => setMobileMenuOpen(false)}>Health</a>
-              <a href="#work" onClick={() => setMobileMenuOpen(false)}>Livelihood</a>
-              <a href="#work" onClick={() => setMobileMenuOpen(false)}>Women Empowerment</a>
-              <a href="#work" onClick={() => setMobileMenuOpen(false)}>Farmer's Connect</a>
-              <a href="#presence" onClick={() => setMobileMenuOpen(false)}>Where We Work</a>
+              <Link href="/#work" onClick={() => setMobileMenuOpen(false)}>Education</Link>
+              <Link href="/#work" onClick={() => setMobileMenuOpen(false)}>Health</Link>
+              <Link href="/#work" onClick={() => setMobileMenuOpen(false)}>Livelihood</Link>
+              <Link href="/#work" onClick={() => setMobileMenuOpen(false)}>Women Empowerment</Link>
+              <Link href="/#work" onClick={() => setMobileMenuOpen(false)}>Farmer's Connect</Link>
+              <Link href="/#presence" onClick={() => setMobileMenuOpen(false)}>Where We Work</Link>
             </div>
           </div>
 
           <div className={`nav-dropdown ${activeDropdown === 'campaigns' ? 'active' : ''}`}>
-            <a href="#campaigns" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'campaigns')}>Campaigns <i className="fa-solid fa-chevron-down"></i></a>
+            <Link href="/#campaigns" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'campaigns')}>Campaigns <i className="fa-solid fa-chevron-down"></i></Link>
             <div className="dropdown-menu">
-              <a href="#camp-shiksha" onClick={() => setMobileMenuOpen(false)}>Shiksha Hi Surakhya</a>
-              <a href="#camp-blood" onClick={() => setMobileMenuOpen(false)}>Blood Donation</a>
-              <a href="#camp-organ" onClick={() => setMobileMenuOpen(false)}>Organ Donation</a>
-              <a href="#camp-plantation" onClick={() => setMobileMenuOpen(false)}>Plantation Awareness</a>
-              <a href="#camp-welfare" onClick={() => setMobileMenuOpen(false)}>Social Welfare</a>
+              <Link href="/#camp-shiksha" onClick={() => setMobileMenuOpen(false)}>Shiksha Hi Surakhya</Link>
+              <Link href="/#camp-blood" onClick={() => setMobileMenuOpen(false)}>Blood Donation</Link>
+              <Link href="/#camp-organ" onClick={() => setMobileMenuOpen(false)}>Organ Donation</Link>
+              <Link href="/#camp-plantation" onClick={() => setMobileMenuOpen(false)}>Plantation Awareness</Link>
+              <Link href="/#camp-welfare" onClick={() => setMobileMenuOpen(false)}>Social Welfare</Link>
             </div>
           </div>
 
           <div className={`nav-dropdown ${activeDropdown === 'involved' ? 'active' : ''}`}>
-            <a href="#get-involved" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'involved')}>Get Involved <i className="fa-solid fa-chevron-down"></i></a>
+            <Link href="/#get-involved" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'involved')}>Get Involved <i className="fa-solid fa-chevron-down"></i></Link>
             <div className="dropdown-menu">
-              <a href="#involved-support" onClick={() => setMobileMenuOpen(false)}>Individual Support</a>
-              <a href="#involved-volunteer" onClick={() => setMobileMenuOpen(false)}>Volunteering</a>
+              <Link href="/#involved-support" onClick={() => setMobileMenuOpen(false)}>Individual Support</Link>
+              <Link href="/#involved-volunteer" onClick={() => setMobileMenuOpen(false)}>Volunteering</Link>
               <a href="#" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); openModal('careers'); }}>Work with Us</a>
             </div>
           </div>
 
           <div className={`nav-dropdown ${activeDropdown === 'partnerships' ? 'active' : ''}`}>
-            <a href="#partnerships" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'partnerships')}>Partnerships <i className="fa-solid fa-chevron-down"></i></a>
+            <Link href="/#partnerships" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'partnerships')}>Partnerships <i className="fa-solid fa-chevron-down"></i></Link>
             <div className="dropdown-menu">
-              <a href="#partnerships" onClick={() => setMobileMenuOpen(false)}>CSR</a>
-              <a href="#partnerships" onClick={() => setMobileMenuOpen(false)}>Employee Engagement</a>
-              <a href="#partnerships" onClick={() => setMobileMenuOpen(false)}>Payroll Giving</a>
-              <a href="#partnerships" onClick={() => setMobileMenuOpen(false)}>Cause Marketing</a>
+              <Link href="/#partnerships" onClick={() => setMobileMenuOpen(false)}>CSR</Link>
+              <Link href="/#partnerships" onClick={() => setMobileMenuOpen(false)}>Employee Engagement</Link>
+              <Link href="/#partnerships" onClick={() => setMobileMenuOpen(false)}>Payroll Giving</Link>
+              <Link href="/#partnerships" onClick={() => setMobileMenuOpen(false)}>Cause Marketing</Link>
             </div>
           </div>
 
           <div className={`nav-dropdown ${activeDropdown === 'resources' ? 'active' : ''}`}>
-            <a href="#resources" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'resources')}>Resources <i className="fa-solid fa-chevron-down"></i></a>
+            <Link href="/#resources" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'resources')}>Resources <i className="fa-solid fa-chevron-down"></i></Link>
             <div className="dropdown-menu">
-              <a href="#blog" onClick={() => setMobileMenuOpen(false)}>Blog</a>
-              <a href="#activity-gallery" onClick={() => setMobileMenuOpen(false)}>Gallery</a>
-              <a href="#publications" onClick={() => setMobileMenuOpen(false)}>Reports</a>
-              <a href="#faq-section" onClick={() => setMobileMenuOpen(false)}>FAQs</a>
+              <Link href="/#blog" onClick={() => setMobileMenuOpen(false)}>Blog</Link>
+              <Link href="/#activity-gallery" onClick={() => setMobileMenuOpen(false)}>Gallery</Link>
+              <Link href="/#publications" onClick={() => setMobileMenuOpen(false)}>Reports</Link>
+              <Link href="/#faq-section" onClick={() => setMobileMenuOpen(false)}>FAQs</Link>
             </div>
           </div>
 
-          <a href="#contact" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Contact Us</a>
+          <Link href="/#contact" className="nav-link" onClick={() => setMobileMenuOpen(false)}>Contact Us</Link>
         </nav>
 
         <div className="nav-cta-group">
