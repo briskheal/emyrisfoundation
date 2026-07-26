@@ -36,19 +36,24 @@ const Footer = () => {
         <div className="footer-links">
           <h4>Join the Cause</h4>
           <a href="#involved-support">Ways to Support</a>
-          <a href="#involved-volunteer">Volunteer Openings</a>
-          <a href="#involved-volunteer">Internships</a>
-          <a href="#involved-work">Job Vacancies</a>
-          <a href="admin.html">Administrator login</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); openModal('volunteer'); }}>Volunteer Openings</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); openModal('internship'); }}>Internships</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); openModal('careers'); }}>Job Vacancies</a>
+          <a href="/admin">Administrator login</a>
         </div>
 
         <div className="footer-newsletter">
           <h4>Corporate Philanthropy</h4>
           <p>Registered Non-Profit Organisation eligible for up to 50% tax benefit under Section 80G. PAN: {corporate?.pan || 'Loading...'}.</p>
           <div className="newsletter-form">
-            <button className="btn btn-primary w-100" onClick={() => openModal('donate')}>
+            <button className="btn btn-primary w-100" onClick={() => openModal('donate')} style={{ marginBottom: '15px' }}>
               Donate Online <i className="fa-solid fa-indian-rupee-sign"></i>
             </button>
+            
+            <div className="footer-contact-info" style={{ marginTop: '15px', color: 'var(--text-light)', fontSize: '0.9rem' }}>
+              <p style={{ margin: '5px 0' }}><i className="fa-solid fa-envelope" style={{ color: 'var(--primary-orange)', marginRight: '8px' }}></i> <a href="mailto:contact@emyrisfoundation.com" style={{ color: 'var(--text-light)', textDecoration: 'none' }}>contact@emyrisfoundation.com</a></p>
+              <p style={{ margin: '5px 0' }}><i className="fa-solid fa-phone" style={{ color: 'var(--primary-orange)', marginRight: '8px' }}></i> <a href="tel:18008891217" style={{ color: 'var(--text-light)', textDecoration: 'none' }}>Toll Free: 1800 889 1217</a></p>
+            </div>
           </div>
         </div>
       </div>
