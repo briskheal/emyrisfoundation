@@ -68,7 +68,23 @@ export async function getPresenceLocations() {
 export async function getWorkDetail(id) {
   try {
     let detail = await WorkDetail.findByPk(id);
-    if (detail) return detail.toJSON();
+    if (detail) {
+      let updated = false;
+      // Force remove videos
+      if (detail.videos && detail.videos.length > 0) {
+        detail.videos = [];
+        updated = true;
+      }
+      // Force trim health grid to 5
+      if (id === 'work-health' && detail.sdgGrid && detail.sdgGrid.length > 5) {
+        detail.sdgGrid = detail.sdgGrid.slice(0, 5);
+        updated = true;
+      }
+      if (updated) {
+        await detail.save();
+      }
+      return detail.toJSON();
+    }
     
     // If not found and it is education, create the default directly
     if (id === 'work-education') {
@@ -97,9 +113,7 @@ export async function getWorkDetail(id) {
         testimonials: [
           { name: 'RAVI', text: 'Happy to learn and now I can put my signature in place of thumb impression.' }
         ],
-        videos: [
-          { url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', title: 'Impact Video 1' }
-        ]
+        videos: []
       };
       
       const newDetail = await WorkDetail.create(defaultEducationData);
@@ -118,9 +132,7 @@ export async function getWorkDetail(id) {
           { title: 'Standalone Clinics', text: 'These facilities are designed to provide essential outpatient services without the need for overnight stays, catering to diagnostics, minor treatments, and follow-up consultations, significantly improve healthcare access for remote populations, reducing travel time and costs.' },
           { title: 'Health Camps', text: 'Health camps often focus on preventive measures such as vaccinations, screenings for diseases like diabetes, hypertension, or cancer, and health education. This proactive approach can lead to early detection and management of conditions, potentially saving lives.' },
           { title: 'Health Equity and Racial Equity', text: 'Emyris Foundation promotes preventive care, which is often more cost-effective than treatment. This approach not only addresses immediate health needs but also invests in long-term health outcomes, potentially reducing the prevalence of chronic diseases.' },
-          { title: 'Education and Prevention', text: 'We aim to reach every doorstep of underserved communities in both rural and urban India.' },
-          { title: 'Engagement and Local Solutions', text: 'Focusing on community-driven solutions to tackle hyper-local health issues effectively.' },
-          { title: 'Sustainable Health Systems', text: 'Building robust frameworks that can withstand future healthcare challenges.' }
+          { title: 'Education and Prevention', text: 'We aim to reach every doorstep of underserved communities in both rural and urban India.' }
         ],
         impactMedia: [
           { type: 'image', url: '/Emyris Foundation Photos/health_impact_1.webp' }
@@ -137,9 +149,7 @@ export async function getWorkDetail(id) {
           { name: 'Patient 3', text: 'Telemedicine connected me to a specialist without traveling 50km.' },
           { name: 'Patient 4', text: 'The standalone clinic in our village has been a life saver for my children.' }
         ],
-        videos: [
-          { url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', title: 'Impact Video 1' }
-        ]
+        videos: []
       };
       
       const newDetail = await WorkDetail.create(defaultHealthData);
