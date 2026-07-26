@@ -1,31 +1,40 @@
 import React from 'react';
 import Link from 'next/link';
-import { getWorkDetail } from '../../../lib/data-fetcher';
+import { getWorkDetail, getCorporateData } from '../../../lib/data-fetcher';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
+import { CorporateProvider } from '../../../context/CorporateContext';
+import { ModalProvider } from '../../../context/ModalContext';
+import Modals from '../../../components/Modals';
 
 export const dynamic = 'force-dynamic';
 
 export default async function WorkCategoryPage({ params }) {
-  const category = params.category; // e.g. 'education'
+  const { category } = await params; // e.g. 'education'
   const detailId = `work-${category}`;
   const data = await getWorkDetail(detailId);
+  const corporateData = await getCorporateData();
 
   if (!data) {
     return (
-      <div className="container" style={{ paddingTop: '120px', textAlign: 'center', minHeight: '60vh' }}>
-        <Header />
-        <h2>Content not found</h2>
-        <Link href="/" className="btn btn-outline">Back to Home</Link>
-        <Footer />
-      </div>
+      <CorporateProvider initialData={corporateData}>
+        <ModalProvider>
+          <div className="container" style={{ paddingTop: '120px', textAlign: 'center', minHeight: '60vh' }}>
+            <Header />
+            <h2>Content not found</h2>
+            <Link href="/" className="btn btn-outline">Back to Home</Link>
+            <Footer />
+          </div>
+        </ModalProvider>
+      </CorporateProvider>
     );
   }
 
   return (
-    <>
-      <Header />
-      <main id="app-content">
+    <CorporateProvider initialData={corporateData}>
+      <ModalProvider>
+        <Header />
+        <main id="app-content">
         {/* HERO BANNER */}
         <section className="work-detail-hero" style={{ backgroundImage: `url('/Emyris Foundation Photos/emyris_hero_${category}.webp')` }}>
           <div className="work-hero-overlay">
@@ -166,6 +175,8 @@ export default async function WorkCategoryPage({ params }) {
         )}
       </main>
       <Footer />
-    </>
+      <Modals />
+      </ModalProvider>
+    </CorporateProvider>
   );
 }
