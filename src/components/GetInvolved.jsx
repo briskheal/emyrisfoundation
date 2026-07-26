@@ -22,8 +22,6 @@ const GetInvolved = () => {
               <div className="support-icon"><i className="fa-solid fa-hands-helping"></i></div>
               <h4>Direct Service</h4>
               <p>Engage directly with the community by assisting in teaching, health services, environmental clean-ups, or campaigns.</p>
-              <button className="btn btn-outline-orange btn-sm btn-vol-start" onClick={() => openModal('volunteer')}>Join as Volunteer <i className="fa-solid fa-handshake-angle"></i></button>
-              <button className="btn btn-outline btn-sm btn-intern-start" onClick={() => openModal('internship')}>Apply for Internship <i className="fa-solid fa-graduation-cap"></i></button>
             </div>
             <div className="glass-card support-item">
               <div className="support-icon"><i className="fa-solid fa-circle-dollar-to-slot"></i></div>
@@ -70,6 +68,23 @@ const GetInvolved = () => {
           
           <div className="text-center" style={{marginTop: '30px'}}>
             <button className="btn btn-primary" onClick={() => document.getElementById('contact')?.scrollIntoView({behavior: 'smooth'})}>Partner With Us <i className="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <div id="involved-volunteer" className="involved-block" style={{marginTop: '60px'}}>
+          <h3 className="subsection-title text-center">Volunteers & Interns</h3>
+          <p className="text-center involved-para">Join our hands-on programs and gain valuable field experience while making a real difference.</p>
+          <div className="text-center" style={{marginTop: '30px', display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap'}}>
+            <button className="btn btn-primary" onClick={() => openModal('volunteer')}>Join as Volunteer <i className="fa-solid fa-handshake-angle"></i></button>
+            <button className="btn btn-outline" onClick={() => openModal('internship')}>Apply for Internship <i className="fa-solid fa-graduation-cap"></i></button>
+          </div>
+        </div>
+
+        <div id="involved-work" className="involved-block" style={{marginTop: '60px'}}>
+          <h3 className="subsection-title text-center">Work with Us (Careers)</h3>
+          <p className="text-center involved-para">Looking for a full-time role to drive social change? Explore our active job openings across various departments and locations.</p>
+          <div className="text-center" style={{marginTop: '30px'}}>
+            <button className="btn btn-primary" onClick={() => openModal('careers')}>Browse Open Positions <i className="fa-solid fa-briefcase"></i></button>
           </div>
         </div>
       </div>

@@ -36,9 +36,9 @@ const Footer = () => {
         <div className="footer-links">
           <h4>Join the Cause</h4>
           <a href="#involved-support">Ways to Support</a>
-          <a href="#" onClick={(e) => { e.preventDefault(); openModal('volunteer'); }}>Volunteer Openings</a>
-          <a href="#" onClick={(e) => { e.preventDefault(); openModal('internship'); }}>Internships</a>
-          <a href="#" onClick={(e) => { e.preventDefault(); openModal('careers'); }}>Job Vacancies</a>
+          <a href="#involved-volunteer">Volunteer Openings</a>
+          <a href="#involved-volunteer">Internships</a>
+          <a href="#involved-work">Job Vacancies</a>
           <a href="/admin">Administrator login</a>
         </div>
 
