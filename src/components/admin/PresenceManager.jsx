@@ -7,7 +7,7 @@ const PresenceLocationManager = ({ token }) => {
   const [conflictInfo, setConflictInfo] = useState(null);
   const [loadedAt, setLoadedAt] = useState(null);
   const [editing, setEditing] = useState(null);
-  const [formData, setFormData] = useState({ id: '', name: '', hq: '', volunteers: '', coordinator: '', phone: '' });
+  const [formData, setFormData] = useState({ id: '', name: '', hq: '', volunteers: '', coordinator: '', phone: '', programs: '' });
 
   const fetchItems = async () => {
     try {
@@ -23,15 +23,21 @@ const PresenceLocationManager = ({ token }) => {
   const handleSave = async (e) => {
     e.preventDefault();
     try {
+      const payload = { 
+        ...formData, 
+        programs: typeof formData.programs === 'string' ? formData.programs.split(',').map(s => s.trim()).filter(Boolean) : formData.programs,
+        lastKnownUpdatedAt: loadedAt 
+      };
+      
       const method = editing ? 'PUT' : 'POST';
       const res = await fetch('/api/presence', {
         method,
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify({ ...formData, lastKnownUpdatedAt: loadedAt })
+        body: JSON.stringify(payload)
       });
       if (res.status === 409) { const d = await res.json(); setConflictInfo(d); return; }
       if (res.ok) {
-        setFormData({ id: '', name: '', hq: '', volunteers: '', coordinator: '', phone: '' });
+        setFormData({ id: '', name: '', hq: '', volunteers: '', coordinator: '', phone: '', programs: '' });
         setEditing(null);
         fetchItems();
       }
@@ -51,7 +57,7 @@ const PresenceLocationManager = ({ token }) => {
 
   const editItem = (item) => {
     setEditing(item.id);
-    setFormData(item);
+    setFormData({ ...item, programs: item.programs ? item.programs.join(', ') : '' });
   };
 
   return (
@@ -85,9 +91,13 @@ const PresenceLocationManager = ({ token }) => {
             <label style={{ color: '#fff', fontSize: '0.9rem' }}>Phone</label>
             <input type="text" className="form-input" required value={formData.phone || ''} onChange={e => setFormData({...formData, phone: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '4px' }} />
           </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+            <label style={{ color: '#fff', fontSize: '0.9rem' }}>Programs (Comma separated)</label>
+            <input type="text" className="form-input" value={formData.programs || ''} onChange={e => setFormData({...formData, programs: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '4px' }} placeholder="e.g. Health Clinic, School Project" />
+          </div>
           <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
             <button type="submit" className="btn btn-primary">{editing ? 'Update' : 'Save'}</button>
-            {editing && <button type="button" className="btn btn-outline" onClick={() => { setEditing(null); setFormData({ id: '', name: '', hq: '', volunteers: '', coordinator: '', phone: '' }); }}>Cancel</button>}
+            {editing && <button type="button" className="btn btn-outline" onClick={() => { setEditing(null); setFormData({ id: '', name: '', hq: '', volunteers: '', coordinator: '', phone: '', programs: '' }); }}>Cancel</button>}
           </div>
         </form>
       </div>

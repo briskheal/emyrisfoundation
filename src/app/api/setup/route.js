@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { sequelize, AdminUser, CorporateProfile, HeroSlide, Campaign, WorkActivity } from '../../../lib/db';
+import { sequelize, AdminUser, CorporateProfile, HeroSlide, Campaign, WorkActivity, PresenceLocation } from '../../../lib/db';
 import bcrypt from 'bcrypt';
 import fs from 'fs';
 import path from 'path';
@@ -51,6 +51,7 @@ export async function GET() {
     await seedData(HeroSlide, 'heroSlides.json');
     await seedData(Campaign, 'campaigns.json');
     await seedData(WorkActivity, 'work.json');
+    await seedData(PresenceLocation, 'presence.json');
 
     return NextResponse.json({
       success: true,
