@@ -466,6 +466,7 @@ const AdminPanel = () => {
                 { label: 'Bank Name', field: 'bankName' },
                 { label: 'Branch', field: 'bankBranch' },
                 { label: 'UPI ID (e.g. emyris@hdfc)', field: 'upiId' },
+                { label: 'Operational Centers (comma-separated)', field: 'operationalCenters' },
               ].map(({ label, field }) => (
                 <div key={field}>
                   <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.82rem', marginBottom: '5px', display: 'block' }}>{label}</label>

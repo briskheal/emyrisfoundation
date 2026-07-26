@@ -57,10 +57,11 @@ const CareersModal = () => {
                 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '10px' }}>
                     <div>
-                      <h4 style={{ margin: '0 0 5px 0', color: 'var(--primary-blue)', fontSize: '1.2rem' }}>{job.title}</h4>
+                      <h4 style={{ margin: '0 0 5px 0', color: 'var(--primary-blue)', fontSize: '1.2rem', lineHeight: '1.4' }}>
+                        {job.title} {job.loc && <span style={{ color: 'var(--text-light)', fontWeight: 'normal', fontSize: '1.1rem' }}>in {job.loc}</span>}
+                      </h4>
                       <div style={{ display: 'flex', gap: '15px', fontSize: '0.85rem', color: 'var(--text-light)', marginBottom: '10px' }}>
                         <span><i className="fa-solid fa-building"></i> {job.dept}</span>
-                        <span><i className="fa-solid fa-location-dot"></i> {job.loc}</span>
                       </div>
                     </div>
                     <button 

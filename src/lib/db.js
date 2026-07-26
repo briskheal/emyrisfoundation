@@ -33,6 +33,7 @@ export const CorporateProfile = sequelize.define('CorporateProfile', {
   upiId: DataTypes.STRING,
   qrCode: DataTypes.TEXT,
   logo: DataTypes.TEXT,
+  operationalCenters: DataTypes.TEXT,
   updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
 });
 
