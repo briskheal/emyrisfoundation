@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { ConflictBanner, LastEditedBadge } from '../../lib/useConflictSave';
 
+import React, { useState, useEffect } from 'react';
+import { ConflictBanner, LastEditedBadge } from '../../lib/useConflictSave';
+
+const INDIAN_STATES = [
+  "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana",
+  "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
+  "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana",
+  "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh",
+  "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
+];
+
 const PresenceLocationManager = ({ token }) => {
   const [items, setItems] = useState([]);
+  const [operationalCenters, setOperationalCenters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [conflictInfo, setConflictInfo] = useState(null);
   const [loadedAt, setLoadedAt] = useState(null);
@@ -11,9 +23,18 @@ const PresenceLocationManager = ({ token }) => {
 
   const fetchItems = async () => {
     try {
-      const res = await fetch('/api/presence');
-      const data = await res.json();
-      setItems(Array.isArray(data) ? data : []);
+      const [presenceRes, corpRes] = await Promise.all([
+        fetch('/api/presence'),
+        fetch('/api/corporate?t=' + Date.now())
+      ]);
+      const presenceData = await presenceRes.json();
+      setItems(Array.isArray(presenceData) ? presenceData : []);
+      
+      const corpData = await corpRes.json();
+      if (corpData && corpData.operationalCenters) {
+        const centers = corpData.operationalCenters.split(',').map(s => s.trim()).filter(Boolean);
+        setOperationalCenters(centers);
+      }
     } catch (err) { console.error(err); }
     finally { setLoading(false); }
   };
@@ -25,6 +46,7 @@ const PresenceLocationManager = ({ token }) => {
     try {
       const payload = { 
         ...formData, 
+        id: editing ? formData.id : (formData.name.toLowerCase().replace(/\s+/g, '-') + '-' + Math.random().toString(36).substr(2, 5)),
         programs: typeof formData.programs === 'string' ? formData.programs.split(',').map(s => s.trim()).filter(Boolean) : formData.programs,
         lastKnownUpdatedAt: loadedAt 
       };
@@ -69,16 +91,22 @@ const PresenceLocationManager = ({ token }) => {
         <form onSubmit={handleSave}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '16px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-              <label style={{ color: '#fff', fontSize: '0.85rem' }}>ID (e.g., gujarat)</label>
-              <input type="text" className="form-input" required value={formData.id || ''} onChange={e => setFormData({...formData, id: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '6px' }} />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
               <label style={{ color: '#fff', fontSize: '0.85rem' }}>State Name</label>
-              <input type="text" className="form-input" required value={formData.name || ''} onChange={e => setFormData({...formData, name: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '6px' }} />
+              <select className="form-input" required value={formData.name || ''} onChange={e => setFormData({...formData, name: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '6px', appearance: 'menulist' }}>
+                <option value="" disabled>Select State</option>
+                {INDIAN_STATES.map(state => (
+                  <option key={state} value={state} style={{ color: '#000' }}>{state}</option>
+                ))}
+              </select>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
               <label style={{ color: '#fff', fontSize: '0.85rem' }}>Headquarters</label>
-              <input type="text" className="form-input" required value={formData.hq || ''} onChange={e => setFormData({...formData, hq: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '6px' }} />
+              <select className="form-input" required value={formData.hq || ''} onChange={e => setFormData({...formData, hq: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '6px', appearance: 'menulist' }}>
+                <option value="" disabled>Select HQ / Operations City</option>
+                {operationalCenters.map(city => (
+                  <option key={city} value={city} style={{ color: '#000' }}>{city}</option>
+                ))}
+              </select>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
               <label style={{ color: '#fff', fontSize: '0.85rem' }}>Volunteers Count</label>
