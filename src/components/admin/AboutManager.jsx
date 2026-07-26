@@ -68,6 +68,8 @@ const AboutManager = ({ token }) => {
           { label: 'Title', field: 'title' },
           { label: 'Subtitle', field: 'subtitle' },
           { label: 'Motto', field: 'motto' },
+          { label: 'Leadership Title', field: 'directorsTitle' },
+          { label: 'Leadership Subtitle', field: 'directorsSubtitle' },
         ].map(({ label, field }) => (
           <div key={field}>
             <label style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.82rem', marginBottom: '5px', display: 'block' }}>{label}</label>

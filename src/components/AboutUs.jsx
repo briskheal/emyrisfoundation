@@ -82,8 +82,8 @@ const AboutUs = () => {
 
         <div id="about-leadership" className="team-block-wrapper">
           <div className="section-title-wrapper text-center">
-            <span className="section-subtitle">Our Guides</span>
-            <h3 className="subsection-title">Board of Directors</h3>
+            <span className="section-subtitle">{about.directorsSubtitle || 'Our Guides'}</span>
+            <h3 className="subsection-title">{about.directorsTitle || 'Board of Directors'}</h3>
           </div>
           <div className="directors-grid" id="directors-list-container">
             {directors.map(d => (

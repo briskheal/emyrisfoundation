@@ -14,7 +14,7 @@ const DirectorManager = ({ token }) => {
 
   const fetchItems = async () => {
     try {
-      const res = await fetch('/api/directors');
+      const res = await fetch(`/api/directors?t=${Date.now()}`);
       const data = await res.json();
       setItems(data);
     } catch (err) {
@@ -110,9 +110,20 @@ const DirectorManager = ({ token }) => {
 
   return (
     <div>
-      <h3 style={{ color: 'white', marginBottom: '20px' }}>
-        <i className="fa-solid fa-user-tie" style={{ color: '#f97316' }}></i> Manage Board of Directors
-      </h3>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <h3 style={{ color: 'white', margin: 0 }}>
+          <i className="fa-solid fa-user-tie" style={{ color: '#f97316' }}></i> Manage Board of Directors
+        </h3>
+        <button 
+          onClick={() => {
+            cancelEdit();
+            document.getElementById('director-form-container')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+          style={{ background: '#10b981', border: 'none', padding: '10px 20px', borderRadius: '8px', color: 'white', fontWeight: 600, cursor: 'pointer' }}
+        >
+          <i className="fa-solid fa-plus"></i> Add New Director
+        </button>
+      </div>
 
       <div style={{ display: 'grid', gap: '16px', marginBottom: '30px' }}>
         {items.map(item => (
@@ -144,7 +155,7 @@ const DirectorManager = ({ token }) => {
         ))}
       </div>
 
-      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px dashed rgba(255,255,255,0.2)', borderRadius: '12px', padding: '24px' }}>
+      <div id="director-form-container" style={{ background: 'rgba(255,255,255,0.02)', border: '1px dashed rgba(255,255,255,0.2)', borderRadius: '12px', padding: '24px' }}>
         <h4 style={{ color: 'white', marginTop: 0 }}>{editing ? 'Edit Director' : 'Add New Director'}</h4>
 
         {/* Conflict Banner */}

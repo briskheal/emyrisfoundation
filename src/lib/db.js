@@ -83,6 +83,8 @@ export const AboutContent = sequelize.define('AboutContent', {
   motto: DataTypes.STRING,
   paragraph1: DataTypes.TEXT,
   paragraph2: DataTypes.TEXT,
+  directorsSubtitle: DataTypes.STRING,
+  directorsTitle: DataTypes.STRING,
   updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
 });
 
