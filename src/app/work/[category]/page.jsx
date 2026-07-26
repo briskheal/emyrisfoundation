@@ -67,7 +67,7 @@ export default async function WorkCategoryPage({ params }) {
                 <h2 className="section-title">What We Do</h2>
                 <div className="title-underline"></div>
               </div>
-              <div className="horizontal-scroll-container">
+              <div className="horizontal-scroll-container sdg-scroll">
                 <div className="sdg-grid">
                   {data.sdgGrid.map((item, idx) => (
                     <div key={idx} className="glass-card sdg-card">
@@ -159,7 +159,7 @@ export default async function WorkCategoryPage({ params }) {
                     <div key={idx} className="glass-card video-card">
                       <iframe 
                         width="100%" 
-                        height="250" 
+                        height="180" 
                         src={vid.url} 
                         title={vid.title} 
                         frameBorder="0" 

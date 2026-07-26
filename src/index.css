@@ -3549,14 +3549,80 @@ textarea.form-control {
 .sdg-card {
   width: 300px;
   scroll-snap-align: start;
+}
+/* Work Detail Page Styles */
+.work-detail-hero {
+  height: 60vh;
+  min-height: 400px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.work-hero-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.work-hero-overlay .hero-title {
+  color: #fff;
+  font-size: 3rem;
+  font-weight: 800;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+.horizontal-scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+.horizontal-scroll-container::-webkit-scrollbar {
+  height: 8px;
+}
+.horizontal-scroll-container::-webkit-scrollbar-thumb {
+  background: var(--primary-orange);
+  border-radius: 10px;
+}
+.sdg-grid {
+  display: flex;
+  gap: 15px;
+  min-width: max-content;
+}
+.sdg-card {
+  width: 250px;
+  scroll-snap-align: start;
   flex-shrink: 0;
-  padding: 25px;
+  padding: 15px;
 }
 .sdg-card h4 {
   color: var(--primary-orange);
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   font-weight: 700;
+  font-size: 1.1rem;
 }
+.sdg-card p {
+  font-size: 0.9rem;
+}
+
+@media (min-width: 992px) {
+  .horizontal-scroll-container.sdg-scroll {
+    overflow-x: visible;
+  }
+  .sdg-grid {
+    min-width: auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+  }
+  .sdg-card {
+    width: auto;
+    padding: 15px;
+  }
+}
+
 .reach-stats-flex {
   display: flex;
   justify-content: space-around;
@@ -3594,28 +3660,34 @@ textarea.form-control {
 }
 .impact-gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
 }
 .testimonial-flex {
   display: flex;
-  gap: 25px;
+  gap: 20px;
   min-width: max-content;
 }
 .testimonial-card {
-  width: 350px;
-  padding: 30px;
+  width: 280px;
+  padding: 20px;
   scroll-snap-align: start;
   flex-shrink: 0;
 }
+.testimonial-card .testi-text {
+  font-size: 0.95rem;
+}
+.testimonial-card .testi-author {
+  font-size: 1.05rem;
+}
 .videos-flex {
   display: flex;
-  gap: 25px;
+  gap: 20px;
   min-width: max-content;
 }
 .video-card {
-  width: 400px;
-  padding: 15px;
+  width: 300px;
+  padding: 10px;
   scroll-snap-align: start;
   flex-shrink: 0;
 }
