@@ -51,8 +51,8 @@ const Footer = () => {
             </button>
             
             <div className="footer-contact-info" style={{ marginTop: '15px', color: 'var(--text-light)', fontSize: '0.9rem' }}>
-              <p style={{ margin: '5px 0' }}><i className="fa-solid fa-envelope" style={{ color: 'var(--primary-orange)', marginRight: '8px' }}></i> <a href="mailto:contact@emyrisfoundation.com" style={{ color: 'var(--text-light)', textDecoration: 'none' }}>contact@emyrisfoundation.com</a></p>
-              <p style={{ margin: '5px 0' }}><i className="fa-solid fa-phone" style={{ color: 'var(--primary-orange)', marginRight: '8px' }}></i> <a href="tel:18008891217" style={{ color: 'var(--text-light)', textDecoration: 'none' }}>Toll Free: 1800 889 1217</a></p>
+              <p style={{ margin: '5px 0' }}><i className="fa-solid fa-envelope" style={{ color: 'var(--primary-orange)', marginRight: '8px' }}></i> <a href={`mailto:${corporate?.email || 'contact@emyrisfoundation.com'}`} style={{ color: 'var(--text-light)', textDecoration: 'none' }}>{corporate?.email || 'contact@emyrisfoundation.com'}</a></p>
+              <p style={{ margin: '5px 0' }}><i className="fa-solid fa-phone" style={{ color: 'var(--primary-orange)', marginRight: '8px' }}></i> <a href={`tel:${corporate?.phone1 || '18008891217'}`} style={{ color: 'var(--text-light)', textDecoration: 'none' }}>Toll Free: {corporate?.phone1 || '1800 889 1217'}</a></p>
             </div>
           </div>
         </div>
