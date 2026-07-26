@@ -192,6 +192,42 @@ export async function getWorkDetail(id) {
       return newDetail.toJSON();
     }
     
+    // If not found and it is women-empowerment, create the default directly
+    if (id === 'work-women-empowerment') {
+      const defaultWomenData = {
+        id: 'work-women-empowerment',
+        bannerTitle: 'Her Rights, Her Choices, Her Voice.',
+        whyTitle: 'Why Women Empowerment',
+        whyText: 'Women\'s empowerment is not just about gender equity; it\'s about leveraging the full potential of a nation\'s human capital, leading to comprehensive development that benefits every aspect of society. It\'s an investment that yields dividends in economic prosperity, social harmony, and global competitiveness.\n\n"Her Rights, Her Choices, Her Voice." UNDP highlight the importance of legal rights for women, ensuring they have the same legal protections and opportunities as men. Enhancing Women\'s ability to make choices that affect their economic, social, and personal lives, which in turn benefits families and communities. Giving Space to Her voice to express opinions, influence society, and contribute to policy-making and nation building is important to build an inclusive society.\n\nEmyris Foundation has initiated a program called "Shiksha Hi Surakhya", a grassroots movement that not only educates but also empowers underprivileged communities through a blend of cultural, educational, and safety-focused initiatives. This approach respects and builds upon the social fabric of these communities, ensuring sustainability and broader impact.',
+        sdgGrid: [
+          { title: 'Grassroots Movement', text: 'We engage local community leaders who are trusted figures in underprivileged communities, to act as liaisons or champions for the campaign. Organize or participates in events like "Gram Utsav" or community festivals where activities related to education and safety can be highlighted.' },
+          { title: 'Mobile Learning Centers', text: 'Mobile units that travel to remote areas, providing access to books, educational materials, and even digital learning resources. These reach could utilize as platforms for safety discussions and self-defense training.' },
+          { title: 'Scholarships and Stipends', text: 'Offer educational incentives for attendance and performance, which could include free meals, uniforms, or a small stipend, directly tied to participation in safety and education programs.' },
+          { title: 'Community Mentoring', text: 'Establish mentorship programs where individuals from the community who have benefited from education or safety initiatives can mentor others, providing real-life examples of success and safety.' },
+          { title: 'Media and Storytelling', text: 'Leverage local media, street plays, or folk arts to convey messages about education and safety. Stories and local heroes can become powerful motivators.' }
+        ],
+        impactMedia: [
+          { type: 'image', url: '/Emyris Foundation Photos/women_impact_1.webp' }
+        ],
+        reachStats: [
+          { count: '3', label: 'villages & slums', color: '#facc15' },
+          { count: '1', label: 'states', color: '#d1d5db' },
+          { count: '1', label: 'projects', color: '#fbcfe8' },
+          { count: '4', label: 'future projects', color: '#fca5a5' }
+        ],
+        testimonials: [
+          { name: 'Rani', text: 'Happy to learn and now I can put my signature in place of thumb impression.' },
+          { name: 'Geeta', text: 'The mobile learning center brought education directly to my village.' },
+          { name: 'Pooja', text: 'Community mentoring gave me the confidence to start my own small business.' },
+          { name: 'Anjali', text: 'Through the scholarship program, I was able to complete my higher education without financial burden.' }
+        ],
+        videos: []
+      };
+      
+      const newDetail = await WorkDetail.create(defaultWomenData);
+      return newDetail.toJSON();
+    }
+    
     return null;
   } catch (error) {
     console.error('getWorkDetail error:', error);
