@@ -79,7 +79,7 @@ const CareersModal = () => {
                   <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '8px' }}>
                     <button 
                       className="btn btn-primary" 
-                      onClick={() => openModal('job', job.title)}
+                      onClick={() => openModal('job', job)}
                       style={{ padding: '10px 24px', borderRadius: '8px', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px' }}
                     >
                       Apply Now <i className="fa-solid fa-arrow-right"></i>

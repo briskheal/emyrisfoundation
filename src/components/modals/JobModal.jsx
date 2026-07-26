@@ -26,7 +26,9 @@ const JobModal = () => {
 
   if (activeModal !== 'job') return null;
 
-  const jobTitle = modalData || 'Position Name';
+  const job = typeof modalData === 'object' && modalData !== null ? modalData : { title: modalData, loc: '' };
+  const jobTitle = job.title || 'Position Name';
+  const jobLocations = job.loc ? job.loc.split(',').map(l => l.trim()).filter(Boolean) : [];
 
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
@@ -122,7 +124,16 @@ const JobModal = () => {
               <div className="form-row">
                 <div className="form-group">
                   <label>City *</label>
-                  <input type="text" className="form-control" required value={formData.city} onChange={e => setFormData({...formData, city: e.target.value})} />
+                  {jobLocations.length > 0 ? (
+                    <select className="form-control" required value={formData.city} onChange={e => setFormData({...formData, city: e.target.value})}>
+                      <option value="">Select a city</option>
+                      {jobLocations.map(loc => (
+                        <option key={loc} value={loc}>{loc}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input type="text" className="form-control" required value={formData.city} onChange={e => setFormData({...formData, city: e.target.value})} />
+                  )}
                 </div>
                 <div className="form-group">
                   <label>Pincode *</label>
