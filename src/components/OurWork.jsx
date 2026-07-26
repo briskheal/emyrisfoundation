@@ -2,21 +2,23 @@
 import React, { useState, useEffect } from 'react';
 import fallbackWork from '../data/work.json';
 
-const OurWork = () => {
-  const [workList, setWorkList] = useState(fallbackWork);
-  const [activeTab, setActiveTab] = useState(fallbackWork[0]?.id || '');
+const OurWork = ({ initialWork }) => {
+  const [workList, setWorkList] = useState(initialWork && initialWork.length > 0 ? initialWork : fallbackWork);
+  const [activeTab, setActiveTab] = useState(workList[0]?.id || '');
 
   useEffect(() => {
-    fetch('/api/work')
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          setWorkList(data);
-          setActiveTab(data[0].id);
-        }
-      })
-      .catch(err => console.error("Failed to load work", err));
-  }, []);
+    if (!initialWork) {
+      fetch('/api/work')
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            setWorkList(data);
+            setActiveTab(data[0].id);
+          }
+        })
+        .catch(err => console.error("Failed to load work", err));
+    }
+  }, [initialWork]);
 
   const iconMap = {
     "work-education": "fa-graduation-cap",

@@ -6,15 +6,18 @@ const CorporateContext = createContext();
 
 export const useCorporate = () => useContext(CorporateContext);
 
-export const CorporateProvider = ({ children }) => {
-  const [corporate, setCorporate] = useState(null);
+export const CorporateProvider = ({ children, initialData }) => {
+  const [corporate, setCorporate] = useState(initialData || null);
 
   useEffect(() => {
-    fetch(`${API_URL}/corporate`, { cache: 'no-store' })
-      .then(res => res.json())
-      .then(data => setCorporate(data))
-      .catch(err => console.error('Failed to fetch corporate data:', err));
-  }, []);
+    // Only fetch if initialData was missing (e.g., navigated client-side without SSR data)
+    if (!corporate) {
+      fetch(`${API_URL}/corporate`, { cache: 'no-store' })
+        .then(res => res.json())
+        .then(data => setCorporate(data))
+        .catch(err => console.error('Failed to fetch corporate data:', err));
+    }
+  }, [corporate]);
 
   return (
     <CorporateContext.Provider value={{ corporate }}>
@@ -22,4 +25,3 @@ export const CorporateProvider = ({ children }) => {
     </CorporateContext.Provider>
   );
 };
-

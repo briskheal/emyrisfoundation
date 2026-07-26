@@ -2,30 +2,33 @@
 import React, { useState, useEffect } from 'react';
 import defaultPresenceList from '../data/presence.json';
 
-const Presence = () => {
-  const [presenceList, setPresenceList] = useState([]);
-  const [activeState, setActiveState] = useState(null);
-  const [loading, setLoading] = useState(true);
+const Presence = ({ initialLocations }) => {
+  const [presenceList, setPresenceList] = useState(initialLocations && initialLocations.length > 0 ? initialLocations : defaultPresenceList);
+  const [activeState, setActiveState] = useState(presenceList[0]?.id || null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch('/api/presence?t=' + Date.now())
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          setPresenceList(data);
-          setActiveState(data[0].id);
-        } else {
+    if (!initialLocations) {
+      setLoading(true);
+      fetch('/api/presence?t=' + Date.now())
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) {
+            setPresenceList(data);
+            setActiveState(data[0].id);
+          } else {
+            setPresenceList(defaultPresenceList);
+            setActiveState(defaultPresenceList[0].id);
+          }
+        })
+        .catch(err => {
+          console.error(err);
           setPresenceList(defaultPresenceList);
           setActiveState(defaultPresenceList[0].id);
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        setPresenceList(defaultPresenceList);
-        setActiveState(defaultPresenceList[0].id);
-      })
-      .finally(() => setLoading(false));
-  }, []);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [initialLocations]);
 
   const activeDetails = presenceList.find(p => p.id === activeState);
 

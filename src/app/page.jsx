@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useEffect } from 'react';
+import React from 'react';
 import { CorporateProvider } from '../context/CorporateContext';
 import { ModalProvider } from '../context/ModalContext';
 import Header from '../components/Header';
@@ -20,37 +18,33 @@ import Contact from '../components/Contact';
 import DonorWall from '../components/DonorWall';
 import Footer from '../components/Footer';
 import Modals from '../components/Modals';
+import SmoothScroll from '../components/SmoothScroll';
 
-export default function Home() {
-  useEffect(() => {
-    const handleHashClick = (e) => {
-      const target = e.target.closest('a');
-      if (target && target.hash && target.hash.startsWith('#') && target.origin === window.location.origin) {
-        // Only prevent default if it's an internal hash link
-        const element = document.querySelector(target.hash);
-        if (element) {
-          e.preventDefault();
-          element.scrollIntoView({ behavior: 'smooth' });
-          window.history.pushState(null, '', target.hash);
-        }
-      }
-    };
-    document.addEventListener('click', handleHashClick);
-    return () => document.removeEventListener('click', handleHashClick);
-  }, []);
+import { getCorporateData, getHeroSlides, getWorkActivities, getCampaigns, getPresenceLocations } from '../lib/data-fetcher';
+
+export const dynamic = 'force-dynamic';
+
+export default async function Home() {
+  // Fetch all initial data instantly on the server side
+  const corporateData = await getCorporateData();
+  const heroSlides = await getHeroSlides();
+  const workActivities = await getWorkActivities();
+  const campaigns = await getCampaigns();
+  const presenceLocations = await getPresenceLocations();
 
   return (
-    <CorporateProvider>
+    <CorporateProvider initialData={corporateData}>
       <ModalProvider>
+        <SmoothScroll />
         <Header />
         <main id="app-content">
           <div id="public-views">
-            <Hero />
+            <Hero initialSlides={heroSlides} />
             <TrustSeals />
             <AboutUs />
-            <OurWork />
-            <Presence />
-            <Campaigns />
+            <OurWork initialWork={workActivities} />
+            <Presence initialLocations={presenceLocations} />
+            <Campaigns initialCampaigns={campaigns} />
             <GetInvolved />
             <Partnerships />
             <Blog />

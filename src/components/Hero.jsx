@@ -3,19 +3,22 @@ import React, { useState, useEffect } from 'react';
 import { useModals } from '../context/ModalContext';
 import fallbackHeroSlides from '../data/heroSlides.json';
 
-const Hero = () => {
+const Hero = ({ initialSlides }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [heroSlides, setHeroSlides] = useState(fallbackHeroSlides);
+  const [heroSlides, setHeroSlides] = useState(initialSlides && initialSlides.length > 0 ? initialSlides : fallbackHeroSlides);
   const { openModal } = useModals();
 
   useEffect(() => {
-    fetch('/api/hero')
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) setHeroSlides(data);
-      })
-      .catch(err => console.error("Failed to load hero slides", err));
-  }, []);
+    // If we didn't get initial slides, try fetching them client-side as fallback
+    if (!initialSlides) {
+      fetch('/api/hero')
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data) && data.length > 0) setHeroSlides(data);
+        })
+        .catch(err => console.error("Failed to load hero slides", err));
+    }
+  }, [initialSlides]);
 
   useEffect(() => {
     if (heroSlides.length === 0) return;
