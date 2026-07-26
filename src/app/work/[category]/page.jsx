@@ -113,7 +113,7 @@ export default async function WorkCategoryPage({ params }) {
               </div>
               <div className="impact-gallery">
                 {data.impactMedia.map((media, idx) => (
-                  <div key={idx} className="impact-photo-card glass-card">
+                  <div key={idx} className="impact-photo-card">
                     <img src={media.url} alt={`Impact ${idx}`} className="img-fluid" style={{ borderRadius: '8px' }} />
                   </div>
                 ))}
@@ -156,10 +156,10 @@ export default async function WorkCategoryPage({ params }) {
               <div className="horizontal-scroll-container">
                 <div className="videos-flex">
                   {data.videos.map((vid, idx) => (
-                    <div key={idx} className="glass-card video-card">
+                    <div key={idx} className="video-card">
                       <iframe 
                         width="100%"
-                        height="140"
+                        height="125"
                         src={vid.url}
                         title={vid.title}
                         frameBorder="0"

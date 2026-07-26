@@ -3666,8 +3666,8 @@ textarea.form-control {
   gap: 15px;
 }
 .impact-photo-card {
-  width: 250px;
-  height: 180px;
+  width: 220px;
+  height: 150px;
 }
 .impact-photo-card img {
   width: 100%;
@@ -3701,8 +3701,8 @@ textarea.form-control {
   min-width: max-content;
 }
 .video-card {
-  width: 250px;
-  padding: 10px;
+  width: 220px;
+  padding: 0;
   scroll-snap-align: start;
   flex-shrink: 0;
 }
