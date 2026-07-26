@@ -25,7 +25,8 @@ const ActivityGallery = () => {
   const scrollRef = useRef(null);
 
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  const years = Array.from({length: 10}, (_, i) => (new Date().getFullYear() - i).toString());
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({length: Math.max(1, currentYear - 2024 + 1)}, (_, i) => (2024 + i).toString()).reverse();
 
   useEffect(() => {
     const fetchGallery = async () => {
