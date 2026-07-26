@@ -228,6 +228,42 @@ export async function getWorkDetail(id) {
       return newDetail.toJSON();
     }
     
+    // If not found and it is farmers-connect, create the default directly
+    if (id === 'work-farmers-connect') {
+      const defaultFarmersData = {
+        id: 'work-farmers-connect',
+        bannerTitle: 'Empowering Earth\'s Stewards',
+        whyTitle: 'Why Farmer\'s Connect?',
+        whyText: 'In India – we are proud of our agricultural heritage however the harsh realities of farmer distress, underscoring the urgent needs for comprehensive, effective agricultural policies those truly uplift farmers, aligning with the broader goals of nation-building. Protecting farmers\' interests is not just about economic support but ensuring their voices are heard in shaping agricultural policy, which directly influences national food security, economic stability, and environmental health. Farmers are the backbone of any nation\'s agricultural sector, which is often the foundation of its economy, particularly in developing countries like us.\n\nAgriculture contributes significantly to GDP, employment, and rural development. Plays a crucial role in environmental health, including soil conservation, water management, and biodiversity. Where direct benefits like subsidies, loans, and insurance schemes (like PM-KISAN, Fasal Bima Yojana), infrastructure development for irrigation and market linkage, and promoting organic and sustainable farming practices is yielding positive outcomes, challenges remain, particularly in equitable distribution of benefits, addressing climate change impacts, and ensuring farmers have a voice in policy-making.',
+        sdgGrid: [
+          { title: 'Workshops & Training', text: 'Organizes training with support of agricultural colleges\', technical experts, covers from soil testing, market economics to integrated farming and crop diversification.' },
+          { title: 'Online Platforms and Apps', text: 'Utilizing technology for real-time advice, market information, and educational content directly accessible to farmers, even in remote areas.' },
+          { title: 'Peer Learning Networks', text: 'Encouraging experienced farmers to mentor less experienced ones, fostering a culture of continuous learning and Farmer-to-Farmer networks.' },
+          { title: 'Demonstration Farms', text: 'Practical learning through model farms where new techniques are showcased.' },
+          { title: 'Promoting Sustainability', text: 'Encouraging practices that promote soil health, reduce chemical use, and enhance biodiversity.' }
+        ],
+        impactMedia: [
+          { type: 'image', url: '/Emyris Foundation Photos/farmers_impact_1.webp' }
+        ],
+        reachStats: [
+          { count: '3', label: 'Farmers association', color: '#facc15' },
+          { count: '1', label: 'states', color: '#d1d5db' },
+          { count: '1', label: 'projects', color: '#fbcfe8' },
+          { count: '4', label: 'future projects', color: '#fca5a5' }
+        ],
+        testimonials: [
+          { name: 'Ravi', text: 'A farmer from Odisha, thanked for our support and help in improving his knowledge on Organic Cultivation.' },
+          { name: 'Manoj', text: 'The demonstration farms showed us practical techniques that actually work in our climate.' },
+          { name: 'Suresh', text: 'The online app alerts me about market prices, ensuring I get the right value for my crops.' },
+          { name: 'Ganesh', text: 'Thanks to the soil testing workshop, my yield has doubled this season.' }
+        ],
+        videos: []
+      };
+      
+      const newDetail = await WorkDetail.create(defaultFarmersData);
+      return newDetail.toJSON();
+    }
+    
     return null;
   } catch (error) {
     console.error('getWorkDetail error:', error);
