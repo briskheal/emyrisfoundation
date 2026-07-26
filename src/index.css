@@ -2544,6 +2544,7 @@ textarea.form-control {
         padding: 30px;
         gap: 20px;
         transition: var(--transition-smooth);
+        overflow-y: auto;
     }
     
     .nav-menu.open {

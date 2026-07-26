@@ -96,9 +96,9 @@ const Header = () => {
           <div className={`nav-dropdown ${activeDropdown === 'involved' ? 'active' : ''}`}>
             <a href="#get-involved" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'involved')}>Get Involved <i className="fa-solid fa-chevron-down"></i></a>
             <div className="dropdown-menu">
-              <a href="#involved-support" onClick={() => setMobileMenuOpen(false)}>Individual Support</a>
-              <a href="#involved-volunteer" onClick={() => setMobileMenuOpen(false)}>Volunteers & Interns</a>
-              <a href="#involved-work" onClick={() => setMobileMenuOpen(false)}>Work with Us</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); openModal('volunteer'); }}>Join as Volunteer</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); openModal('internship'); }}>Apply for Internship</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); openModal('job'); }}>Work with Us</a>
             </div>
           </div>
 
