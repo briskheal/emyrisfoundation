@@ -44,32 +44,7 @@ const GetInvolved = () => {
           </div>
         </div>
 
-        <div id="involved-csr" className="involved-block">
-          <h3 className="subsection-title text-center">Corporate &amp; CSR Partnerships</h3>
-          <p className="text-center involved-para">Align your company's ESG goals with Emyris Foundation. We facilitate customized CSR projects with 80G tax benefit certification and detailed impact measurement sheets.</p>
-          
-          <div className="support-cards-grid">
-            <div className="glass-card support-item">
-              <div className="support-icon"><i className="fa-solid fa-building-ngo"></i></div>
-              <h4>ESG &amp; CSR Compliance</h4>
-              <p>Fully compliant with Schedule VII of the Companies Act, offering transparent reporting, audits, and impact metrics.</p>
-            </div>
-            <div className="glass-card support-item">
-              <div className="support-icon"><i className="fa-solid fa-hand-holding-hand"></i></div>
-              <h4>Employee Engagement</h4>
-              <p>Coordinate corporate volunteering drives, local field trips, and skill-sharing seminars for your staff.</p>
-            </div>
-            <div className="glass-card support-item">
-              <div className="support-icon"><i className="fa-solid fa-shield-heart"></i></div>
-              <h4>Cause Marketing</h4>
-              <p>Co-brand sustainability campaigns, plantation drives, and student learning kits to build shared values.</p>
-            </div>
-          </div>
-          
-          <div className="text-center" style={{marginTop: '30px'}}>
-            <button className="btn btn-primary" onClick={() => document.getElementById('contact')?.scrollIntoView({behavior: 'smooth'})}>Partner With Us <i className="fa-solid fa-arrow-right"></i></button>
-          </div>
-        </div>
+
 
         <div id="involved-volunteer" className="involved-block" style={{marginTop: '60px'}}>
           <h3 className="subsection-title text-center">Volunteers & Interns</h3>

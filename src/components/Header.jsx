@@ -39,8 +39,6 @@ const Header = () => {
         </a>
         
         <nav className={`nav-menu ${mobileMenuOpen ? 'open' : ''}`} id="nav-links">
-          <a href="#home" className="nav-link active" onClick={() => setMobileMenuOpen(false)}>Home</a>
-          
           <div className={`nav-dropdown ${activeDropdown === 'about' ? 'active' : ''}`}>
             <a href="#about" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'about')}>About Us <i className="fa-solid fa-chevron-down"></i></a>
             <div className="dropdown-menu">
@@ -58,6 +56,7 @@ const Header = () => {
               <a href="#work" onClick={() => setMobileMenuOpen(false)}>Livelihood</a>
               <a href="#work" onClick={() => setMobileMenuOpen(false)}>Women Empowerment</a>
               <a href="#work" onClick={() => setMobileMenuOpen(false)}>Farmer's Connect</a>
+              <a href="#presence" onClick={() => setMobileMenuOpen(false)}>Where We Work</a>
             </div>
           </div>
 
@@ -72,33 +71,32 @@ const Header = () => {
             </div>
           </div>
 
-          <div className={`nav-dropdown ${activeDropdown === 'partnerships' ? 'active' : ''}`}>
-            <a href="#presence" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'partnerships')}>Partnerships <i className="fa-solid fa-chevron-down"></i></a>
-            <div className="dropdown-menu">
-              <a href="#involved-csr" onClick={() => setMobileMenuOpen(false)}>Corporate Partnerships</a>
-              <a href="#involved-csr" onClick={() => setMobileMenuOpen(false)}>Institutional Partnerships</a>
-              <a href="#presence" onClick={() => setMobileMenuOpen(false)}>Engagement with Government</a>
-            </div>
-          </div>
-
-          <div className={`nav-dropdown ${activeDropdown === 'resources' ? 'active' : ''}`}>
-            <a href="#publications" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'resources')}>Resources <i className="fa-solid fa-chevron-down"></i></a>
-            <div className="dropdown-menu">
-              <a href="#campaigns" onClick={() => setMobileMenuOpen(false)}>Latest Blog</a>
-              <a href="#publications" onClick={() => setMobileMenuOpen(false)}>Resource Centre</a>
-              <a href="#publications" onClick={() => setMobileMenuOpen(false)}>Annual Reports</a>
-              <a href="#publications" onClick={() => setMobileMenuOpen(false)}>Other Reports</a>
-              <a href="#faq-section" onClick={() => setMobileMenuOpen(false)}>FAQs</a>
-              <a href="#activity-gallery" onClick={() => setMobileMenuOpen(false)}>Activity Gallery</a>
-            </div>
-          </div>
-
           <div className={`nav-dropdown ${activeDropdown === 'involved' ? 'active' : ''}`}>
             <a href="#get-involved" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'involved')}>Get Involved <i className="fa-solid fa-chevron-down"></i></a>
             <div className="dropdown-menu">
               <a href="#involved-support" onClick={() => setMobileMenuOpen(false)}>Individual Support</a>
-              <a href="#involved-volunteer" onClick={() => setMobileMenuOpen(false)}>Volunteers & Interns</a>
-              <a href="#involved-work" onClick={() => setMobileMenuOpen(false)}>Work with Us</a>
+              <a href="#involved-volunteer" onClick={() => setMobileMenuOpen(false)}>Volunteering</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); openModal('careers'); }}>Work with Us</a>
+            </div>
+          </div>
+
+          <div className={`nav-dropdown ${activeDropdown === 'partnerships' ? 'active' : ''}`}>
+            <a href="#partnerships" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'partnerships')}>Partnerships <i className="fa-solid fa-chevron-down"></i></a>
+            <div className="dropdown-menu">
+              <a href="#partnerships" onClick={() => setMobileMenuOpen(false)}>CSR</a>
+              <a href="#partnerships" onClick={() => setMobileMenuOpen(false)}>Employee Engagement</a>
+              <a href="#partnerships" onClick={() => setMobileMenuOpen(false)}>Payroll Giving</a>
+              <a href="#partnerships" onClick={() => setMobileMenuOpen(false)}>Cause Marketing</a>
+            </div>
+          </div>
+
+          <div className={`nav-dropdown ${activeDropdown === 'resources' ? 'active' : ''}`}>
+            <a href="#resources" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'resources')}>Resources <i className="fa-solid fa-chevron-down"></i></a>
+            <div className="dropdown-menu">
+              <a href="#blog" onClick={() => setMobileMenuOpen(false)}>Blog</a>
+              <a href="#activity-gallery" onClick={() => setMobileMenuOpen(false)}>Gallery</a>
+              <a href="#publications" onClick={() => setMobileMenuOpen(false)}>Reports</a>
+              <a href="#faq-section" onClick={() => setMobileMenuOpen(false)}>FAQs</a>
             </div>
           </div>
 
@@ -106,7 +104,7 @@ const Header = () => {
         </nav>
 
         <div className="nav-cta-group">
-          <button className="btn btn-primary btn-donate" id="global-donate-btn" onClick={() => openModal('donate')}>Donate Now <i className="fa-solid fa-heart"></i></button>
+          <button className="btn btn-primary btn-donate" id="global-donate-btn" onClick={() => openModal('donate')}>Donate <i className="fa-solid fa-heart"></i></button>
           <button className="mobile-nav-toggle" id="menu-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             <i className={`fa-solid ${mobileMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
           </button>

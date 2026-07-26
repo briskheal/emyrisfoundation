@@ -10,10 +10,12 @@ import AboutUs from '../components/AboutUs';
 import OurWork from '../components/OurWork';
 import Campaigns from '../components/Campaigns';
 import Presence from '../components/Presence';
+import Blog from '../components/Blog';
 import Publications from '../components/Publications';
 import ActivityGallery from '../components/ActivityGallery';
 import FAQs from '../components/FAQs';
 import GetInvolved from '../components/GetInvolved';
+import Partnerships from '../components/Partnerships';
 import Contact from '../components/Contact';
 import DonorWall from '../components/DonorWall';
 import Footer from '../components/Footer';
@@ -47,12 +49,14 @@ export default function Home() {
             <TrustSeals />
             <AboutUs />
             <OurWork />
-            <Campaigns />
             <Presence />
-            <Publications />
-            <ActivityGallery />
-            <FAQs />
+            <Campaigns />
             <GetInvolved />
+            <Partnerships />
+            <Blog />
+            <ActivityGallery />
+            <Publications />
+            <FAQs />
             <Contact />
             <DonorWall />
           </div>
