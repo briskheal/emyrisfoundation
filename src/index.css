@@ -3505,3 +3505,117 @@ textarea.form-control {
     .footer-grid { grid-template-columns: 1fr !important; gap: 30px; }
     .footer-links h4 { margin-bottom: 10px; }
 }
+/* Work Detail Page Styles */
+.work-detail-hero {
+  height: 60vh;
+  min-height: 400px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.work-hero-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.work-hero-overlay .hero-title {
+  color: #fff;
+  font-size: 3rem;
+  font-weight: 800;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+.horizontal-scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+.horizontal-scroll-container::-webkit-scrollbar {
+  height: 8px;
+}
+.horizontal-scroll-container::-webkit-scrollbar-thumb {
+  background: var(--primary-orange);
+  border-radius: 10px;
+}
+.sdg-grid {
+  display: flex;
+  gap: 20px;
+  min-width: max-content;
+}
+.sdg-card {
+  width: 300px;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  padding: 25px;
+}
+.sdg-card h4 {
+  color: var(--primary-orange);
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+.reach-stats-flex {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 40px;
+}
+.reach-circle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+.reach-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  border: 4px solid rgba(255,255,255,0.2);
+}
+.reach-circle h3 {
+  color: #040d1a;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0;
+}
+.reach-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.impact-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+.testimonial-flex {
+  display: flex;
+  gap: 25px;
+  min-width: max-content;
+}
+.testimonial-card {
+  width: 350px;
+  padding: 30px;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+.videos-flex {
+  display: flex;
+  gap: 25px;
+  min-width: max-content;
+}
+.video-card {
+  width: 400px;
+  padding: 15px;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}

@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import fallbackWork from '../data/work.json';
 
 const OurWork = ({ initialWork }) => {
@@ -77,6 +78,14 @@ const OurWork = ({ initialWork }) => {
                         </li>
                       ))}
                     </ul>
+                    
+                    {/* Add Read More Link */}
+                    <div style={{ marginTop: '25px' }}>
+                      <Link href={`/work/${w.id.replace('work-', '')}`} className="btn btn-outline btn-sm">
+                        Read More <i className="fa-solid fa-arrow-right"></i>
+                      </Link>
+                    </div>
+
                   </div>
                   <div className="panel-visual">
                     <img src={w.img} alt={w.title} className="panel-img" />

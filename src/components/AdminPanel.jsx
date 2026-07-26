@@ -17,6 +17,7 @@ import ApplicationManager from './admin/ApplicationManager';
 import CampaignRegistrationManager from './admin/CampaignRegistrationManager';
 import GalleryManager from './admin/GalleryManager';
 import JobManager from './admin/JobManager';
+import WorkDetailEditor from './admin/WorkDetailEditor';
 import { compressImage } from '../lib/imageCompressor';
 
 const AdminPanel = () => {
@@ -364,6 +365,7 @@ const AdminPanel = () => {
         {activeTab === 'campaigns' && <CampaignManager token={token} />}
         {activeTab === 'publications' && <PublicationManager token={token} />}
         {activeTab === 'work' && <WorkManager token={token} />}
+        {activeTab === 'work-details' && <WorkDetailEditor token={token} />}
         {activeTab === 'hero-stats' && <HeroStatManager token={token} />}
         {activeTab === 'presence' && <PresenceManager token={token} />}
         {activeTab === 'content' && <ContentManager token={token} />}

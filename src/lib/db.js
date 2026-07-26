@@ -220,3 +220,14 @@ export const JobOpening = sequelize.define('JobOpening', {
   active: { type: DataTypes.BOOLEAN, defaultValue: true },
   order: { type: DataTypes.INTEGER, defaultValue: 0 },
 });
+export const WorkDetail = sequelize.define('WorkDetail', {
+  id: { type: DataTypes.STRING, primaryKey: true }, // e.g. 'work-education'
+  bannerTitle: DataTypes.STRING,
+  whyTitle: DataTypes.STRING,
+  whyText: DataTypes.TEXT,
+  sdgGrid: DataTypes.JSON,
+  impactMedia: DataTypes.JSON,
+  reachStats: DataTypes.JSON,
+  testimonials: DataTypes.JSON,
+  videos: DataTypes.JSON
+});

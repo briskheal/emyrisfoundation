@@ -1,4 +1,4 @@
-import { CorporateProfile, HeroSlide, Campaign, WorkActivity, PresenceLocation } from './db';
+import { CorporateProfile, HeroSlide, Campaign, WorkActivity, PresenceLocation, WorkDetail } from './db';
 import fs from 'fs';
 import path from 'path';
 
@@ -63,5 +63,22 @@ export async function getPresenceLocations() {
     return [];
   } catch (error) {
     return [];
+  }
+}
+export async function getWorkDetail(id) {
+  try {
+    // We can fetch via local API since it's already there and handles defaulting
+    // But since it's a server component we can just use the DB directly
+    let detail = await WorkDetail.findByPk(id);
+    if (detail) return detail.toJSON();
+    
+    // If not found, fetch from the local API to trigger the default creation
+    const res = await fetch(`http://localhost:3000/api/work-details/${id}`);
+    if (res.ok) {
+      return await res.json();
+    }
+    return null;
+  } catch (error) {
+    return null;
   }
 }
