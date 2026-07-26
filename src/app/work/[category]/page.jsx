@@ -53,7 +53,7 @@ export default async function WorkCategoryPage({ params }) {
             </div>
             <div className="glass-card" style={{ padding: '25px', marginTop: '15px', fontSize: '0.95rem', lineHeight: '1.6' }}>
               {data.whyText.split('\n').map((para, idx) => (
-                <p key={idx} style={{ marginBottom: '15px' }}>{para}</p>
+                <p key={idx} style={{ marginBottom: '15px', textAlign: 'justify' }}>{para}</p>
               ))}
             </div>
           </div>

@@ -3605,6 +3605,7 @@ textarea.form-control {
 }
 .sdg-card p {
   font-size: 0.9rem;
+  text-align: justify;
 }
 
 @media (min-width: 992px) {
@@ -3637,8 +3638,8 @@ textarea.form-control {
   gap: 15px;
 }
 .reach-circle {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -3648,12 +3649,12 @@ textarea.form-control {
 }
 .reach-circle h3 {
   color: #040d1a;
-  font-size: 2.5rem;
+  font-size: 1.8rem;
   font-weight: 800;
   margin: 0;
 }
 .reach-label {
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -3688,6 +3689,7 @@ textarea.form-control {
 .testimonial-card .testi-text {
   font-size: 0.85rem;
   line-height: 1.4;
+  text-align: justify;
 }
 .testimonial-card .testi-author {
   font-size: 0.9rem;
