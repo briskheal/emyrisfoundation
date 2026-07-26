@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ConflictBanner, LastEditedBadge } from '../../lib/useConflictSave';
 
-import React, { useState, useEffect } from 'react';
-import { ConflictBanner, LastEditedBadge } from '../../lib/useConflictSave';
-
 const INDIAN_STATES = [
   "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana",
   "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
