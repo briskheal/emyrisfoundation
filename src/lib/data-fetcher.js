@@ -106,6 +106,46 @@ export async function getWorkDetail(id) {
       return newDetail.toJSON();
     }
     
+    // If not found and it is health, create the default directly
+    if (id === 'work-health') {
+      const defaultHealthData = {
+        id: 'work-health',
+        bannerTitle: 'Healthcare Reach for All',
+        whyTitle: 'Why Healthcare',
+        whyText: 'In a vast country like India having population of more than 1.4 Bn, Healthcare access to all is a phenomenal challenge. Govt of India doing its bit by "Ayushman Bharat" initiative. Many Non-Profit Organizations also supporting Govt. directly/indirectly in this novel cause. Emyris Foundation also determined to play its part for the improvement of Healthcare facilities around its operational states.\n\nWhile Ayushman Bharat primarily deals with secondary and tertiary care, there\'s an undercurrent emphasis on preventive health through its wellness centers. Emyris Foundation has initiatives aimed at preventive care and community health awareness campaigns, which could provide a structured framework for these initiatives, leveraging the existing infrastructure for broader outreach.',
+        sdgGrid: [
+          { title: 'Telemedicine', text: 'You can consult with healthcare providers from your home, reducing the need for travel, which is particularly beneficial for those with mobility issues, time constraints, or those living in remote areas.' },
+          { title: 'Standalone Clinics', text: 'These facilities are designed to provide essential outpatient services without the need for overnight stays, catering to diagnostics, minor treatments, and follow-up consultations, significantly improve healthcare access for remote populations, reducing travel time and costs.' },
+          { title: 'Health Camps', text: 'Health camps often focus on preventive measures such as vaccinations, screenings for diseases like diabetes, hypertension, or cancer, and health education. This proactive approach can lead to early detection and management of conditions, potentially saving lives.' },
+          { title: 'Health Equity and Racial Equity', text: 'Emyris Foundation promotes preventive care, which is often more cost-effective than treatment. This approach not only addresses immediate health needs but also invests in long-term health outcomes, potentially reducing the prevalence of chronic diseases.' },
+          { title: 'Education and Prevention', text: 'We aim to reach every doorstep of underserved communities in both rural and urban India.' },
+          { title: 'Engagement and Local Solutions', text: 'Focusing on community-driven solutions to tackle hyper-local health issues effectively.' },
+          { title: 'Sustainable Health Systems', text: 'Building robust frameworks that can withstand future healthcare challenges.' }
+        ],
+        impactMedia: [
+          { type: 'image', url: '/Emyris Foundation Photos/health_impact_1.webp' }
+        ],
+        reachStats: [
+          { count: '20', label: 'villages & slums', color: '#facc15' },
+          { count: '3', label: 'states', color: '#93c5fd' },
+          { count: '2', label: 'projects', color: '#fbcfe8' },
+          { count: '4', label: 'future projects', color: '#fca5a5' }
+        ],
+        testimonials: [
+          { name: 'Rani', text: 'Suffering from illness and help she got message with read more.' },
+          { name: 'Patient 2', text: 'Health camp diagnosed my issues early.' },
+          { name: 'Patient 3', text: 'Telemedicine connected me to a specialist without traveling 50km.' },
+          { name: 'Patient 4', text: 'The standalone clinic in our village has been a life saver for my children.' }
+        ],
+        videos: [
+          { url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', title: 'Impact Video 1' }
+        ]
+      };
+      
+      const newDetail = await WorkDetail.create(defaultHealthData);
+      return newDetail.toJSON();
+    }
+    
     return null;
   } catch (error) {
     console.error('getWorkDetail error:', error);
