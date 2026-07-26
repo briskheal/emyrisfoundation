@@ -1,9 +1,31 @@
 'use client';
-import React, { useState } from 'react';
-import presenceList from '../data/presence.json';
+import React, { useState, useEffect } from 'react';
+import defaultPresenceList from '../data/presence.json';
 
 const Presence = () => {
-  const [activeState, setActiveState] = useState(presenceList[0]?.id);
+  const [presenceList, setPresenceList] = useState([]);
+  const [activeState, setActiveState] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/presence?t=' + Date.now())
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setPresenceList(data);
+          setActiveState(data[0].id);
+        } else {
+          setPresenceList(defaultPresenceList);
+          setActiveState(defaultPresenceList[0].id);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        setPresenceList(defaultPresenceList);
+        setActiveState(defaultPresenceList[0].id);
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   const activeDetails = presenceList.find(p => p.id === activeState);
 
@@ -17,20 +39,26 @@ const Presence = () => {
         </div>
         
         <div className="presence-grid">
-          <div className="presence-tabs" id="presence-tabs-container">
-            {presenceList.map(p => (
-              <button
-                key={p.id}
-                className={`presence-tab-btn ${activeState === p.id ? 'active' : ''}`}
-                onClick={() => setActiveState(p.id)}
-              >
-                {p.name} <i className="fa-solid fa-chevron-right"></i>
-              </button>
-            ))}
-          </div>
-          
-          <div className="glass-card presence-detail-card" id="presence-details-container" style={{ color: 'white' }}>
-            {activeDetails && (
+          {loading ? (
+            <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-light)', width: '100%' }}>
+              Loading presence data...
+            </div>
+          ) : (
+            <>
+              <div className="presence-tabs" id="presence-tabs-container">
+                {presenceList.map(p => (
+                  <button
+                    key={p.id}
+                    className={`presence-tab-btn ${activeState === p.id ? 'active' : ''}`}
+                    onClick={() => setActiveState(p.id)}
+                  >
+                    {p.name} <i className="fa-solid fa-chevron-right"></i>
+                  </button>
+                ))}
+              </div>
+              
+              <div className="glass-card presence-detail-card" id="presence-details-container" style={{ color: 'white' }}>
+                {activeDetails && (
               <>
                 <div className="presence-header">
                   <h3>{activeDetails.name} Operations</h3>
@@ -62,6 +90,8 @@ const Presence = () => {
               </>
             )}
           </div>
+          </>
+          )}
         </div>
       </div>
     </section>
