@@ -65,38 +65,40 @@ const PresenceLocationManager = ({ token }) => {
       <h2 style={{ color: '#fff', marginBottom: '20px' }}>Manage PresenceLocations</h2>
       
       <div className="glass-card" style={{ padding: '20px', marginBottom: '30px' }}>
-        <h3 style={{ color: '#15F5BA', marginBottom: '15px' }}>{editing ? 'Edit' : 'Add New'} PresenceLocation</h3>
-        <form onSubmit={handleSave} style={{ display: 'grid', gap: '15px' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ color: '#fff', fontSize: '0.9rem' }}>ID</label>
-            <input type="text" className="form-input" required value={formData.id || ''} onChange={e => setFormData({...formData, id: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '4px' }} />
+        <h3 style={{ color: '#15F5BA', marginBottom: '15px' }}>{editing ? 'Edit' : 'Add New'} Presence & Location</h3>
+        <form onSubmit={handleSave}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '16px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={{ color: '#fff', fontSize: '0.85rem' }}>ID (e.g., gujarat)</label>
+              <input type="text" className="form-input" required value={formData.id || ''} onChange={e => setFormData({...formData, id: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '6px' }} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={{ color: '#fff', fontSize: '0.85rem' }}>State Name</label>
+              <input type="text" className="form-input" required value={formData.name || ''} onChange={e => setFormData({...formData, name: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '6px' }} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={{ color: '#fff', fontSize: '0.85rem' }}>Headquarters</label>
+              <input type="text" className="form-input" required value={formData.hq || ''} onChange={e => setFormData({...formData, hq: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '6px' }} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={{ color: '#fff', fontSize: '0.85rem' }}>Volunteers Count</label>
+              <input type="number" className="form-input" required value={formData.volunteers || ''} onChange={e => setFormData({...formData, volunteers: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '6px' }} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={{ color: '#fff', fontSize: '0.85rem' }}>Coordinator Name</label>
+              <input type="text" className="form-input" required value={formData.coordinator || ''} onChange={e => setFormData({...formData, coordinator: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '6px' }} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={{ color: '#fff', fontSize: '0.85rem' }}>Phone</label>
+              <input type="text" className="form-input" required value={formData.phone || ''} onChange={e => setFormData({...formData, phone: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '6px' }} />
+            </div>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ color: '#fff', fontSize: '0.9rem' }}>State Name</label>
-            <input type="text" className="form-input" required value={formData.name || ''} onChange={e => setFormData({...formData, name: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '4px' }} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginBottom: '16px' }}>
+            <label style={{ color: '#fff', fontSize: '0.85rem' }}>Programs (Comma separated)</label>
+            <input type="text" className="form-input" value={formData.programs || ''} onChange={e => setFormData({...formData, programs: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '6px' }} placeholder="e.g. Health Clinic, School Project" />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ color: '#fff', fontSize: '0.9rem' }}>Headquarters</label>
-            <input type="text" className="form-input" required value={formData.hq || ''} onChange={e => setFormData({...formData, hq: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '4px' }} />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ color: '#fff', fontSize: '0.9rem' }}>Volunteers</label>
-            <input type="text" className="form-input" required value={formData.volunteers || ''} onChange={e => setFormData({...formData, volunteers: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '4px' }} />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ color: '#fff', fontSize: '0.9rem' }}>Coordinator</label>
-            <input type="text" className="form-input" required value={formData.coordinator || ''} onChange={e => setFormData({...formData, coordinator: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '4px' }} />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ color: '#fff', fontSize: '0.9rem' }}>Phone</label>
-            <input type="text" className="form-input" required value={formData.phone || ''} onChange={e => setFormData({...formData, phone: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '4px' }} />
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ color: '#fff', fontSize: '0.9rem' }}>Programs (Comma separated)</label>
-            <input type="text" className="form-input" value={formData.programs || ''} onChange={e => setFormData({...formData, programs: e.target.value})} style={{ background: 'rgba(255,255,255,0.05)', color: '#fff', border: '1px solid rgba(255,255,255,0.1)', padding: '10px', borderRadius: '4px' }} placeholder="e.g. Health Clinic, School Project" />
-          </div>
-          <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
-            <button type="submit" className="btn btn-primary">{editing ? 'Update' : 'Save'}</button>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button type="submit" className="btn btn-primary">{editing ? 'Update' : 'Save New Location'}</button>
             {editing && <button type="button" className="btn btn-outline" onClick={() => { setEditing(null); setFormData({ id: '', name: '', hq: '', volunteers: '', coordinator: '', phone: '', programs: '' }); }}>Cancel</button>}
           </div>
         </form>
@@ -106,22 +108,36 @@ const PresenceLocationManager = ({ token }) => {
         <table style={{ width: '100%', borderCollapse: 'collapse', color: '#fff' }}>
           <thead>
             <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-              <th style={{ padding: '12px', textAlign: 'left', color: '#15F5BA' }}>ID</th><th style={{ padding: '12px', textAlign: 'left', color: '#15F5BA' }}>State Name</th><th style={{ padding: '12px', textAlign: 'left', color: '#15F5BA' }}>Headquarters</th><th style={{ padding: '12px', textAlign: 'left', color: '#15F5BA' }}>Volunteers</th><th style={{ padding: '12px', textAlign: 'left', color: '#15F5BA' }}>Coordinator</th><th style={{ padding: '12px', textAlign: 'left', color: '#15F5BA' }}>Phone</th>
+              <th style={{ padding: '12px', textAlign: 'left', color: '#15F5BA' }}>State Location</th>
+              <th style={{ padding: '12px', textAlign: 'left', color: '#15F5BA' }}>Headquarters</th>
+              <th style={{ padding: '12px', textAlign: 'left', color: '#15F5BA' }}>Coordinator</th>
+              <th style={{ padding: '12px', textAlign: 'center', color: '#15F5BA' }}>Volunteers</th>
               <th style={{ padding: '12px', textAlign: 'right', color: '#15F5BA' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
             {items.map(item => (
               <tr key={item.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                <td style={{ padding: '12px' }}>{item.id}</td><td style={{ padding: '12px' }}>{item.name}</td><td style={{ padding: '12px' }}>{item.hq}</td><td style={{ padding: '12px' }}>{item.volunteers}</td><td style={{ padding: '12px' }}>{item.coordinator}</td><td style={{ padding: '12px' }}>{item.phone}</td>
+                <td style={{ padding: '12px' }}>
+                  <div style={{ fontWeight: 'bold' }}>{item.name}</div>
+                  <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)' }}>ID: {item.id}</div>
+                </td>
+                <td style={{ padding: '12px' }}>{item.hq}</td>
+                <td style={{ padding: '12px' }}>
+                  <div>{item.coordinator}</div>
+                  <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)' }}>{item.phone}</div>
+                </td>
+                <td style={{ padding: '12px', textAlign: 'center' }}>
+                  <span style={{ background: 'rgba(21, 245, 186, 0.1)', color: '#15F5BA', padding: '4px 8px', borderRadius: '4px', fontSize: '0.85rem' }}>{item.volunteers}</span>
+                </td>
                 <td style={{ padding: '12px', textAlign: 'right' }}>
-                  <button onClick={() => editItem(item)} style={{ background: 'none', border: 'none', color: '#f97316', cursor: 'pointer', marginRight: '15px' }}><i className="fa-solid fa-pen"></i></button>
-                  <button onClick={() => handleDelete(item.id)} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer' }}><i className="fa-solid fa-trash"></i></button>
+                  <button onClick={() => editItem(item)} style={{ background: 'rgba(249, 115, 22, 0.1)', border: '1px solid rgba(249, 115, 22, 0.2)', color: '#f97316', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer', marginRight: '8px' }}><i className="fa-solid fa-pen"></i> Edit</button>
+                  <button onClick={() => handleDelete(item.id)} style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', color: '#ef4444', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer' }}><i className="fa-solid fa-trash"></i></button>
                 </td>
               </tr>
             ))}
             {items.length === 0 && !loading && (
-              <tr><td colSpan="7" style={{ padding: '20px', textAlign: 'center', color: 'rgba(255,255,255,0.5)' }}>No items found.</td></tr>
+              <tr><td colSpan="5" style={{ padding: '30px', textAlign: 'center', color: 'rgba(255,255,255,0.5)' }}>No locations found. Add one above.</td></tr>
             )}
           </tbody>
         </table>
