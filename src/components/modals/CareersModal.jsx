@@ -47,27 +47,27 @@ const CareersModal = () => {
               <p>There are currently no active job openings. Please check back later!</p>
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', margin: '15px' }}>
               {jobs.map(job => (
                 <div key={job.id} style={{ 
-                  backgroundColor: '#f8f9fa', 
+                  backgroundColor: 'rgba(255, 255, 255, 0.05)', 
                   padding: '24px', 
                   borderRadius: '12px', 
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
-                  border: '1px solid rgba(0,0,0,0.1)',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '16px'
                 }}>
                   <div>
-                    <span style={{ display: 'inline-block', backgroundColor: 'rgba(249, 115, 22, 0.1)', color: 'var(--primary-orange)', padding: '4px 12px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    <span style={{ display: 'inline-block', backgroundColor: 'rgba(249, 115, 22, 0.2)', color: 'var(--primary-orange)', padding: '5px 12px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 'bold', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                       <i className="fa-solid fa-building"></i> {job.dept}
                     </span>
-                    <h4 style={{ margin: '0 0 8px 0', color: 'var(--primary-blue)', fontSize: '1.4rem', lineHeight: '1.3', fontWeight: '800' }}>
+                    <h4 style={{ margin: '0 0 10px 0', color: '#ffffff', fontSize: '1.4rem', lineHeight: '1.3', fontWeight: '800' }}>
                       {job.title}
                     </h4>
                     {job.loc && (
-                      <div style={{ color: 'var(--text-light)', fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '500' }}>
+                      <div style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '500' }}>
                         <i className="fa-solid fa-location-dot" style={{ color: 'var(--primary-orange)' }}></i> {job.loc}
                       </div>
                     )}
