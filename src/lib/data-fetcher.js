@@ -156,6 +156,42 @@ export async function getWorkDetail(id) {
       return newDetail.toJSON();
     }
     
+    // If not found and it is livelihood, create the default directly
+    if (id === 'work-livelihood') {
+      const defaultLivelihoodData = {
+        id: 'work-livelihood',
+        bannerTitle: 'From Struggle to Strength: Elevating Lives.',
+        whyTitle: 'Why Sustainable Livelihood ?',
+        whyText: 'Livelihood refers to the means by which individuals or households meet their basic needs, such as food, clothing, shelter, and other essentials, while also seeking to improve their quality of life. It encompasses the activities, resources, and capabilities that people use to make a living and sustain themselves and their families.\n\nSustainable livelihoods are the cornerstone of resilient communities and a balanced global ecosystem. They represent more than mere survival; they embody the principles of equity, resilience, and environmental stewardship. Whether they are economic, environmental, or social, by diversifying income sources and building capacities, communities become better equipped to handle adversity, reducing the risk of falling into poverty traps due to unforeseen events.\n\nThe Sustainable Development Goals (SDGs), also known as the Global Goals, are a set of 17 interconnected global goals designed to be a "blueprint to achieve a better and more sustainable future for all." Adopted by all United Nations Member States in 2015, these goals are part of the 2030 Agenda for Sustainable Development, which aims to address various global challenges, including poverty, Hunger, Good Health, Quality Education etc. Emyris Foundation plays its part to achieve this Global Goals in assisting and coordinating various Organizations and working on same.',
+        sdgGrid: [
+          { title: 'Highlights Gap', text: 'Work with community to identify gap in terms of employability. Prepare a blueprint in terms of availability, accessibility, acceptability, and adaptability.' },
+          { title: 'Support In Skill development', text: 'Invest in IDENTIFIED GROUP to improve employability. Core Focus Area – Communication Skill, Digital Awareness, Mock Interviews, Placement facilitation, and Post Placement Support.' },
+          { title: 'Scholarships and Grants', text: 'Establish programs to fund education for marginalized groups, ensuring that financial barriers do not impede access to further skill development.' },
+          { title: 'Special Needs Skill Program', text: 'Advocate for and fund programs that cater to children with disabilities, ensuring they have access to education and skill development to ensure employability.' },
+          { title: 'Awareness Campaign', text: 'Run campaigns to educate communities on the importance of education with soft skills and rights associated with it, reducing dropout rates through increased understanding and community valuation of education.' }
+        ],
+        impactMedia: [
+          { type: 'image', url: '/Emyris Foundation Photos/livelihood_impact_1.webp' }
+        ],
+        reachStats: [
+          { count: '2', label: 'Groups', color: '#facc15' },
+          { count: '1', label: 'states', color: '#d1d5db' },
+          { count: '1', label: 'projects', color: '#fbcfe8' },
+          { count: '4', label: 'Future Target Group', color: '#fca5a5' }
+        ],
+        testimonials: [
+          { name: 'Ravi', text: 'Happy to share that now I am confident to face any interview after gone through the training session conducted by Emyris Foundation. I am sure this program is going to help many like me.' },
+          { name: 'Trainee 2', text: 'The mock interviews prepared me perfectly for my new job.' },
+          { name: 'Trainee 3', text: 'Digital awareness classes completely changed how I find opportunities.' },
+          { name: 'Trainee 4', text: 'The placement support helped me secure a steady income for my family.' }
+        ],
+        videos: []
+      };
+      
+      const newDetail = await WorkDetail.create(defaultLivelihoodData);
+      return newDetail.toJSON();
+    }
+    
     return null;
   } catch (error) {
     console.error('getWorkDetail error:', error);
