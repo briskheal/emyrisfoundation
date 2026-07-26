@@ -98,7 +98,7 @@ const Header = () => {
             <div className="dropdown-menu">
               <a href="#" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); openModal('volunteer'); }}>Join as Volunteer</a>
               <a href="#" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); openModal('internship'); }}>Apply for Internship</a>
-              <a href="#" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); openModal('job'); }}>Work with Us</a>
+              <a href="#" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); openModal('careers'); }}>Work with Us</a>
             </div>
           </div>
 

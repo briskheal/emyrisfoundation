@@ -17,6 +17,7 @@ import ContactSubmissionsManager from './admin/ContactSubmissionsManager';
 import ApplicationManager from './admin/ApplicationManager';
 import CampaignRegistrationManager from './admin/CampaignRegistrationManager';
 import GalleryManager from './admin/GalleryManager';
+import JobManager from './admin/JobManager';
 import { compressImage } from '../lib/imageCompressor';
 
 const AdminPanel = () => {
@@ -266,6 +267,7 @@ const AdminPanel = () => {
     { id: 'mentors', label: 'Mentors', icon: 'fa-chalkboard-user' },
     { id: 'work', label: 'Our Work', icon: 'fa-briefcase' },
     { id: 'campaigns', label: 'Campaigns', icon: 'fa-bullhorn' },
+    { id: 'careers', label: 'Careers & Jobs', icon: 'fa-briefcase' },
     { id: 'publications', label: 'Publications', icon: 'fa-file-pdf' },
     { id: 'presence', label: 'Presence / Locations', icon: 'fa-location-dot' },
     { id: 'content', label: 'Page Content', icon: 'fa-align-left' },
@@ -372,6 +374,7 @@ const AdminPanel = () => {
         {activeTab === 'applications' && <ApplicationManager token={token} />}
         {activeTab === 'campaign_regs' && <CampaignRegistrationManager token={token} />}
         {activeTab === 'gallery' && <GalleryManager token={token} />}
+        {activeTab === 'careers' && <JobManager token={token} />}
         {activeTab === 'donations' && userRole === 'superadmin' && <DonationsManager token={token} />}
         {activeTab === 'donations' && userRole !== 'superadmin' && (
           <div style={{ textAlign: 'center', padding: '60px', color: '#ef4444' }}>

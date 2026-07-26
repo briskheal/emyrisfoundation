@@ -6,6 +6,7 @@ import VolunteerModal from './modals/VolunteerModal';
 import InternshipModal from './modals/InternshipModal';
 import ConsentModal from './modals/ConsentModal';
 import JobModal from './modals/JobModal';
+import CareersModal from './modals/CareersModal';
 
 const Modals = () => {
   const { activeModal, closeModal } = useModals();
@@ -29,6 +30,7 @@ const Modals = () => {
       <VolunteerModal />
       <InternshipModal />
       <ConsentModal />
+      <CareersModal />
       <JobModal />
     </>
   );
