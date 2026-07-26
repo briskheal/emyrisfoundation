@@ -18,8 +18,6 @@ const InternshipModal = () => {
     reasons: [], activityType: '', personality: ''
   });
 
-  if (activeModal !== 'internship') return null;
-
   React.useEffect(() => {
     if (activeModal === 'internship' && step === 3) {
       setNum1(Math.floor(Math.random() * 10) + 1);
@@ -27,6 +25,8 @@ const InternshipModal = () => {
       setCaptcha('');
     }
   }, [activeModal, step]);
+
+  if (activeModal !== 'internship') return null;
 
   const handleNextStep1 = (e) => { e.preventDefault(); setStep(2); };
   const handleNextStep2 = (e) => { e.preventDefault(); setStep(3); };

@@ -14,8 +14,6 @@ const VolunteerModal = () => {
 
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', address: '', pincode: '', capacity: '' });
 
-  if (activeModal !== 'volunteer') return null;
-
   React.useEffect(() => {
     if (activeModal === 'volunteer') {
       setNum1(Math.floor(Math.random() * 10) + 1);
@@ -23,6 +21,8 @@ const VolunteerModal = () => {
       setCaptcha('');
     }
   }, [activeModal]);
+
+  if (activeModal !== 'volunteer') return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -15,8 +15,6 @@ const JobModal = () => {
 
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', city: '', pincode: '', experience: '' });
 
-  if (activeModal !== 'job') return null;
-
   React.useEffect(() => {
     if (activeModal === 'job') {
       setNum1(Math.floor(Math.random() * 10) + 1);
@@ -25,6 +23,8 @@ const JobModal = () => {
       setFile(null);
     }
   }, [activeModal]);
+
+  if (activeModal !== 'job') return null;
 
   const jobTitle = modalData || 'Position Name';
 
