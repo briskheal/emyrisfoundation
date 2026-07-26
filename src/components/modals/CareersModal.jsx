@@ -26,7 +26,7 @@ const CareersModal = () => {
   if (activeModal !== 'careers') return null;
 
   return (
-    <div className="modal-overlay" onClick={closeModal} style={{ zIndex: 1100 }}>
+    <div className="modal-overlay open" onClick={closeModal} style={{ zIndex: 1100, display: 'flex' }}>
       <div className="modal-content donate-modal-content" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '800px', backgroundColor: 'var(--bg-light)' }}>
         <button className="modal-close" onClick={closeModal}>
           <i className="fa-solid fa-times"></i>
