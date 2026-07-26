@@ -193,9 +193,9 @@ export async function getWorkDetail(id) {
     }
     
     // If not found and it is women-empowerment, create the default directly
-    if (id === 'work-women-empowerment') {
+    if (id === 'work-women') {
       const defaultWomenData = {
-        id: 'work-women-empowerment',
+        id: 'work-women',
         bannerTitle: 'Her Rights, Her Choices, Her Voice.',
         whyTitle: 'Why Women Empowerment',
         whyText: 'Women\'s empowerment is not just about gender equity; it\'s about leveraging the full potential of a nation\'s human capital, leading to comprehensive development that benefits every aspect of society. It\'s an investment that yields dividends in economic prosperity, social harmony, and global competitiveness.\n\n"Her Rights, Her Choices, Her Voice." UNDP highlight the importance of legal rights for women, ensuring they have the same legal protections and opportunities as men. Enhancing Women\'s ability to make choices that affect their economic, social, and personal lives, which in turn benefits families and communities. Giving Space to Her voice to express opinions, influence society, and contribute to policy-making and nation building is important to build an inclusive society.\n\nEmyris Foundation has initiated a program called "Shiksha Hi Surakhya", a grassroots movement that not only educates but also empowers underprivileged communities through a blend of cultural, educational, and safety-focused initiatives. This approach respects and builds upon the social fabric of these communities, ensuring sustainability and broader impact.',
@@ -229,9 +229,9 @@ export async function getWorkDetail(id) {
     }
     
     // If not found and it is farmers-connect, create the default directly
-    if (id === 'work-farmers-connect') {
+    if (id === 'work-farmers') {
       const defaultFarmersData = {
-        id: 'work-farmers-connect',
+        id: 'work-farmers',
         bannerTitle: 'Empowering Earth\'s Stewards',
         whyTitle: 'Why Farmer\'s Connect?',
         whyText: 'In India – we are proud of our agricultural heritage however the harsh realities of farmer distress, underscoring the urgent needs for comprehensive, effective agricultural policies those truly uplift farmers, aligning with the broader goals of nation-building. Protecting farmers\' interests is not just about economic support but ensuring their voices are heard in shaping agricultural policy, which directly influences national food security, economic stability, and environmental health. Farmers are the backbone of any nation\'s agricultural sector, which is often the foundation of its economy, particularly in developing countries like us.\n\nAgriculture contributes significantly to GDP, employment, and rural development. Plays a crucial role in environmental health, including soil conservation, water management, and biodiversity. Where direct benefits like subsidies, loans, and insurance schemes (like PM-KISAN, Fasal Bima Yojana), infrastructure development for irrigation and market linkage, and promoting organic and sustainable farming practices is yielding positive outcomes, challenges remain, particularly in equitable distribution of benefits, addressing climate change impacts, and ensuring farmers have a voice in policy-making.',
