@@ -50,28 +50,41 @@ const CareersModal = () => {
               {jobs.map(job => (
                 <div key={job.id} style={{ 
                   backgroundColor: 'var(--white)', 
-                  padding: '20px', 
-                  borderRadius: '10px', 
-                  boxShadow: '0 4px 15px rgba(0,0,0,0.05)',
-                  border: '1px solid rgba(0,0,0,0.05)'
+                  padding: '24px', 
+                  borderRadius: '12px', 
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+                  border: '1px solid rgba(0,0,0,0.04)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '16px'
                 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '10px' }}>
-                    <div>
-                      <h4 style={{ margin: '0 0 5px 0', color: 'var(--primary-blue)', fontSize: '1.2rem', lineHeight: '1.4' }}>
-                        {job.title} {job.loc && <span style={{ color: 'var(--text-light)', fontWeight: 'normal', fontSize: '1.1rem' }}>in {job.loc}</span>}
-                      </h4>
-                      <div style={{ display: 'flex', gap: '15px', fontSize: '0.85rem', color: 'var(--text-light)', marginBottom: '10px' }}>
-                        <span><i className="fa-solid fa-building"></i> {job.dept}</span>
+                  <div>
+                    <span style={{ display: 'inline-block', backgroundColor: 'rgba(249, 115, 22, 0.1)', color: 'var(--primary-orange)', padding: '4px 12px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 'bold', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                      <i className="fa-solid fa-building"></i> {job.dept}
+                    </span>
+                    <h4 style={{ margin: '0 0 8px 0', color: 'var(--primary-blue)', fontSize: '1.4rem', lineHeight: '1.3', fontWeight: '800' }}>
+                      {job.title}
+                    </h4>
+                    {job.loc && (
+                      <div style={{ color: 'var(--text-light)', fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '500' }}>
+                        <i className="fa-solid fa-location-dot" style={{ color: 'var(--primary-orange)' }}></i> {job.loc}
                       </div>
-                    </div>
+                    )}
+                  </div>
+                  
+                  <p style={{ margin: '0', fontSize: '0.95rem', color: 'var(--text-dark)', lineHeight: '1.6' }}>
+                    {job.desc}
+                  </p>
+
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '8px' }}>
                     <button 
-                      className="btn btn-primary btn-sm" 
+                      className="btn btn-primary" 
                       onClick={() => openModal('job', job.title)}
+                      style={{ padding: '10px 24px', borderRadius: '8px', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '8px' }}
                     >
-                      Apply Now <i className="fa-solid fa-paper-plane"></i>
+                      Apply Now <i className="fa-solid fa-arrow-right"></i>
                     </button>
                   </div>
-                  <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-dark)' }}>{job.desc}</p>
                 </div>
               ))}
             </div>
