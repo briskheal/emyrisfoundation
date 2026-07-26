@@ -216,6 +216,7 @@ export const JobOpening = sequelize.define('JobOpening', {
   title: DataTypes.STRING,
   dept: DataTypes.STRING,
   loc: DataTypes.STRING,
+  desc: DataTypes.TEXT,
   active: { type: DataTypes.BOOLEAN, defaultValue: true },
   order: { type: DataTypes.INTEGER, defaultValue: 0 },
 });

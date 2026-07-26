@@ -52,7 +52,21 @@ export async function GET() {
     await seedData(Campaign, 'campaigns.json');
     await seedData(WorkActivity, 'work.json');
     await seedData(PresenceLocation, 'presence.json');
-    await seedData(JobOpening, 'jobs.json');
+    
+    // Custom seed logic for jobs to ensure descriptions are populated if missing
+    const jobsPath = path.join(process.cwd(), 'src', 'data', 'jobs.json');
+    if (fs.existsSync(jobsPath)) {
+      const jobsData = JSON.parse(fs.readFileSync(jobsPath, 'utf8'));
+      const jobsCount = await JobOpening.count();
+      if (jobsCount === 0) {
+        await JobOpening.bulkCreate(jobsData.map((item, index) => ({ ...item, order: index })));
+      } else {
+        // Recover missing descriptions due to schema update
+        for (const item of jobsData) {
+          await JobOpening.update({ desc: item.desc }, { where: { id: item.id, desc: null } });
+        }
+      }
+    }
 
     return NextResponse.json({
       success: true,
