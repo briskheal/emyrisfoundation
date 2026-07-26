@@ -3359,3 +3359,48 @@ textarea.form-control {
         font-size: 0.88rem;
     }
 }
+
+@media (max-width: 768px) {
+    .gallery-fixed-track {
+        flex-direction: column;
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 800px;
+    }
+    
+    .gallery-card {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+
+    .hide-on-mobile {
+        display: none !important;
+    }
+
+    .show-on-mobile {
+        display: flex !important;
+    }
+
+    .gallery-fixed-container {
+        padding: 40px 20px;
+    }
+
+    .gallery-nav-btn.up {
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .gallery-nav-btn.down {
+        bottom: -10px;
+        top: auto;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media (min-width: 769px) {
+    .show-on-mobile {
+        display: none !important;
+    }
+}

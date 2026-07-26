@@ -58,6 +58,14 @@ const ActivityGallery = () => {
     if (scrollRef.current) scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' });
   };
 
+  const scrollUp = () => {
+    if (scrollRef.current) scrollRef.current.scrollBy({ top: -300, behavior: 'smooth' });
+  };
+
+  const scrollDown = () => {
+    if (scrollRef.current) scrollRef.current.scrollBy({ top: 300, behavior: 'smooth' });
+  };
+
   return (
     <section id="activity-gallery" className="gallery-section scroll-spy">
       <div className="container" style={{ maxWidth: '1400px' }}>
@@ -109,9 +117,14 @@ const ActivityGallery = () => {
           ) : media.length > 0 ? (
             <>
               {media.length > 3 && (
-                <button className="gallery-nav-btn left" onClick={scrollLeft}>
-                  <i className="fa-solid fa-chevron-left"></i>
-                </button>
+                <>
+                  <button className="gallery-nav-btn left hide-on-mobile" onClick={scrollLeft} title="Scroll Left">
+                    <i className="fa-solid fa-chevron-left"></i>
+                  </button>
+                  <button className="gallery-nav-btn up show-on-mobile" onClick={scrollUp} title="Scroll Up">
+                    <i className="fa-solid fa-chevron-up"></i>
+                  </button>
+                </>
               )}
               
               <div className="gallery-fixed-track" ref={scrollRef}>
@@ -155,9 +168,14 @@ const ActivityGallery = () => {
               </div>
 
               {media.length > 3 && (
-                <button className="gallery-nav-btn right" onClick={scrollRight}>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </button>
+                <>
+                  <button className="gallery-nav-btn right hide-on-mobile" onClick={scrollRight} title="Scroll Right">
+                    <i className="fa-solid fa-chevron-right"></i>
+                  </button>
+                  <button className="gallery-nav-btn down show-on-mobile" onClick={scrollDown} title="Scroll Down">
+                    <i className="fa-solid fa-chevron-down"></i>
+                  </button>
+                </>
               )}
             </>
           ) : (
