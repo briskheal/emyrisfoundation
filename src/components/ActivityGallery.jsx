@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // Helper function to extract YouTube ID
 const getYoutubeEmbedUrl = (url) => {
@@ -22,6 +22,7 @@ const ActivityGallery = () => {
   const [filterType, setFilterType] = useState('all');
   const [filterYear, setFilterYear] = useState(new Date().getFullYear().toString());
   const [filterMonth, setFilterMonth] = useState(new Date().toLocaleString('default', { month: 'long' }));
+  const scrollRef = useRef(null);
 
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const years = Array.from({length: 10}, (_, i) => (new Date().getFullYear() - i).toString());
@@ -47,6 +48,14 @@ const ActivityGallery = () => {
     };
     fetchGallery();
   }, [filterType, filterYear, filterMonth]);
+
+  const scrollLeft = () => {
+    if (scrollRef.current) scrollRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+  };
+
+  const scrollRight = () => {
+    if (scrollRef.current) scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+  };
 
   return (
     <section id="activity-gallery" className="gallery-section scroll-spy">
@@ -90,49 +99,68 @@ const ActivityGallery = () => {
         </div>
 
         {/* Fixed Results Block */}
-        <div className="gallery-fixed-container">
+        <div className="gallery-fixed-container" style={{ position: 'relative' }}>
           {loading ? (
-            <div className="loading-state" style={{ height: '300px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div className="loading-state" style={{ height: '350px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <i className="fa-solid fa-circle-notch fa-spin"></i>
               <p>Loading archives...</p>
             </div>
           ) : media.length > 0 ? (
-            <div className="gallery-fixed-grid">
-              {media.map(item => (
-                <div key={item.id} className="netflix-card">
-                  <div className="netflix-card-media">
-                    {item.type === 'photo' ? (
-                      <img src={item.url} alt={item.title} loading="lazy" />
-                    ) : (
-                      <div className="netflix-video-wrapper">
-                        <iframe 
-                          src={getYoutubeEmbedUrl(item.url)} 
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                          allowFullScreen
-                          title={item.title}
-                        ></iframe>
-                        <div className="video-overlay-blocker"></div>
-                      </div>
-                    )}
-                    <div className="netflix-card-overlay">
-                      <div className="overlay-content">
-                        <div className="media-type-badge">
-                          {item.type === 'photo' ? <i className="fa-solid fa-camera"></i> : <i className="fa-solid fa-play"></i>}
+            <>
+              {media.length > 3 && (
+                <button className="gallery-nav-btn left" onClick={scrollLeft}>
+                  <i className="fa-solid fa-chevron-left"></i>
+                </button>
+              )}
+              
+              <div className="gallery-fixed-track" ref={scrollRef}>
+                {media.map(item => (
+                  <div key={item.id} className="gallery-card">
+                    <div className="gallery-card-media">
+                      {item.type === 'photo' ? (
+                        <img src={item.url} alt={item.title} loading="lazy" />
+                      ) : (
+                        <div className="netflix-video-wrapper">
+                          <iframe 
+                            src={getYoutubeEmbedUrl(item.url)} 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen
+                            title={item.title}
+                          ></iframe>
+                          <div className="video-overlay-blocker"></div>
                         </div>
-                        <h5 className="media-title">{item.title || 'Activity Archive'}</h5>
-                        {item.type === 'video' && (
-                          <a href={item.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm watch-btn">
-                            Watch on YouTube
-                          </a>
-                        )}
+                      )}
+                      
+                      {/* Only show badge inside overlay, remove title from here */}
+                      <div className="netflix-card-overlay">
+                        <div className="overlay-content">
+                          <div className="media-type-badge">
+                            {item.type === 'photo' ? <i className="fa-solid fa-camera"></i> : <i className="fa-solid fa-play"></i>}
+                          </div>
+                          {item.type === 'video' && (
+                            <a href={item.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm watch-btn" style={{ marginTop: '10px' }}>
+                              Watch on YouTube
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </div>
+                    {/* Title permanently below the image */}
+                    <div className="gallery-card-info">
+                      <h5 className="gallery-card-title" title={item.title || 'Activity Archive'}>{item.title || 'Activity Archive'}</h5>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+
+              {media.length > 3 && (
+                <button className="gallery-nav-btn right" onClick={scrollRight}>
+                  <i className="fa-solid fa-chevron-right"></i>
+                </button>
+              )}
+            </>
           ) : (
-            <div className="empty-state" style={{ height: '300px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div className="empty-state" style={{ height: '350px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <i className="fa-regular fa-folder-open"></i>
               <p>No visual archives found for this selection.</p>
             </div>

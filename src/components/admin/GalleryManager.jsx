@@ -22,6 +22,7 @@ const GalleryManager = ({ token }) => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [progressText, setProgressText] = useState('');
   const fileInputRef = useRef(null);
   const [formData, setFormData] = useState({
     type: 'photo',
@@ -60,67 +61,96 @@ const GalleryManager = ({ token }) => {
     e.preventDefault();
     
     setUploading(true);
-    let finalUrl = '';
+    setProgressText('Processing...');
 
     try {
       if (formData.type === 'photo') {
-        const file = fileInputRef.current?.files[0];
-        if (!file) {
+        const files = fileInputRef.current?.files;
+        if (!files || files.length === 0) {
           alert('Please select an image file to upload');
           setUploading(false);
+          setProgressText('');
           return;
         }
         
-        const data = new FormData();
-        data.append('file', file);
-  
-        // Upload file
-        const uploadRes = await fetch('/api/upload', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}` },
-          body: data
-        });
-  
-        if (!uploadRes.ok) throw new Error('File upload failed');
-        const uploadData = await uploadRes.json();
-        finalUrl = uploadData.url;
+        for (let i = 0; i < files.length; i++) {
+          setProgressText(`Uploading & Optimizing ${i + 1} of ${files.length}...`);
+          const file = files[i];
+          const data = new FormData();
+          data.append('file', file);
+    
+          // Upload file
+          const uploadRes = await fetch('/api/upload', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` },
+            body: data
+          });
+    
+          if (!uploadRes.ok) throw new Error(`File ${i + 1} upload failed`);
+          const uploadData = await uploadRes.json();
+          const finalUrl = uploadData.url;
+
+          // Save media record
+          const mediaRes = await fetch('/api/gallery', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              type: formData.type,
+              title: formData.title ? (files.length > 1 ? `${formData.title} ${i + 1}` : formData.title) : `Photo ${i + 1}`,
+              year: formData.year,
+              month: formData.month,
+              url: finalUrl
+            })
+          });
+          if (!mediaRes.ok) throw new Error(`Failed to save record for file ${i + 1}`);
+        }
+
+        setFormData({ ...formData, title: '', youtubeUrl: '' });
+        if (fileInputRef.current) fileInputRef.current.value = '';
+        fetchMedia();
+
       } else {
         // Video
         if (!formData.youtubeUrl) {
           alert('Please provide a valid YouTube URL');
           setUploading(false);
+          setProgressText('');
           return;
         }
-        finalUrl = formData.youtubeUrl;
-      }
+        const finalUrl = formData.youtubeUrl;
 
-      // Save media record
-      const mediaRes = await fetch('/api/gallery', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          type: formData.type,
-          title: formData.title,
-          year: formData.year,
-          month: formData.month,
-          url: finalUrl
-        })
-      });
+        // Save media record
+        const mediaRes = await fetch('/api/gallery', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            type: formData.type,
+            title: formData.title,
+            year: formData.year,
+            month: formData.month,
+            url: finalUrl
+          })
+        });
 
-      if (mediaRes.ok) {
-        setFormData({ ...formData, title: '', youtubeUrl: '' });
-        if (fileInputRef.current) fileInputRef.current.value = '';
-        fetchMedia();
-      } else {
-        throw new Error('Failed to save media record');
+        if (mediaRes.ok) {
+          setFormData({ ...formData, title: '', youtubeUrl: '' });
+          if (fileInputRef.current) fileInputRef.current.value = '';
+          fetchMedia();
+        } else {
+          throw new Error('Failed to save media record');
+        }
       }
     } catch (err) {
       alert(err.message);
     }
     setUploading(false);
+    setProgressText('');
   };
 
   const handleDelete = async (id) => {
@@ -180,8 +210,8 @@ const GalleryManager = ({ token }) => {
           
           {formData.type === 'photo' ? (
             <div style={{ flex: '1 1 100%' }}>
-              <label style={{ display: 'block', marginBottom: '5px' }}>Image File</label>
-              <input type="file" ref={fileInputRef} accept="image/*" style={{ width: '100%', padding: '6px' }} />
+              <label style={{ display: 'block', marginBottom: '5px' }}>Image Files (Select multiple)</label>
+              <input type="file" ref={fileInputRef} accept="image/*" multiple style={{ width: '100%', padding: '6px' }} />
             </div>
           ) : (
             <div style={{ flex: '1 1 100%' }}>
@@ -192,7 +222,7 @@ const GalleryManager = ({ token }) => {
 
           <div style={{ flex: '1 1 100%', display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
             <button type="submit" className="btn btn-primary" disabled={uploading}>
-              {uploading ? 'Processing...' : (formData.type === 'photo' ? 'Upload Photo' : 'Add Video')}
+              {uploading ? progressText : (formData.type === 'photo' ? 'Upload Photos' : 'Add Video')}
             </button>
           </div>
         </form>
@@ -208,18 +238,15 @@ const GalleryManager = ({ token }) => {
             )}
             <div style={{ marginTop: '10px' }}>
               <p style={{ margin: 0, fontWeight: 'bold', fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.title || 'Untitled'}</p>
-              <p style={{ margin: 0, fontSize: '0.8rem', color: 'gray' }}>{item.month} {item.year}</p>
+              <p style={{ margin: 0, fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)' }}>{item.month} {item.year}</p>
             </div>
             <button 
               onClick={() => handleDelete(item.id)}
-              style={{ position: 'absolute', top: '15px', right: '15px', background: 'red', color: 'white', border: 'none', borderRadius: '50%', width: '25px', height: '25px', cursor: 'pointer', zIndex: 10 }}
-              title="Delete"
-            >
-              <i className="fa-solid fa-xmark"></i>
+              style={{ position: 'absolute', top: '15px', right: '15px', background: 'rgba(255,0,0,0.8)', border: 'none', color: 'white', borderRadius: '50%', width: '30px', height: '30px', cursor: 'pointer' }}>
+              <i className="fa-solid fa-trash"></i>
             </button>
           </div>
         ))}
-        {media.length === 0 && <p style={{ gridColumn: '1 / -1' }}>No media found.</p>}
       </div>
     </div>
   );
