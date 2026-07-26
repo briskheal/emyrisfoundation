@@ -210,3 +210,12 @@ export const GalleryMedia = sequelize.define('GalleryMedia', {
   month: DataTypes.STRING,
   date: { type: DataTypes.DATE, defaultValue: Sequelize.NOW },
 });
+
+export const JobOpening = sequelize.define('JobOpening', {
+  id: { type: DataTypes.STRING, primaryKey: true },
+  title: DataTypes.STRING,
+  dept: DataTypes.STRING,
+  loc: DataTypes.STRING,
+  active: { type: DataTypes.BOOLEAN, defaultValue: true },
+  order: { type: DataTypes.INTEGER, defaultValue: 0 },
+});
