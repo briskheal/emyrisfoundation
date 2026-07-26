@@ -3552,8 +3552,8 @@ textarea.form-control {
 }
 /* Work Detail Page Styles */
 .work-detail-hero {
-  height: 60vh;
-  min-height: 400px;
+  height: 40vh;
+  min-height: 250px;
   background-size: cover;
   background-position: center;
   position: relative;
