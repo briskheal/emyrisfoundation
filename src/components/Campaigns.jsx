@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useModals } from '../context/ModalContext';
 import fallbackCampaigns from '../data/campaigns.json';
 
@@ -58,9 +59,9 @@ const Campaigns = ({ initialCampaigns }) => {
                         Request Counsel
                       </button>
                     ) : (
-                      <button className="btn btn-outline-orange btn-sm">Join Campaign</button>
+                      <button className="btn btn-outline-orange btn-sm" onClick={() => openModal('consent', c.title)}>Join Campaign</button>
                     )}
-                    <button className="btn btn-outline btn-sm">Details</button>
+                    <Link href={`/campaigns/${c.id}`} className="btn btn-outline btn-sm">Details</Link>
                   </div>
                 </div>
               </div>

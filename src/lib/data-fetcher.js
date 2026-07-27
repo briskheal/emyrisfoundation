@@ -1,4 +1,4 @@
-import { CorporateProfile, HeroSlide, Campaign, WorkActivity, PresenceLocation, WorkDetail } from './db';
+import { CorporateProfile, HeroSlide, Campaign, WorkActivity, PresenceLocation, WorkDetail, CampaignDetail } from './db';
 import fs from 'fs';
 import path from 'path';
 
@@ -270,3 +270,63 @@ export async function getWorkDetail(id) {
     return null;
   }
 }
+
+export async function getCampaignDetail(id) {
+  try {
+    let detail = await CampaignDetail.findByPk(id);
+    if (detail) {
+      return detail.toJSON();
+    }
+    
+    if (id === 'blood' || id === 'campaign-blood') {
+      const defaultBloodData = {
+        id: 'blood',
+        title: 'Blood Donation Camps',
+        motto: 'Be a Hero, Donate Blood.',
+        bannerMsg: 'Join Hands to create awareness and willingness to Donate Blood to Save Lives.',
+        introText: `The beauty of blood donation lies in its simplicity and accessibility. It requires no special skills, just a willingness to give a part of oneself for the greater good. Every drop donated is a testament to the community's commitment to life, to each other.\n\nSo, let's take a moment to reflect on the power we hold within us—the power to save lives. Let us not wait for a crisis to act; let's create a culture where giving blood is as routine as any other civic duty. By doing so, we not only protect our immediate community but also contribute to a global network of care and compassion.\n\nIn essence, blood donation camps are more than just events; they are celebrations of life, love, and community. They are a call to action for each of us to be a part of something larger than ourselves, to be a part of the heartbeat of our community. Let's keep this heartbeat strong, for in doing so, we keep our society alive, vibrant, and interconnected.\n\nCome and shower your love in saving someone’s life. Join Hand and Fill up the consent form to contact you to invite.`,
+        whyTitle: 'Why Healthy Volunteers Should Donate',
+        whyGrid: [
+          { title: 'Constant Need for Supplies', text: 'Hospitals require a steady supply of blood for surgeries, accident victims, childbirth complications, and treatments for various illnesses like anemia, cancer, or thalassemia.' },
+          { title: 'Limited Shelf Life', text: 'Blood components have a limited shelf life (e.g., red blood cells last about 42 days), necessitating continuous replenishment.' },
+          { title: 'Local Availability', text: 'Local donation camps ensure a diverse blood supply within the community, which is crucial for emergency situations where immediate access to blood is life-saving.' },
+          { title: 'Reducing Shortages', text: 'Blood shortages are common and can critically affect patient care. Regular donation camps help maintain a buffer stock.' },
+          { title: 'Volunteer Opportunities', text: 'It provides a platform for community members to volunteer, from organizing the event to comforting donors, enhancing community spirit.' }
+        ],
+        galleryPhotos: [
+          { url: '/Emyris Foundation Photos/blood-donor-day-poster-with-heart-blood-drop_1017-25357.webp', title: 'Blood Donation Drive' },
+          { url: '/Emyris Foundation Photos/low-angle-hands-holding-heart-shape-with-sky_23-2148635107.webp', title: 'Community Camp' }
+        ],
+        videos: []
+      };
+      const created = await CampaignDetail.create(defaultBloodData);
+      return created.toJSON();
+    }
+
+    const defaultOthers = {
+      id,
+      title: id === 'shiksha' ? 'Shiksha Hi Surakhya' : id === 'organ' ? 'Organ Donation Awareness' : id === 'plantation' ? 'Plantation & Sustainability' : 'Social Welfare & Mental Health',
+      motto: id === 'shiksha' ? 'Education is Protection' : id === 'organ' ? 'Eternal Impact, Organ Donation' : id === 'plantation' ? 'Nurture Nature' : 'Together We Grow, Together We Heal',
+      bannerMsg: `Join our mission to create real, measurable social impact through targeted grassroots interventions.`,
+      introText: `Our collaborative initiative is designed to mobilize community support and deliver direct assistance where it is most critically needed. By participating in this campaign, you help build resilient networks of solidarity, awareness, and long-term community transformation.\n\nWe invite all compassionate volunteers, partners, and well-wishers to step forward and play an active role in driving this change. Your engagement guarantees our collective success.`,
+      whyTitle: 'Why You Should Participate',
+      whyGrid: [
+        { title: 'Community Empowerment', text: 'Direct involvement fosters local self-reliance and strengthens communal bonds across generations.' },
+        { title: 'Sustainable Solutions', text: 'Our focused methodology addresses root challenges rather than merely alleviating superficial symptoms.' },
+        { title: 'Volunteer Leadership', text: 'Take charge of grassroots initiatives, organize local drives, and mentor peers within your neighborhood.' },
+        { title: 'Collective Advocacy', text: 'Amplify marginalized voices and raise essential public awareness on critical health and social issues.' },
+        { title: 'Long-term Impact', text: 'Create enduring legacies that continue enriching individual lives and broader communities for decades.' }
+      ],
+      galleryPhotos: [
+        { url: id === 'shiksha' ? '/Emyris Foundation Photos/modern-hand-drawn-education-concept_23-2147906438.avif' : id === 'organ' ? '/Emyris Foundation Photos/low-angle-hands-holding-heart-shape-with-sky_23-2148635107.webp' : id === 'plantation' ? '/Emyris Foundation Photos/environment-concept_23-2147517224.webp' : '/Emyris Foundation Photos/hands-composition-about-support_23-2150510481.webp', title: 'Campaign Activity' }
+      ],
+      videos: []
+    };
+    const created = await CampaignDetail.create(defaultOthers);
+    return created.toJSON();
+  } catch (error) {
+    console.error('getCampaignDetail error:', error);
+    return null;
+  }
+}
+

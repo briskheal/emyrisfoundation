@@ -220,6 +220,7 @@ export const JobOpening = sequelize.define('JobOpening', {
   active: { type: DataTypes.BOOLEAN, defaultValue: true },
   order: { type: DataTypes.INTEGER, defaultValue: 0 },
 });
+
 export const WorkDetail = sequelize.define('WorkDetail', {
   id: { type: DataTypes.STRING, primaryKey: true }, // e.g. 'work-education'
   bannerTitle: DataTypes.STRING,
@@ -229,5 +230,17 @@ export const WorkDetail = sequelize.define('WorkDetail', {
   impactMedia: DataTypes.JSON,
   reachStats: DataTypes.JSON,
   testimonials: DataTypes.JSON,
+  videos: DataTypes.JSON
+});
+
+export const CampaignDetail = sequelize.define('CampaignDetail', {
+  id: { type: DataTypes.STRING, primaryKey: true },
+  title: DataTypes.STRING,
+  motto: DataTypes.STRING,
+  bannerMsg: DataTypes.TEXT,
+  introText: DataTypes.TEXT,
+  whyTitle: DataTypes.STRING,
+  whyGrid: DataTypes.JSON,
+  galleryPhotos: DataTypes.JSON,
   videos: DataTypes.JSON
 });
