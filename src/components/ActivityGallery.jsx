@@ -69,28 +69,29 @@ const ActivityGallery = () => {
   return (
     <section id="activity-gallery" className="gallery-section scroll-spy">
       <div className="container" style={{ maxWidth: '1400px' }}>
-        <div className="section-title-wrapper text-center" style={{ marginBottom: '20px' }}>
-          <span className="section-subtitle">Visual Archives</span>
-          <h2 className="section-title">Our Activities</h2>
-          <div className="title-underline"></div>
+        <div className="section-title-wrapper text-center" style={{ marginBottom: '12px' }}>
+          <span className="section-subtitle" style={{ marginBottom: '2px', display: 'block' }}>Visual Archives</span>
+          <h2 className="section-title" style={{ marginBottom: '4px', fontSize: '2.2rem' }}>Our Activities</h2>
+          <div className="title-underline" style={{ margin: '0 auto' }}></div>
         </div>
         
         {/* Master Media Filters */}
-        <div className="gallery-filters-top" style={{ marginBottom: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
+        <div className="gallery-filters-top" style={{ marginBottom: '8px', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', gap: '12px' }}>
           
           {/* Type Filters */}
-          <div className="filter-group-horizontal" style={{ background: 'rgba(11, 25, 44, 0.4)', padding: '8px', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.05)', display: 'inline-flex' }}>
+          <div className="filter-group-horizontal" style={{ background: 'rgba(11, 25, 44, 0.4)', padding: '6px 10px', borderRadius: '30px', border: '1px solid rgba(255, 255, 255, 0.05)', display: 'inline-flex', gap: '6px' }}>
             <button className={`filter-chip gallery-filter-btn ${filterType === 'all' ? 'active' : ''}`} onClick={() => setFilterType('all')}>All Media</button>
             <button className={`filter-chip gallery-filter-btn ${filterType === 'photo' ? 'active' : ''}`} onClick={() => setFilterType('photo')}><i className="fa-solid fa-image"></i> Photos</button>
             <button className={`filter-chip gallery-filter-btn ${filterType === 'video' ? 'active' : ''}`} onClick={() => setFilterType('video')}><i className="fa-solid fa-brands fa-youtube"></i> Videos</button>
           </div>
           
           {/* Year & Month Dropdowns */}
-          <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             <select 
               className="gallery-filter-select"
               value={filterYear} 
               onChange={(e) => setFilterYear(e.target.value)}
+              style={{ padding: '6px 14px', margin: 0 }}
             >
               <option value="all">All Years</option>
               {years.map(y => <option key={y} value={y}>{y}</option>)}
@@ -100,6 +101,7 @@ const ActivityGallery = () => {
               className="gallery-filter-select"
               value={filterMonth} 
               onChange={(e) => setFilterMonth(e.target.value)}
+              style={{ padding: '6px 14px', margin: 0 }}
             >
               <option value="all">All Months</option>
               {months.map(m => <option key={m} value={m}>{m}</option>)}
