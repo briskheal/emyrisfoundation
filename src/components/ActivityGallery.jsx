@@ -71,7 +71,7 @@ const ActivityGallery = () => {
       <div className="container" style={{ maxWidth: '1400px' }}>
         <div className="section-title-wrapper text-center" style={{ marginBottom: '12px' }}>
           <span className="section-subtitle" style={{ marginBottom: '2px', display: 'block' }}>Visual Archives</span>
-          <h2 className="section-title" style={{ marginBottom: '4px', fontSize: '2.2rem' }}>Our Activities</h2>
+          <h2 className="section-title" style={{ marginBottom: '4px', fontSize: '2.2rem', color: '#ffffff' }}>Our Activities</h2>
           <div className="title-underline" style={{ margin: '0 auto' }}></div>
         </div>
         

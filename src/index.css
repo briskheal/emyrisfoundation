@@ -2892,6 +2892,10 @@ textarea.form-control {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.gallery-section .section-title {
+    color: #ffffff !important;
+}
+
 .gallery-filters-top {
     display: flex;
     flex-direction: row;
