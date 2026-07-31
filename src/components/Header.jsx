@@ -64,11 +64,11 @@ const Header = () => {
           <div className={`nav-dropdown ${activeDropdown === 'campaigns' ? 'active' : ''}`}>
             <Link href="/#campaigns" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'campaigns')}>Campaigns <i className="fa-solid fa-chevron-down"></i></Link>
             <div className="dropdown-menu">
-              <Link href="/campaigns/shiksha" onClick={() => setMobileMenuOpen(false)}>Shiksha Hi Surakhya</Link>
-              <Link href="/campaigns/blood" onClick={() => setMobileMenuOpen(false)}>Blood Donation</Link>
-              <Link href="/campaigns/organ" onClick={() => setMobileMenuOpen(false)}>Organ Donation</Link>
-              <Link href="/campaigns/plantation" onClick={() => setMobileMenuOpen(false)}>Plantation Awareness</Link>
-              <Link href="/campaigns/welfare" onClick={() => setMobileMenuOpen(false)}>Social Welfare</Link>
+              <Link href="/#campaigns" onClick={() => setMobileMenuOpen(false)}>Shiksha Hi Surakhya</Link>
+              <Link href="/#campaigns" onClick={() => setMobileMenuOpen(false)}>Blood Donation</Link>
+              <Link href="/#campaigns" onClick={() => setMobileMenuOpen(false)}>Organ Donation</Link>
+              <Link href="/#campaigns" onClick={() => setMobileMenuOpen(false)}>Plantation Awareness</Link>
+              <Link href="/#campaigns" onClick={() => setMobileMenuOpen(false)}>Social Welfare</Link>
             </div>
           </div>
 
