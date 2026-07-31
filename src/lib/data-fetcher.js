@@ -4,8 +4,23 @@ import path from 'path';
 
 export async function getCorporateData() {
   try {
+    // Automatically apply schema updates on the live database (Hostycare)
+    await CorporateProfile.sync({ alter: true });
+
     const data = await CorporateProfile.findOne();
-    if (data) return data.toJSON();
+    if (data) {
+      // Seed backend records directly
+      let needsSave = false;
+      if (!data.pan || data.pan === 'Loading...') { data.pan = 'AAICE2817L'; needsSave = true; }
+      if (!data.csr || data.csr === 'Loading...') { data.csr = 'CSR00078495'; needsSave = true; }
+      if (!data.cin || data.cin === 'Loading...') { data.cin = 'U88900GJ2024NPL153125'; needsSave = true; }
+      
+      if (needsSave) {
+        await data.save();
+      }
+      
+      return data.toJSON();
+    }
     return null;
   } catch (error) {
     console.error('Failed to get corporate data server-side:', error);
