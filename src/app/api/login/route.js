@@ -9,8 +9,8 @@ export const dynamic = 'force-dynamic';
 
 // Master credentials — always authoritative
 const DEFAULT_CREDS = {
-  admin:  { password: 'Omrutam@1306', role: 'superadmin' },
-  junior: { password: 'Junior@123',   role: 'junior' },
+  admin:  { password: process.env.ADMIN_PASS || 'Omrutam@1306', role: 'superadmin' },
+  junior: { password: process.env.JUNIOR_PASS || 'Junior@123',   role: 'junior' },
 };
 
 export async function POST(req) {
