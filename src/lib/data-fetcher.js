@@ -330,10 +330,27 @@ export async function getCampaignDetail(id) {
       { url: '/Emyris Foundation Photos/low-angle-hands-holding-heart-shape-with-sky_23-2148635107.webp', title: 'Community Camp' }
     ],
     videos: []
+  } : id === 'shiksha' ? {
+    id: 'shiksha',
+    title: 'Shiksha Hi Surakhya',
+    motto: 'Education is Protection',
+    bannerMsg: 'Join Hands to support Education Program of Underprivileged Children’s.',
+    introText: `"Siksha Hi Suraksha" translates to "Education is Protection," emphasizing the role of education as a fundamental safeguard for underprivileged children.\n\nSiksha Hi Suraksha: Education as the Bedrock for Underprivileged Children.\n\nIn the tapestry of human development, education stands out as a golden thread, weaving through the fabric of society to fortify its most vulnerable members. "Siksha Hi Suraksha" is not just a slogan; it's a clarion call for transformative action, particularly for those children who find themselves on the fringes of opportunity due to socio-economic disparities.\n\nEducation for underprivileged children transcends the traditional boundaries of learning. It's about empowerment, breaking cycles of poverty, and opening doors to a future where children can dream, aspire, and achieve. For these children, education isn't merely an option; it's a lifeline, a shield against the adversities of child labor, early marriage, and trafficking.`,
+    whyTitle: 'Purpose behind action:',
+    whyGrid: [
+      { title: 'Empowerment', text: 'Education equips children with the knowledge and skills necessary to navigate through life\'s challenges, fostering an environment where they can grow into informed, responsible citizens.' },
+      { title: 'Economic Upliftment', text: 'Educating children from underprivileged backgrounds is an investment in economic empowerment. It not only enhances their earning potential but also contributes to national economic growth.' },
+      { title: 'Social Integration', text: 'Education serves as a great equalizer, reducing social disparities by providing a common ground where all children can learn, play, and grow together, regardless of their socio-economic status.' },
+      { title: 'Better Society', text: 'Join Hands for better educated society and growth.' }
+    ],
+    galleryPhotos: [
+      { url: '/Emyris Foundation Photos/modern-hand-drawn-education-concept_23-2147906438.avif', title: 'Campaign Activity' }
+    ],
+    videos: []
   } : {
     id,
-    title: id === 'shiksha' ? 'Shiksha Hi Surakhya' : id === 'organ' ? 'Organ Donation Awareness' : id === 'plantation' ? 'Plantation & Sustainability' : 'Social Welfare & Mental Health',
-    motto: id === 'shiksha' ? 'Education is Protection' : id === 'organ' ? 'Eternal Impact, Organ Donation' : id === 'plantation' ? 'Nurture Nature' : 'Together We Grow, Together We Heal',
+    title: id === 'organ' ? 'Organ Donation Awareness' : id === 'plantation' ? 'Plantation & Sustainability' : 'Social Welfare & Mental Health',
+    motto: id === 'organ' ? 'Eternal Impact, Organ Donation' : id === 'plantation' ? 'Nurture Nature' : 'Together We Grow, Together We Heal',
     bannerMsg: `Join our mission to create real, measurable social impact through targeted grassroots interventions.`,
     introText: `Our collaborative initiative is designed to mobilize community support and deliver direct assistance where it is most critically needed. By participating in this campaign, you help build resilient networks of solidarity, awareness, and long-term community transformation.\n\nWe invite all compassionate volunteers, partners, and well-wishers to step forward and play an active role in driving this change. Your engagement guarantees our collective success.`,
     whyTitle: 'Why You Should Participate',
@@ -345,7 +362,7 @@ export async function getCampaignDetail(id) {
       { title: 'Long-term Impact', text: 'Create enduring legacies that continue enriching individual lives and broader communities for decades.' }
     ],
     galleryPhotos: [
-      { url: id === 'shiksha' ? '/Emyris Foundation Photos/modern-hand-drawn-education-concept_23-2147906438.avif' : id === 'organ' ? '/Emyris Foundation Photos/low-angle-hands-holding-heart-shape-with-sky_23-2148635107.webp' : id === 'plantation' ? '/Emyris Foundation Photos/environment-concept_23-2147517224.webp' : '/Emyris Foundation Photos/hands-composition-about-support_23-2150510481.webp', title: 'Campaign Activity' }
+      { url: id === 'organ' ? '/Emyris Foundation Photos/low-angle-hands-holding-heart-shape-with-sky_23-2148635107.webp' : id === 'plantation' ? '/Emyris Foundation Photos/environment-concept_23-2147517224.webp' : '/Emyris Foundation Photos/hands-composition-about-support_23-2150510481.webp', title: 'Campaign Activity' }
     ],
     videos: []
   };
@@ -356,9 +373,11 @@ export async function getCampaignDetail(id) {
     
     let detail = await CampaignDetail.findByPk(id);
     if (detail) {
-      if (isBlood) {
+      if (isBlood || id === 'shiksha') {
         detail.whyTitle = defaultData.whyTitle;
         detail.whyGrid = defaultData.whyGrid;
+        detail.introText = defaultData.introText;
+        detail.bannerMsg = defaultData.bannerMsg;
         await detail.save();
       }
       return detail.toJSON();

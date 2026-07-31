@@ -7,6 +7,7 @@ import { CorporateProvider } from '../../../context/CorporateContext';
 import { ModalProvider } from '../../../context/ModalContext';
 import Modals from '../../../components/Modals';
 import CampaignDetailForm from '../../../components/CampaignDetailForm';
+import ShikshaDonationForm from '../../../components/ShikshaDonationForm';
 
 export const dynamic = 'force-dynamic';
 
@@ -110,7 +111,11 @@ export default async function CampaignPage({ params }) {
 
                 {/* Right Column: Embedded Registration Form */}
                 <div className="campaign-form-column" id="consent-section" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-                  <CampaignDetailForm campaignTitle={data.title} isBloodCampaign={isBlood} />
+                  {id === 'shiksha' ? (
+                    <ShikshaDonationForm />
+                  ) : (
+                    <CampaignDetailForm campaignTitle={data.title} isBloodCampaign={isBlood} />
+                  )}
                 </div>
               </div>
 
