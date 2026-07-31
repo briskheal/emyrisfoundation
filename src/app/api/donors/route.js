@@ -40,7 +40,7 @@ export async function POST(req) {
     const order = parseInt(formData.get('order') || '0', 10);
     const file = formData.get('image');
 
-    let imageUrl = '/emyris_logo.webp'; // Default fallback
+    let imageUrl = ''; // Empty by default
 
     if (file && file.size > 0) {
       const buffer = Buffer.from(await file.arrayBuffer());

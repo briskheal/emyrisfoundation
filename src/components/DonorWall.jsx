@@ -1,7 +1,10 @@
 'use client';
 import React, { useState } from 'react';
+import { useCorporate } from '../context/CorporateContext';
 
 const DonorWall = ({ initialDonors }) => {
+  const { corporate } = useCorporate();
+  const fallbackImage = corporate?.logo || "/emyris_logo.webp";
   const [donors, setDonors] = useState(initialDonors && initialDonors.length > 0 ? initialDonors : []);
   return (
     <section className="donor-wall-section">
@@ -21,7 +24,7 @@ const DonorWall = ({ initialDonors }) => {
               {donor.image ? (
                 <img src={donor.image} alt="Logo" style={{ height: '30px', width: '30px', objectFit: 'contain', borderRadius: '4px' }} />
               ) : (
-                <img src="/emyris_logo.webp" alt="Emyris Logo" style={{ height: '30px', width: '30px', objectFit: 'contain', borderRadius: '4px' }} />
+                <img src={fallbackImage} alt="Emyris Logo" style={{ height: '30px', width: '30px', objectFit: 'contain', borderRadius: '4px' }} />
               )}
               <span>{donor.name}</span>
             </div>
@@ -31,7 +34,7 @@ const DonorWall = ({ initialDonors }) => {
               {donor.image ? (
                 <img src={donor.image} alt="Logo" style={{ height: '30px', width: '30px', objectFit: 'contain', borderRadius: '4px' }} />
               ) : (
-                <img src="/emyris_logo.webp" alt="Emyris Logo" style={{ height: '30px', width: '30px', objectFit: 'contain', borderRadius: '4px' }} />
+                <img src={fallbackImage} alt="Emyris Logo" style={{ height: '30px', width: '30px', objectFit: 'contain', borderRadius: '4px' }} />
               )}
               <span>{donor.name}</span>
             </div>
