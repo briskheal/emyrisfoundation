@@ -54,7 +54,6 @@ export default async function Home() {
             <ActivityGallery />
             <Publications />
             <FAQs />
-            <Careers />
             <Contact />
           </div>
         </main>
