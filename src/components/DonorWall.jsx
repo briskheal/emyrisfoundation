@@ -1,9 +1,8 @@
 'use client';
 import React, { useState } from 'react';
-import fallbackDonors from '../data/donors.json';
 
 const DonorWall = ({ initialDonors }) => {
-  const [donors, setDonors] = useState(initialDonors && initialDonors.length > 0 ? initialDonors : fallbackDonors);
+  const [donors, setDonors] = useState(initialDonors && initialDonors.length > 0 ? initialDonors : []);
   return (
     <section className="donor-wall-section">
       <div className="container text-center" style={{marginBottom: '25px'}}>
@@ -13,8 +12,11 @@ const DonorWall = ({ initialDonors }) => {
         </h3>
       </div>
       <div className="donor-marquee-wrapper">
-        <div className="donor-marquee" id="donor-marquee-container">
-          {donors.map((donor, idx) => (
+        {donors.length === 0 ? (
+          <p style={{ color: 'rgba(255,255,255,0.5)', padding: '20px' }}>Our Champions wall is being updated. Check back soon!</p>
+        ) : (
+          <div className="donor-marquee" id="donor-marquee-container">
+            {donors.map((donor, idx) => (
             <div key={idx} className="donor-tag" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               {donor.image ? (
                 <img src={donor.image} alt="Logo" style={{ height: '30px', width: '30px', objectFit: 'contain', borderRadius: '4px' }} />
@@ -35,6 +37,7 @@ const DonorWall = ({ initialDonors }) => {
             </div>
           ))}
         </div>
+        )}
       </div>
     </section>
   );

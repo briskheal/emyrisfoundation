@@ -93,12 +93,12 @@ const DonorManager = ({ token }) => {
     <div className="admin-panel-section" style={{ display: 'block' }}>
       <h2 style={{ color: '#fff', marginBottom: '20px' }}>Manage Champions (Donors)</h2>
       
-      <div className="glass-card" style={{ padding: '20px', marginBottom: '30px' }}>
+      <div className="glass-card" style={{ padding: '20px', marginBottom: '20px' }}>
         <h3 style={{ color: '#15F5BA', marginBottom: '15px' }}>{editing ? 'Edit' : 'Add New'} Champion</h3>
-        <form onSubmit={handleSave} style={{ display: 'grid', gap: '15px' }}>
+        <form onSubmit={handleSave} style={{ display: 'flex', gap: '15px', alignItems: 'flex-end', flexWrap: 'wrap' }}>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ color: '#fff', fontSize: '0.9rem' }}>Champion Name</label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', flex: '1 1 200px' }}>
+            <label style={{ color: '#fff', fontSize: '0.85rem' }}>Champion Name</label>
             <input 
               required
               value={formData.name} 
@@ -108,24 +108,22 @@ const DonorManager = ({ token }) => {
             />
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ color: '#fff', fontSize: '0.9rem' }}>Logo/Photo (Auto WebP Compression)</label>
-            <input 
-              type="file" 
-              accept="image/*"
-              onChange={handleImageChange}
-              className="admin-input" 
-              style={{ padding: '8px' }}
-            />
-            {preview && (
-              <div style={{ marginTop: '10px' }}>
-                <img src={preview} alt="Preview" style={{ height: '60px', borderRadius: '4px' }} />
-              </div>
-            )}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', flex: '1 1 200px' }}>
+            <label style={{ color: '#fff', fontSize: '0.85rem' }}>Logo/Photo (Auto WebP)</label>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+              <input 
+                type="file" 
+                accept="image/*"
+                onChange={handleImageChange}
+                className="admin-input" 
+                style={{ padding: '8px', flex: 1 }}
+              />
+              {preview && <img src={preview} alt="Preview" style={{ height: '40px', borderRadius: '4px' }} />}
+            </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ color: '#fff', fontSize: '0.9rem' }}>Display Order</label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '80px' }}>
+            <label style={{ color: '#fff', fontSize: '0.85rem' }}>Order</label>
             <input 
               type="number" 
               value={formData.order} 
@@ -134,9 +132,9 @@ const DonorManager = ({ token }) => {
             />
           </div>
 
-          <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+          <div style={{ display: 'flex', gap: '10px', paddingBottom: '2px' }}>
             <button type="submit" className="admin-btn">
-              <i className="fa-solid fa-save"></i> Save Champion
+              <i className="fa-solid fa-save"></i> Save
             </button>
             {editing && (
               <button type="button" className="admin-btn" style={{ background: '#475569' }} onClick={() => {

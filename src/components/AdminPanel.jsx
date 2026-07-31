@@ -266,7 +266,6 @@ const AdminPanel = () => {
     { id: 'directors', label: 'Directors', icon: 'fa-user-tie' },
     { id: 'mentors', label: 'Mentors', icon: 'fa-chalkboard-user' },
     { id: 'work', label: 'Our Work', icon: 'fa-briefcase' },
-    { id: 'work-details', label: 'Page Editor', icon: 'fa-file-alt' },
     { id: 'campaigns', label: 'Campaigns', icon: 'fa-bullhorn' },
     { id: 'careers', label: 'Careers & Jobs', icon: 'fa-briefcase' },
     { id: 'publications', label: 'Publications', icon: 'fa-file-pdf' },
@@ -366,7 +365,6 @@ const AdminPanel = () => {
         {activeTab === 'campaigns' && <CampaignManager token={token} />}
         {activeTab === 'publications' && <PublicationManager token={token} />}
         {activeTab === 'work' && <WorkManager token={token} />}
-        {activeTab === 'work-details' && <WorkDetailEditor token={token} />}
         {activeTab === 'hero-stats' && <HeroStatManager token={token} />}
         {activeTab === 'presence' && <PresenceManager token={token} />}
         {activeTab === 'donors' && <DonorManager token={token} />}
