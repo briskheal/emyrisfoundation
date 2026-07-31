@@ -19,7 +19,7 @@ export default function CampaignDetailForm({ campaignTitle, isBloodCampaign }) {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
-        details: `Gender: ${formData.gender}\nAge: ${formData.age}\nState: ${formData.state}\nPin: ${formData.pin}\nAddress: ${formData.address}\nBlood Group: ${formData.bloodGroup}`
+        details: `Gender: ${formData.gender}\nAge: ${formData.age}\nState: ${formData.state}\nPin: ${formData.pin}\nAddress: ${formData.address}${isBloodCampaign ? `\nBlood Group: ${formData.bloodGroup}` : ''}`
       };
       const res = await fetch('/api/campaign', {
         method: 'POST',
@@ -80,8 +80,8 @@ export default function CampaignDetailForm({ campaignTitle, isBloodCampaign }) {
           <input type="text" className="form-control" required placeholder="Enter your full name" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} style={{ background: 'rgba(255,255,255,0.08)', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }} />
         </div>
         
-        {/* Compact Grid: Gender, Age, Blood Group */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))', gap: '15px', marginBottom: '14px' }}>
+        {/* Compact Grid: Gender, Age, optionally Blood Group */}
+        <div style={{ display: 'grid', gridTemplateColumns: isBloodCampaign ? 'repeat(auto-fit, minmax(80px, 1fr))' : '1fr 1fr', gap: '15px', marginBottom: '14px' }}>
           <div className="form-group">
             <label style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.85rem', fontWeight: '600', display: 'block', marginBottom: '6px' }}>Gender – *</label>
             <select className="form-select" required value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} style={{ background: '#0b192c', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}>
@@ -94,20 +94,22 @@ export default function CampaignDetailForm({ campaignTitle, isBloodCampaign }) {
             <label style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.85rem', fontWeight: '600', display: 'block', marginBottom: '6px' }}>Age – *</label>
             <input type="number" className="form-control" min="18" max="70" required placeholder="Age" value={formData.age} onChange={e => setFormData({...formData, age: e.target.value})} style={{ background: 'rgba(255,255,255,0.08)', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }} />
           </div>
-          <div className="form-group">
-            <label style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.85rem', fontWeight: '600', display: 'block', marginBottom: '6px' }}>Blood Group – *</label>
-            <select className="form-select" required value={formData.bloodGroup} onChange={e => setFormData({...formData, bloodGroup: e.target.value})} style={{ background: '#0b192c', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}>
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="B-">B-</option>
-              <option value="O+">O+</option>
-              <option value="O-">O-</option>
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
-              <option value="Not Sure">Other</option>
-            </select>
-          </div>
+          {isBloodCampaign && (
+            <div className="form-group">
+              <label style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.85rem', fontWeight: '600', display: 'block', marginBottom: '6px' }}>Blood Group – *</label>
+              <select className="form-select" required value={formData.bloodGroup} onChange={e => setFormData({...formData, bloodGroup: e.target.value})} style={{ background: '#0b192c', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="Not Sure">Other</option>
+              </select>
+            </div>
+          )}
         </div>
 
         {/* Compact Grid: State, Pin */}

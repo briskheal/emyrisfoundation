@@ -347,22 +347,58 @@ export async function getCampaignDetail(id) {
       { url: '/Emyris Foundation Photos/modern-hand-drawn-education-concept_23-2147906438.avif', title: 'Campaign Activity' }
     ],
     videos: []
-  } : {
-    id,
-    title: id === 'organ' ? 'Organ Donation Awareness' : id === 'plantation' ? 'Plantation & Sustainability' : 'Social Welfare & Mental Health',
-    motto: id === 'organ' ? 'Eternal Impact, Organ Donation' : id === 'plantation' ? 'Nurture Nature' : 'Together We Grow, Together We Heal',
-    bannerMsg: `Join our mission to create real, measurable social impact through targeted grassroots interventions.`,
-    introText: `Our collaborative initiative is designed to mobilize community support and deliver direct assistance where it is most critically needed. By participating in this campaign, you help build resilient networks of solidarity, awareness, and long-term community transformation.\n\nWe invite all compassionate volunteers, partners, and well-wishers to step forward and play an active role in driving this change. Your engagement guarantees our collective success.`,
-    whyTitle: 'Why You Should Participate',
+  } : id === 'organ' ? {
+    id: 'organ',
+    title: 'Organ Donation Awareness',
+    motto: 'Eternal Impact, Organ Donation',
+    bannerMsg: 'Give the ultimate gift of life and leave an eternal legacy.',
+    introText: `Organ donation is a profound act of human solidarity that transforms loss into life. Every single day, thousands of patients remain on waiting lists, hoping for a second chance. A single organ donor can save up to eight lives and improve the lives of more than 75 others through tissue donation.\n\nDespite the critical need, lack of awareness and persistent myths prevent many from registering. Our Organ Donation Awareness campaign aims to bridge this gap through education, advocacy, and community outreach. We partner with medical institutions and grassroots volunteers to break taboos and encourage proactive registration.\n\nBy pledging to be a donor, you are making an extraordinary commitment to humanity. Join us in our mission to ensure that no life is lost due to a shortage of transplantable organs. Your decision today can be someone else's miracle tomorrow.`,
+    whyTitle: 'Why You Should Pledge',
     whyGrid: [
-      { title: 'Community Empowerment', text: 'Direct involvement fosters local self-reliance and strengthens communal bonds across generations.' },
-      { title: 'Sustainable Solutions', text: 'Our focused methodology addresses root challenges rather than merely alleviating superficial symptoms.' },
-      { title: 'Volunteer Leadership', text: 'Take charge of grassroots initiatives, organize local drives, and mentor peers within your neighborhood.' },
-      { title: 'Collective Advocacy', text: 'Amplify marginalized voices and raise essential public awareness on critical health and social issues.' },
-      { title: 'Long-term Impact', text: 'Create enduring legacies that continue enriching individual lives and broader communities for decades.' }
+      { title: 'Save Multiple Lives', text: 'A single donor can save up to eight lives by donating vital organs such as the heart, lungs, liver, and kidneys.' },
+      { title: 'Leave a Legacy', text: 'It is the ultimate act of altruism, allowing your legacy to live on through the individuals whose lives you transform.' },
+      { title: 'Bridge the Gap', text: 'Help reduce the critical shortage of organs and decrease the agonizing wait times for patients in need.' },
+      { title: 'Inspire Others', text: 'By registering and openly discussing your decision, you inspire your family and community to do the same.' },
+      { title: 'Zero Cost', text: 'There is no cost to the donor’s family for organ and tissue donation; it is a completely free act of giving.' }
     ],
     galleryPhotos: [
-      { url: id === 'organ' ? '/Emyris Foundation Photos/low-angle-hands-holding-heart-shape-with-sky_23-2148635107.webp' : id === 'plantation' ? '/Emyris Foundation Photos/environment-concept_23-2147517224.webp' : '/Emyris Foundation Photos/hands-composition-about-support_23-2150510481.webp', title: 'Campaign Activity' }
+      { url: '/Emyris Foundation Photos/low-angle-hands-holding-heart-shape-with-sky_23-2148635107.webp', title: 'Awareness Drive' }
+    ],
+    videos: []
+  } : id === 'plantation' ? {
+    id: 'plantation',
+    title: 'Plantation & Sustainability',
+    motto: 'Nurture Nature',
+    bannerMsg: 'Rooting for a greener, more sustainable future for generations to come.',
+    introText: `Our planet is at a critical juncture. Rapid urbanization, deforestation, and climate change are severely impacting global ecosystems, leading to loss of biodiversity and unpredictable weather patterns. The simplest, yet most effective solution to combat these challenges is afforestation.\n\nOur Plantation & Sustainability campaign is dedicated to restoring our natural environment by organizing large-scale tree-planting drives in urban and rural areas. We focus on planting indigenous, climate-resilient species that support local fauna and restore soil health. But our work doesn't stop at planting; we ensure the long-term survival of these saplings through continuous community monitoring.\n\nWe believe that environmental stewardship is a collective responsibility. Whether you volunteer to plant trees, help maintain our green zones, or educate others on sustainable living practices, your contribution is vital in healing our Earth.`,
+    whyTitle: 'Why Plant With Us',
+    whyGrid: [
+      { title: 'Combat Climate Change', text: 'Trees act as vital carbon sinks, absorbing CO2 from the atmosphere and mitigating the effects of global warming.' },
+      { title: 'Restore Biodiversity', text: 'Planting indigenous species provides crucial habitats and food sources for local birds, insects, and wildlife.' },
+      { title: 'Improve Air Quality', text: 'Urban forests act as natural air filters, trapping pollutants and releasing clean oxygen for communities.' },
+      { title: 'Prevent Soil Erosion', text: 'Deep root systems bind the soil together, preventing erosion and improving groundwater retention.' },
+      { title: 'Community Health', text: 'Green spaces have been scientifically proven to reduce stress, improve mental health, and foster community bonding.' }
+    ],
+    galleryPhotos: [
+      { url: '/Emyris Foundation Photos/environment-concept_23-2147517224.webp', title: 'Plantation Drive' }
+    ],
+    videos: []
+  } : {
+    id: 'welfare',
+    title: 'Social Welfare & Mental Health',
+    motto: 'Together We Grow, Together We Heal',
+    bannerMsg: 'Fostering inclusive communities built on empathy, support, and mental well-being.',
+    introText: `True social welfare extends beyond basic physical needs—it encompasses the emotional, psychological, and social well-being of every individual. In our fast-paced, often isolating modern world, mental health challenges and social disparities are silently affecting millions.\n\nOur Social Welfare & Mental Health initiative is a comprehensive program designed to break the stigma surrounding mental illness and provide actionable support to vulnerable populations. We organize community counseling sessions, awareness workshops, and safe spaces where individuals can share their struggles without judgment.\n\nFurthermore, we integrate social welfare programs that assist marginalized groups with resources for daily living, education, and skill development. By addressing both the mind and the material realities of those we serve, we are building a foundation for holistic community healing.`,
+    whyTitle: 'The Impact of Your Support',
+    whyGrid: [
+      { title: 'Break the Stigma', text: 'Help normalize conversations around mental health, ensuring people feel safe seeking the help they need.' },
+      { title: 'Holistic Support', text: 'Combine psychological counseling with tangible social welfare resources to address comprehensive human needs.' },
+      { title: 'Crisis Intervention', text: 'Fund emergency support lines and rapid-response teams for individuals experiencing acute mental distress.' },
+      { title: 'Empower Youth', text: 'Support mental resilience programs in schools, giving the next generation the tools to handle modern pressures.' },
+      { title: 'Inclusive Communities', text: 'Foster environments where marginalized individuals are integrated, valued, and given equal opportunities to thrive.' }
+    ],
+    galleryPhotos: [
+      { url: '/Emyris Foundation Photos/hands-composition-about-support_23-2150510481.webp', title: 'Community Support' }
     ],
     videos: []
   };
@@ -373,7 +409,9 @@ export async function getCampaignDetail(id) {
     
     let detail = await CampaignDetail.findByPk(id);
     if (detail) {
-      if (isBlood || id === 'shiksha') {
+      if (['blood', 'shiksha', 'organ', 'plantation', 'welfare'].includes(id)) {
+        detail.title = defaultData.title;
+        detail.motto = defaultData.motto;
         detail.whyTitle = defaultData.whyTitle;
         detail.whyGrid = defaultData.whyGrid;
         detail.introText = defaultData.introText;
