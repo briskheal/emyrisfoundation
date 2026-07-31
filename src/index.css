@@ -203,13 +203,15 @@ a {
     color: var(--white);
 }
 
-.main-header.scrolled .nav-link {
-    color: rgba(255, 255, 255, 0.8);
-}
+@media (min-width: 993px) {
+    .main-header.scrolled .nav-link {
+        color: rgba(255, 255, 255, 0.8);
+    }
 
-.main-header.scrolled .nav-link:hover,
-.main-header.scrolled .nav-link.active {
-    color: var(--primary-orange);
+    .main-header.scrolled .nav-link:hover,
+    .main-header.scrolled .nav-link.active {
+        color: var(--primary-orange);
+    }
 }
 
 .header-container {
