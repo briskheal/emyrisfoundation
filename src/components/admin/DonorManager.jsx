@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { ConflictBanner, LastEditedBadge } from '../../lib/useConflictSave';
 
 const DonorManager = ({ token }) => {
   const [items, setItems] = useState([]);
