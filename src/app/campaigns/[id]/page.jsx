@@ -139,7 +139,7 @@ export default async function CampaignPage({ params }) {
                 </div>
 
                 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', marginTop: '10px' }}>
-                  {data.whyGrid.slice(0, 5).map((item, idx) => (
+                  {data.whyGrid.map((item, idx) => (
                     <div key={idx} className="glass-card sdg-card" style={{ flex: '1 1 200px', maxWidth: '300px', padding: '22px 18px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '14px', display: 'flex', flexDirection: 'column' }}>
                       <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(235, 94, 40, 0.2)', color: 'var(--primary-orange)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '14px' }}>
                         0{idx + 1}
@@ -160,10 +160,10 @@ export default async function CampaignPage({ params }) {
                 <div className="section-title-wrapper text-center" style={{ marginBottom: '15px' }}>
                   <span className="section-subtitle">Visual Archives</span>
                   <h2 className="section-title" style={{ fontSize: '2.1rem', color: '#ffffff', marginBottom: '6px' }}>
-                    {isBlood ? '"Blood: The Universal Bond"' : 'Campaign Photographs'}
+                    {data.galleryTitle || (isBlood ? '"Blood: The Universal Bond"' : 'Campaign Photographs')}
                   </h2>
                   <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', marginBottom: '8px' }}>
-                    {isBlood ? 'Photographs on Blood Donation with scroll option for our future camp captures.' : 'Moments captured during our recent drives and community workshops.'}
+                    {data.gallerySubtitle || (isBlood ? 'Photographs on Blood Donation with scroll option for our future camp captures.' : 'Moments captured during our recent drives and community workshops.')}
                   </p>
                   <div className="title-underline" style={{ margin: '0 auto' }}></div>
                 </div>
@@ -191,8 +191,13 @@ export default async function CampaignPage({ params }) {
                 <div className="section-title-wrapper text-center" style={{ marginBottom: '15px' }}>
                   <span className="section-subtitle">Video Archives</span>
                   <h2 className="section-title" style={{ fontSize: '2.1rem', color: '#ffffff', marginBottom: '6px' }}>
-                    {isBlood ? 'Blood Donation in Motion' : 'Campaign Stories in Motion'}
+                    {data.videoTitle || (isBlood ? 'Blood Donation in Motion' : 'Campaign Stories in Motion')}
                   </h2>
+                  {data.videoSubtitle && (
+                    <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', marginBottom: '8px' }}>
+                      {data.videoSubtitle}
+                    </p>
+                  )}
                   <div className="title-underline" style={{ margin: '0 auto' }}></div>
                 </div>
 

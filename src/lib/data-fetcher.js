@@ -367,23 +367,29 @@ export async function getCampaignDetail(id) {
     videos: []
   } : id === 'plantation' ? {
     id: 'plantation',
-    title: 'Plantation & Sustainability',
-    motto: 'Nurture Nature',
-    bannerMsg: 'Rooting for a greener, more sustainable future for generations to come.',
-    introText: `Our planet is at a critical juncture. Rapid urbanization, deforestation, and climate change are severely impacting global ecosystems, leading to loss of biodiversity and unpredictable weather patterns. The simplest, yet most effective solution to combat these challenges is afforestation.\n\nOur Plantation & Sustainability campaign is dedicated to restoring our natural environment by organizing large-scale tree-planting drives in urban and rural areas. We focus on planting indigenous, climate-resilient species that support local fauna and restore soil health. But our work doesn't stop at planting; we ensure the long-term survival of these saplings through continuous community monitoring.\n\nWe believe that environmental stewardship is a collective responsibility. Whether you volunteer to plant trees, help maintain our green zones, or educate others on sustainable living practices, your contribution is vital in healing our Earth.`,
-    whyTitle: 'Why Plant With Us',
+    title: 'Plantation: Save Mother Earth',
+    motto: 'Nurture Nature.',
+    bannerMsg: 'Join Hands to create awareness on Planting Trees to Save Mother Earth',
+    introText: `Plantation activities are a call to each of us, inviting us to participate in the regeneration of our planet. They remind us that every individual can make a difference that collective effort can lead to monumental change. So, let us dig into the soil, not just to plant a tree but to plant hope, to cultivate a future where nature's balance is restored, where every breath of fresh air and every sip of clean water is a testament to our commitment to life.\n\nIn the simple act of planting, we find a profound connection to the Earth, a reminder that we are both caretakers and beneficiaries of this beautiful, fragile planet we call home. Let's plant not just trees but a vision for a greener, more sustainable world.\n\nPlanting trees is planting for the future, a legacy project. Trees can live for decades, centuries, even millennia. They outlive us, becoming monuments of our times, silent witnesses to the passage of time, and guardians of life.\n\nCome and join in our effort to make our mother Earth greener. Fill up the consent form to contact you to invite and participate.`,
+    whyTitle: 'Why Plantation is required?',
     whyGrid: [
-      { title: 'Combat Climate Change', text: 'Trees act as vital carbon sinks, absorbing CO2 from the atmosphere and mitigating the effects of global warming.' },
-      { title: 'Restore Biodiversity', text: 'Planting indigenous species provides crucial habitats and food sources for local birds, insects, and wildlife.' },
-      { title: 'Improve Air Quality', text: 'Urban forests act as natural air filters, trapping pollutants and releasing clean oxygen for communities.' },
-      { title: 'Prevent Soil Erosion', text: 'Deep root systems bind the soil together, preventing erosion and improving groundwater retention.' },
-      { title: 'Community Health', text: 'Green spaces have been scientifically proven to reduce stress, improve mental health, and foster community bonding.' }
-    ],
-    galleryPhotos: [
-      { url: '/Emyris Foundation Photos/environment-concept_23-2147517224.webp', title: 'Plantation Drive' }
-    ],
-    videos: []
-  } : {
+      { title: 'Carbon Sequestration', text: 'Trees absorb carbon dioxide (a primary greenhouse gas) and store carbon while releasing oxygen, playing a crucial role in mitigating climate change.' },
+      { title: 'Oxygen Production', text: 'They produce oxygen through photosynthesis, essential for all life forms.' },
+      { title: 'Air Purification', text: 'Trees act as natural air filters, removing pollutants like sulfur dioxide, carbon monoxide, and nitrogen dioxide from the air.' },
+          { title: 'Soil Conservation', text: 'Their root systems help prevent soil erosion, maintain soil structure, and contribute to water infiltration, which replenishes groundwater.' },
+          { title: 'Water Cycle Regulation', text: 'Trees help regulate the water cycle by intercepting rain, reducing runoff, and promoting transpiration which can influence local weather patterns.' },
+          { title: 'Biodiversity', text: 'Trees provide habitat for numerous species, supporting biodiversity. They are crucial in ecosystems where many organisms rely on trees for food, shelter, or reproduction.' },
+          { title: 'Mental Health', text: 'Access to green spaces with trees has been linked to lower levels of stress and mental fatigue. Activities like tree planting can be therapeutic, enhancing mental well-being.' }
+        ],
+        galleryTitle: '"Plant a Tree, Build a Legacy."',
+        gallerySubtitle: 'Photographs on plantation awareness activity with scroll option for our future camps photographs.',
+        galleryPhotos: [
+          { url: '/Emyris Foundation Photos/environment-concept_23-2147517224.webp', title: 'Plantation Drive' }
+        ],
+        videoTitle: '“Plantation activity in Motion”',
+        videoSubtitle: 'Youtube videos with scroll option for our camps and other videos on Plantation activity.',
+        videos: []
+      } : {
     id: 'welfare',
     title: 'Social Welfare & Mental Health',
     motto: 'Together We Grow, Together We Heal',
@@ -404,8 +410,8 @@ export async function getCampaignDetail(id) {
   };
 
   try {
-    // Ensure table exists in database
-    await CampaignDetail.sync();
+    // Ensure table exists in database and alters schema if new columns are added
+    await CampaignDetail.sync({ alter: true });
     
     let detail = await CampaignDetail.findByPk(id);
     if (detail) {
@@ -416,6 +422,10 @@ export async function getCampaignDetail(id) {
         detail.whyGrid = defaultData.whyGrid;
         detail.introText = defaultData.introText;
         detail.bannerMsg = defaultData.bannerMsg;
+        if (defaultData.galleryTitle) detail.galleryTitle = defaultData.galleryTitle;
+        if (defaultData.gallerySubtitle) detail.gallerySubtitle = defaultData.gallerySubtitle;
+        if (defaultData.videoTitle) detail.videoTitle = defaultData.videoTitle;
+        if (defaultData.videoSubtitle) detail.videoSubtitle = defaultData.videoSubtitle;
         await detail.save();
       }
       return detail.toJSON();

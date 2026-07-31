@@ -250,6 +250,10 @@ export const CampaignDetail = sequelize.define('CampaignDetail', {
   introText: DataTypes.TEXT,
   whyTitle: DataTypes.STRING,
   whyGrid: DataTypes.JSON,
+  galleryTitle: DataTypes.STRING,
+  gallerySubtitle: DataTypes.STRING,
   galleryPhotos: DataTypes.JSON,
+  videoTitle: DataTypes.STRING,
+  videoSubtitle: DataTypes.STRING,
   videos: DataTypes.JSON
 });
