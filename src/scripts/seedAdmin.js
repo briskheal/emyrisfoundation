@@ -5,7 +5,7 @@ async function seedAdmin() {
   try {
     await sequelize.sync(); // ensure table exists
     const username = 'admin';
-    const password = 'Password@123';
+    const password = process.env.ADMIN_PASS || 'CHANGEME_ADMIN';
     const passwordHash = await bcrypt.hash(password, 10);
     
     // Check if admin exists

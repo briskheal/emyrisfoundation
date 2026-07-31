@@ -3,14 +3,14 @@ import { sequelize, AdminUser } from '../../../lib/db';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'CHANGEME_JWT_SECRET';
 
 export const dynamic = 'force-dynamic';
 
 // Master credentials — always authoritative
 const DEFAULT_CREDS = {
-  admin:  { password: process.env.ADMIN_PASS || 'Omrutam@1306', role: 'superadmin' },
-  junior: { password: process.env.JUNIOR_PASS || 'Junior@123',   role: 'junior' },
+  admin:  { password: process.env.ADMIN_PASS || 'CHANGEME_ADMIN', role: 'superadmin' },
+  junior: { password: process.env.JUNIOR_PASS || 'CHANGEME_JUNIOR', role: 'junior' },
 };
 
 export async function POST(req) {

@@ -1,7 +1,7 @@
 // Shared helper: decode JWT token from Authorization header and return payload
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'CHANGEME_JWT_SECRET';
 
 /**
  * Extracts and verifies the JWT from an Authorization header.
