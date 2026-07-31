@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { Donor } from '../../../lib/db';
 import { compressImage } from '../../../lib/imageCompressor';
 import jwt from 'jsonwebtoken';
-import { v4 as uuidv4 } from 'uuid';
+import crypto from 'crypto';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'CHANGEME_JWT_SECRET';
 
@@ -33,7 +33,7 @@ export async function POST(req) {
 
   try {
     const formData = await req.formData();
-    const id = formData.get('id') || uuidv4();
+    const id = formData.get('id') || crypto.randomUUID();
     const name = formData.get('name');
     const order = parseInt(formData.get('order') || '0', 10);
     const file = formData.get('image');
