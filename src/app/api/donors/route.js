@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
 import { Donor } from '../../../lib/db';
-import { compressImage } from '../../../lib/imageCompressor';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
+import sharp from 'sharp';
+import fs from 'fs/promises';
+import path from 'path';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'CHANGEME_JWT_SECRET';
 
@@ -42,12 +44,20 @@ export async function POST(req) {
 
     if (file && file.size > 0) {
       const buffer = Buffer.from(await file.arrayBuffer());
-      // Compress and save as WebP
-      const filename = `donor_${Date.now()}.webp`;
-      const savedPath = await compressImage(buffer, filename);
-      if (savedPath) {
-        imageUrl = savedPath;
+      
+      const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+      try {
+        await fs.access(uploadsDir);
+      } catch {
+        await fs.mkdir(uploadsDir, { recursive: true });
       }
+
+      const filename = `donor_${Date.now()}_${Math.round(Math.random() * 1E9)}.webp`;
+      const finalBuffer = await sharp(buffer).webp({ quality: 80 }).toBuffer();
+      const filepath = path.join(uploadsDir, filename);
+      await fs.writeFile(filepath, finalBuffer);
+      
+      imageUrl = `/api/media/${filename}`;
     }
 
     // Check if updating
