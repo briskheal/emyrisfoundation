@@ -21,7 +21,7 @@ const DonorWall = ({ initialDonors }) => {
               {donor.image ? (
                 <img src={donor.image} alt="Logo" style={{ height: '30px', width: '30px', objectFit: 'contain', borderRadius: '4px' }} />
               ) : (
-                <i className={donor.icon || "fa-solid fa-medal"}></i>
+                <img src="/emyris_logo.webp" alt="Emyris Logo" style={{ height: '30px', width: '30px', objectFit: 'contain', borderRadius: '4px' }} />
               )}
               <span>{donor.name}</span>
             </div>
@@ -31,7 +31,7 @@ const DonorWall = ({ initialDonors }) => {
               {donor.image ? (
                 <img src={donor.image} alt="Logo" style={{ height: '30px', width: '30px', objectFit: 'contain', borderRadius: '4px' }} />
               ) : (
-                <i className={donor.icon || "fa-solid fa-medal"}></i>
+                <img src="/emyris_logo.webp" alt="Emyris Logo" style={{ height: '30px', width: '30px', objectFit: 'contain', borderRadius: '4px' }} />
               )}
               <span>{donor.name}</span>
             </div>
