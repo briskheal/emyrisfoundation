@@ -3,9 +3,15 @@ import React, { useState, useEffect } from 'react';
 import { useModals } from '../context/ModalContext';
 import fallbackHeroSlides from '../data/heroSlides.json';
 
-const Hero = ({ initialSlides }) => {
+const Hero = ({ initialSlides, initialStats }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [heroSlides, setHeroSlides] = useState(initialSlides && initialSlides.length > 0 ? initialSlides : fallbackHeroSlides);
+  const [heroStats, setHeroStats] = useState(initialStats && initialStats.length > 0 ? initialStats : [
+    { value: '25+', label: 'Villages & Slums Impacted' },
+    { value: '3+', label: 'States Presence (Odisha, Gujarat, NE)' },
+    { value: '5+', label: 'Active Core Projects' },
+    { value: '8+', label: 'Future Target Operations' }
+  ]);
   const { openModal } = useModals();
 
   useEffect(() => {
@@ -89,25 +95,15 @@ const Hero = ({ initialSlides }) => {
 
       <div className="stats-bar">
         <div className="container stats-container">
-          <div className="stat-item">
-            <h3 className="stat-num">25+</h3>
-            <p className="stat-label">Villages &amp; Slums Impacted</p>
-          </div>
-          <div className="stat-divider"></div>
-          <div className="stat-item">
-            <h3 className="stat-num">3+</h3>
-            <p className="stat-label">States Presence (Odisha, Gujarat, NE)</p>
-          </div>
-          <div className="stat-divider"></div>
-          <div className="stat-item">
-            <h3 className="stat-num">5+</h3>
-            <p className="stat-label">Active Core Projects</p>
-          </div>
-          <div className="stat-divider"></div>
-          <div className="stat-item">
-            <h3 className="stat-num">8+</h3>
-            <p className="stat-label">Future Target Operations</p>
-          </div>
+          {heroStats.map((stat, idx) => (
+            <React.Fragment key={idx}>
+              <div className="stat-item">
+                <h3 className="stat-num">{stat.value}</h3>
+                <p className="stat-label">{stat.label}</p>
+              </div>
+              {idx < heroStats.length - 1 && <div className="stat-divider"></div>}
+            </React.Fragment>
+          ))}
         </div>
       </div>
     </section>

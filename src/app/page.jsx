@@ -20,7 +20,7 @@ import Footer from '../components/Footer';
 import Modals from '../components/Modals';
 import SmoothScroll from '../components/SmoothScroll';
 
-import { getCorporateData, getHeroSlides, getWorkActivities, getCampaigns, getPresenceLocations } from '../lib/data-fetcher';
+import { getCorporateData, getHeroSlides, getHeroStats, getDonors, getWorkActivities, getCampaigns, getPresenceLocations } from '../lib/data-fetcher';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,6 +28,8 @@ export default async function Home() {
   // Fetch all initial data instantly on the server side
   const corporateData = await getCorporateData();
   const heroSlides = await getHeroSlides();
+  const heroStats = await getHeroStats();
+  const donors = await getDonors();
   const workActivities = await getWorkActivities();
   const campaigns = await getCampaigns();
   const presenceLocations = await getPresenceLocations();
@@ -39,8 +41,9 @@ export default async function Home() {
         <Header />
         <main id="app-content">
           <div id="public-views">
-            <Hero initialSlides={heroSlides} />
+            <Hero initialSlides={heroSlides} initialStats={heroStats} />
             <TrustSeals />
+            <DonorWall initialDonors={donors} />
             <AboutUs />
             <OurWork initialWork={workActivities} />
             <Presence initialLocations={presenceLocations} />
@@ -51,8 +54,8 @@ export default async function Home() {
             <ActivityGallery />
             <Publications />
             <FAQs />
+            <Careers />
             <Contact />
-            <DonorWall />
           </div>
         </main>
         <Footer />

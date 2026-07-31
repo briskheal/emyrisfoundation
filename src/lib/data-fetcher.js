@@ -1,4 +1,4 @@
-import { CorporateProfile, HeroSlide, Campaign, WorkActivity, PresenceLocation, WorkDetail, CampaignDetail } from './db';
+import { CorporateProfile, HeroSlide, HeroStat, Donor, Campaign, WorkActivity, PresenceLocation, WorkDetail, CampaignDetail } from './db';
 import fs from 'fs';
 import path from 'path';
 
@@ -39,6 +39,28 @@ export async function getHeroSlides() {
     return [];
   } catch (error) {
     return [];
+  }
+}
+
+export async function getHeroStats() {
+  try {
+    const stats = await HeroStat.findAll({ order: [['order', 'ASC']] });
+    if (stats.length > 0) return stats.map(s => s.toJSON());
+    return null;
+  } catch (error) {
+    console.error('Failed to get hero stats:', error);
+    return null;
+  }
+}
+
+export async function getDonors() {
+  try {
+    const donors = await Donor.findAll({ order: [['order', 'ASC']] });
+    if (donors.length > 0) return donors.map(s => s.toJSON());
+    return null;
+  } catch (error) {
+    console.error('Failed to get donors:', error);
+    return null;
   }
 }
 

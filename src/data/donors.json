@@ -1,12 +1,12 @@
 [
-  { "id": "donor-1", "name": "Tata Steel CSR", "icon": "fa-solid fa-trophy" },
-  { "id": "donor-2", "name": "Dr. Durga Prasad Mishra", "icon": "fa-solid fa-medal" },
-  { "id": "donor-3", "name": "Mr. J. Ranjan Dash", "icon": "fa-solid fa-medal" },
-  { "id": "donor-4", "name": "Baroda Plantation Group", "icon": "fa-solid fa-seedling" },
-  { "id": "donor-5", "name": "HDFC Bank CSR", "icon": "fa-solid fa-heart" },
-  { "id": "donor-6", "name": "Ms. Silla Padhi", "icon": "fa-solid fa-medal" },
-  { "id": "donor-7", "name": "Bhubaneswar Green Heroes", "icon": "fa-solid fa-tree" },
-  { "id": "donor-8", "name": "AlmaLinux Foundation", "icon": "fa-solid fa-hand-holding-dollar" },
-  { "id": "donor-9", "name": "Mr. Sishir Ranjan Mishra", "icon": "fa-solid fa-medal" },
-  { "id": "donor-10", "name": "Beti Bachao Support Group", "icon": "fa-solid fa-ribbon" }
+  { "id": "donor-1", "name": "Tata Steel CSR", "icon": "fa-solid fa-trophy" ,"image":"/emyris_logo.webp"},
+  { "id": "donor-2", "name": "Dr. Durga Prasad Mishra", "icon": "fa-solid fa-medal" ,"image":"/emyris_logo.webp"},
+  { "id": "donor-3", "name": "Mr. J. Ranjan Dash", "icon": "fa-solid fa-medal" ,"image":"/emyris_logo.webp"},
+  { "id": "donor-4", "name": "Baroda Plantation Group", "icon": "fa-solid fa-seedling" ,"image":"/emyris_logo.webp"},
+  { "id": "donor-5", "name": "HDFC Bank CSR", "icon": "fa-solid fa-heart" ,"image":"/emyris_logo.webp"},
+  { "id": "donor-6", "name": "Ms. Silla Padhi", "icon": "fa-solid fa-medal" ,"image":"/emyris_logo.webp"},
+  { "id": "donor-7", "name": "Bhubaneswar Green Heroes", "icon": "fa-solid fa-tree" ,"image":"/emyris_logo.webp"},
+  { "id": "donor-8", "name": "AlmaLinux Foundation", "icon": "fa-solid fa-hand-holding-dollar" ,"image":"/emyris_logo.webp"},
+  { "id": "donor-9", "name": "Mr. Sishir Ranjan Mishra", "icon": "fa-solid fa-medal" ,"image":"/emyris_logo.webp"},
+  { "id": "donor-10", "name": "Beti Bachao Support Group", "icon": "fa-solid fa-ribbon" ,"image":"/emyris_logo.webp"}
 ]

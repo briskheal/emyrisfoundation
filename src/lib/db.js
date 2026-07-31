@@ -139,6 +139,13 @@ export const HeroStat = sequelize.define('HeroStat', {
   updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
 });
 
+export const Donor = sequelize.define('Donor', {
+  id: { type: DataTypes.STRING, primaryKey: true },
+  name: DataTypes.STRING,
+  image: DataTypes.STRING, // Path to uploaded logo/thumbnail
+  order: { type: DataTypes.INTEGER, defaultValue: 0 },
+});
+
 export const PresenceLocation = sequelize.define('PresenceLocation', {
   id: { type: DataTypes.STRING, primaryKey: true },
   name: DataTypes.STRING,
