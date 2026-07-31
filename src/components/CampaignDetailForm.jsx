@@ -60,16 +60,18 @@ export default function CampaignDetailForm({ campaignTitle, isBloodCampaign }) {
   }
 
   return (
-    <div className="glass-card" style={{ height: '100%', display: 'flex', flexDirection: 'column', padding: '25px', background: 'rgba(11, 25, 44, 0.7)', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
-      <div className="text-center" style={{ marginBottom: '20px', paddingBottom: '15px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-        <h3 style={{ color: 'var(--primary-orange)', fontSize: '1.4rem', fontWeight: '700', marginBottom: '6px' }}>
-          {isBloodCampaign ? '"Blood: The Universal Bond"' : `Join ${campaignTitle}`}
-        </h3>
-        <p style={{ color: '#ffffff', fontSize: '0.95rem', margin: 0 }}>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ marginBottom: '20px' }}>
+        <span className="section-subtitle" style={{ color: 'var(--primary-orange)', fontSize: '0.85rem' }}>
           {isBloodCampaign ? 'Consent form to Contact and Coordinate' : 'Fill up the form below to become part of our movement.'}
-        </p>
+        </span>
+        <h2 style={{ fontSize: '2rem', color: '#ffffff', marginBottom: '8px', fontWeight: '700' }}>
+          {isBloodCampaign ? '"Blood: The Universal Bond"' : `Join ${campaignTitle}`}
+        </h2>
+        <div className="title-underline" style={{ margin: '0 0 15px 0' }}></div>
       </div>
 
+      <div className="glass-card" style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', padding: '25px', background: 'rgba(11, 25, 44, 0.7)', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
       <form onSubmit={handleSubmit}>
         
         {/* Name */}
@@ -144,6 +146,7 @@ export default function CampaignDetailForm({ campaignTitle, isBloodCampaign }) {
           {loading ? 'Submitting...' : <>Submit Consent Form <i className="fa-solid fa-paper-plane" style={{ marginLeft: '8px' }}></i></>}
         </button>
       </form>
+    </div>
     </div>
   );
 }

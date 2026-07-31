@@ -11,18 +11,17 @@ export default function ShikshaDonationForm() {
   };
 
   return (
-    <div className="glass-card" style={{ height: '100%', display: 'flex', flexDirection: 'column', padding: '25px', background: 'rgba(11, 25, 44, 0.7)', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
-      
-      <div className="text-center" style={{ marginBottom: '25px', paddingBottom: '15px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-        <h3 style={{ color: '#86efac', fontSize: '1.5rem', fontWeight: '700', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '1px' }}>
-          SUPPORT THE PURPOSE
-        </h3>
-        <p style={{ color: '#ffffff', fontSize: '1.05rem', margin: 0, fontWeight: '500' }}>
-          • We Can Make a difference.
-        </p>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ marginBottom: '20px' }}>
+        <span className="section-subtitle" style={{ color: 'var(--primary-orange)', fontSize: '0.85rem' }}>SUPPORT THE PURPOSE</span>
+        <h2 style={{ fontSize: '2rem', color: '#ffffff', marginBottom: '8px', fontWeight: '700' }}>
+          We Can Make a difference.
+        </h2>
+        <div className="title-underline" style={{ margin: '0 0 15px 0' }}></div>
       </div>
 
-      <form onSubmit={handleSubmit} style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+      <div className="glass-card" style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', padding: '25px', background: 'rgba(11, 25, 44, 0.7)', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
+        <form onSubmit={handleSubmit} style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
         
         <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '15px', marginBottom: '30px', alignItems: 'center' }}>
           {['1500', '3000', '6000', '12000'].map((amount) => (
@@ -73,6 +72,7 @@ export default function ShikshaDonationForm() {
           </p>
         </div>
       </form>
+    </div>
     </div>
   );
 }
