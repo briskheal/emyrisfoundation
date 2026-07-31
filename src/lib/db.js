@@ -18,6 +18,8 @@ export const CorporateProfile = sequelize.define('CorporateProfile', {
   tan: DataTypes.STRING,
   cin: DataTypes.STRING,
   niti: DataTypes.STRING,
+  csr: DataTypes.STRING,
+  darpan: DataTypes.STRING,
   tax80g: DataTypes.STRING,
   tax12a: DataTypes.STRING,
   fb: DataTypes.STRING,

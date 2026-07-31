@@ -9,7 +9,7 @@ const TrustSeals = () => {
     { icon: "fa-solid fa-file-shield", title: "PAN NO", id: "trust-pan-text", text: corporate?.pan || 'AAICE2817L' },
     { icon: "fa-solid fa-circle-check", title: "CSR Regn. No.", id: "trust-csr-text", text: corporate?.csr || 'CSR00078495' },
     { icon: "fa-solid fa-stamp", title: "CIN NO", id: "trust-cin-text", text: corporate?.cin || 'U88900GJ2024NPL153125' },
-    { icon: "fa-solid fa-hand-holding-heart", title: "DARPAN NO", id: "trust-darpan-text", text: corporate?.niti || 'To be updated' }
+    { icon: "fa-solid fa-hand-holding-heart", title: "DARPAN NO", id: "trust-darpan-text", text: corporate?.darpan || 'To be updated' }
   ];
 
   return (
