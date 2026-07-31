@@ -407,7 +407,7 @@ const AdminPanel = () => {
                 { label: 'PAN Number', field: 'pan' },
                 { label: 'TAN Number', field: 'tan' },
                 { label: 'CIN No', field: 'cin' },
-                { label: 'CSR Regn. No', field: 'csr' },
+                { label: 'CSR REGN NO', field: 'csr' },
                 { label: 'Darpan No', field: 'darpan' },
                 { label: '80G Tax Info', field: 'tax80g' },
                 { label: '12A Status', field: 'tax12a' },
