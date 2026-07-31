@@ -114,7 +114,7 @@ export default async function CampaignPage({ params }) {
                   {id === 'shiksha' ? (
                     <ShikshaDonationForm />
                   ) : (
-                    <CampaignDetailForm campaignTitle={data.title} isBloodCampaign={isBlood} />
+                    <CampaignDetailForm campaignTitle={data.title} isBloodCampaign={isBlood} campaignId={id} />
                   )}
                 </div>
               </div>

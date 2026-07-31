@@ -350,20 +350,24 @@ export async function getCampaignDetail(id) {
   } : id === 'organ' ? {
     id: 'organ',
     title: 'Organ Donation Awareness',
-    motto: 'Eternal Impact, Organ Donation',
-    bannerMsg: 'Give the ultimate gift of life and leave an eternal legacy.',
-    introText: `Organ donation is a profound act of human solidarity that transforms loss into life. Every single day, thousands of patients remain on waiting lists, hoping for a second chance. A single organ donor can save up to eight lives and improve the lives of more than 75 others through tissue donation.\n\nDespite the critical need, lack of awareness and persistent myths prevent many from registering. Our Organ Donation Awareness campaign aims to bridge this gap through education, advocacy, and community outreach. We partner with medical institutions and grassroots volunteers to break taboos and encourage proactive registration.\n\nBy pledging to be a donor, you are making an extraordinary commitment to humanity. Join us in our mission to ensure that no life is lost due to a shortage of transplantable organs. Your decision today can be someone else's miracle tomorrow.`,
-    whyTitle: 'Why You Should Pledge',
+    motto: 'Eternal Impact, Organ Donation.',
+    bannerMsg: 'Join hands to create awareness on “Organ Donation, a Testament to Human Kindness”',
+    introText: `Imagine a world where every person who can donate, does. A world where waiting lists for organs are dramatically shortened or even eradicated. This isn't a distant dream but a reachable reality with increased awareness and action.\n\nTo those who ponder, "What can I do?"—your action can be as simple as registering as an organ donor. It's about sparking conversations, educating others, and breaking through the silence that often surrounds this topic. Organ donation isn't just about saving lives; it's about fostering a culture of empathy, where life's end for one becomes life's beginning for another.\n\nLet's pledge not only to give when we can but to also spread the word, dispel myths, and advocate for a future where organ donation is as commonplace as any other act of kindness. In doing so, we participate in one of the most profound gifts humanity can offer—the gift of life.\n\nCome and shower your love in saving someone’s life. Join Hand and Fill up the consent form to contact you.`,
+    whyTitle: 'Why Organ Donation is Important?',
     whyGrid: [
-      { title: 'Save Multiple Lives', text: 'A single donor can save up to eight lives by donating vital organs such as the heart, lungs, liver, and kidneys.' },
-      { title: 'Leave a Legacy', text: 'It is the ultimate act of altruism, allowing your legacy to live on through the individuals whose lives you transform.' },
-      { title: 'Bridge the Gap', text: 'Help reduce the critical shortage of organs and decrease the agonizing wait times for patients in need.' },
-      { title: 'Inspire Others', text: 'By registering and openly discussing your decision, you inspire your family and community to do the same.' },
-      { title: 'Zero Cost', text: 'There is no cost to the donor’s family for organ and tissue donation; it is a completely free act of giving.' }
+      { title: 'Saves Lives and Improves Quality of Life', text: 'Organ donation is often the only treatment for end-stage organ failure or certain congenital conditions. Hearts, kidneys, livers, lungs, and other organs can mean the difference between life and death for recipients.' },
+      { title: 'Enhanced Quality of Life', text: 'For many recipients, receiving an organ transplant can restore health, allowing them to return to normal activities, work, and family life, significantly improving their quality of life.' },
+      { title: 'End of Long Suffering', text: 'People waiting for organs often endure long periods of pain, disability, or dependence on machines like dialysis machines for kidney failure. Donation can end this suffering.' },
+      { title: 'Healthcare Costs', text: 'Early transplantation can be more cost-effective than prolonged treatments or machine-dependent care. This reduces healthcare costs both for individuals and the overall healthcare system.' },
+      { title: 'Innovation', text: 'The need for organ donation drives medical research into organ preservation, transplantation techniques, and even the development of artificial organs or organ regeneration.' }
     ],
+    galleryTitle: '"Organ Donation: The Human Kindness"',
+    gallerySubtitle: 'Photographs on Organ Donation with scroll option for our future camps photographs.',
     galleryPhotos: [
       { url: '/Emyris Foundation Photos/low-angle-hands-holding-heart-shape-with-sky_23-2148635107.webp', title: 'Awareness Drive' }
     ],
+    videoTitle: 'Organ Donation in Motion',
+    videoSubtitle: 'Youtube videos with scroll option for our camps and other videos on Organ Donation.',
     videos: []
   } : id === 'plantation' ? {
     id: 'plantation',
