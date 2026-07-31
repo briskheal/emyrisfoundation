@@ -93,54 +93,82 @@ const DonorManager = ({ token }) => {
     <div className="admin-panel-section" style={{ display: 'block' }}>
       <h2 style={{ color: '#fff', marginBottom: '20px' }}>Manage Champions (Donors)</h2>
       
-      <div className="glass-card" style={{ padding: '20px', marginBottom: '20px' }}>
-        <h3 style={{ color: '#15F5BA', marginBottom: '15px' }}>{editing ? 'Edit' : 'Add New'} Champion</h3>
-        <form onSubmit={handleSave} style={{ display: 'grid', gridTemplateColumns: '2fr 2fr 80px 120px', gap: '15px', alignItems: 'end' }}>
+      <div className="glass-card" style={{ padding: '25px', marginBottom: '30px', background: 'rgba(15, 23, 42, 0.6)', borderLeft: '4px solid #15F5BA' }}>
+        <h3 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '20px', fontWeight: '600' }}>
+          <i className="fa-solid fa-user-plus" style={{ color: '#15F5BA', marginRight: '10px' }}></i>
+          {editing ? 'Edit Champion Details' : 'Add New Champion'}
+        </h3>
+        
+        <form onSubmit={handleSave} style={{ display: 'flex', gap: '20px', alignItems: 'flex-end', flexWrap: 'wrap' }}>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ color: '#fff', fontSize: '0.85rem' }}>Champion Name</label>
+          {/* Name Field */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: '2 1 250px' }}>
+            <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', fontWeight: '500', letterSpacing: '0.5px' }}>CHAMPION NAME</label>
             <input 
               required
               value={formData.name} 
               onChange={e => setFormData({...formData, name: e.target.value})} 
-              className="admin-input" 
-              placeholder="e.g. John Doe / Acme Corp" 
+              style={{
+                width: '100%', padding: '12px 16px', borderRadius: '8px',
+                border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(0,0,0,0.2)',
+                color: 'white', fontSize: '0.95rem', outline: 'none', transition: 'border 0.3s'
+              }}
+              placeholder="e.g. John Doe or Acme Corp" 
             />
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ color: '#fff', fontSize: '0.85rem' }}>Logo/Photo (Auto WebP)</label>
-            <div style={{ display: 'flex', gap: '10px', alignItems: 'center', height: '42.5px' }}>
+          {/* Logo Field */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: '2 1 250px' }}>
+            <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', fontWeight: '500', letterSpacing: '0.5px' }}>LOGO OR PHOTO (OPTIONAL)</label>
+            <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
               <input 
                 type="file" 
                 accept="image/*"
                 onChange={handleImageChange}
-                className="admin-input" 
-                style={{ padding: '8px', flex: 1, height: '100%', boxSizing: 'border-box' }}
+                style={{
+                  flex: 1, padding: '9px 12px', borderRadius: '8px',
+                  border: '1px dashed rgba(255,255,255,0.2)', background: 'rgba(0,0,0,0.1)',
+                  color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', cursor: 'pointer'
+                }}
               />
-              {preview && <img src={preview} alt="Preview" style={{ height: '36px', borderRadius: '4px' }} />}
+              {preview && <img src={preview} alt="Preview" style={{ height: '42px', width: '42px', objectFit: 'cover', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.1)' }} />}
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            <label style={{ color: '#fff', fontSize: '0.85rem' }}>Order</label>
+          {/* Order Field */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100px' }}>
+            <label style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', fontWeight: '500', letterSpacing: '0.5px' }}>ORDER</label>
             <input 
               type="number" 
               value={formData.order} 
               onChange={e => setFormData({...formData, order: parseInt(e.target.value) || 0})} 
-              className="admin-input" 
+              style={{
+                width: '100%', padding: '12px 16px', borderRadius: '8px',
+                border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(0,0,0,0.2)',
+                color: 'white', fontSize: '0.95rem', outline: 'none', textAlign: 'center'
+              }}
             />
           </div>
 
-          <div style={{ display: 'flex', gap: '10px', height: '42.5px' }}>
-            <button type="submit" className="admin-btn" style={{ flex: 1, padding: '0 10px' }}>
-              <i className="fa-solid fa-save"></i> Save
+          {/* Actions */}
+          <div style={{ display: 'flex', gap: '12px', height: '46px', flex: '1 1 120px' }}>
+            <button type="submit" style={{
+              flex: 1, padding: '0 20px', background: '#15F5BA', color: '#000',
+              border: 'none', borderRadius: '8px', fontWeight: '600', fontSize: '0.95rem',
+              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+              transition: 'background 0.2s', whiteSpace: 'nowrap'
+            }}>
+              <i className="fa-solid fa-floppy-disk"></i> {editing ? 'Save Changes' : 'Save'}
             </button>
             {editing && (
-              <button type="button" className="admin-btn" style={{ background: '#475569' }} onClick={() => {
+              <button type="button" onClick={() => {
                 setEditing(null);
                 setFormData({ name: '', order: 0, image: null });
                 setPreview(null);
+              }} style={{
+                padding: '0 20px', background: 'rgba(255,255,255,0.1)', color: 'white',
+                border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', fontWeight: '500',
+                cursor: 'pointer', transition: 'background 0.2s'
               }}>
                 Cancel
               </button>
