@@ -60,7 +60,7 @@ export default function CampaignDetailForm({ campaignTitle, isBloodCampaign }) {
   }
 
   return (
-    <div className="glass-card" style={{ padding: '25px', background: 'rgba(11, 25, 44, 0.7)', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
+    <div className="glass-card" style={{ height: '100%', display: 'flex', flexDirection: 'column', padding: '25px', background: 'rgba(11, 25, 44, 0.7)', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
       <div className="text-center" style={{ marginBottom: '20px', paddingBottom: '15px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
         <h3 style={{ color: 'var(--primary-orange)', fontSize: '1.4rem', fontWeight: '700', marginBottom: '6px' }}>
           {isBloodCampaign ? '"Blood: The Universal Bond"' : `Join ${campaignTitle}`}
