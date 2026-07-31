@@ -77,6 +77,24 @@ const DonateModal = () => {
     closeModal();
   };
 
+  const TEMP_DISABLED = true;
+
+  if (TEMP_DISABLED) {
+    return (
+      <div className="modal-overlay open" id="donate-modal" style={{ display: 'flex' }}>
+        <div className="modal-card donate-modal-card glass-card" style={{ maxWidth: '500px', textAlign: 'center', padding: '40px 25px' }}>
+          <button className="modal-close-btn" onClick={handleClose}><i className="fa-solid fa-xmark"></i></button>
+          <i className="fa-solid fa-triangle-exclamation" style={{ color: 'var(--primary-orange)', fontSize: '4rem', marginBottom: '20px', display: 'block' }}></i>
+          <h2 style={{ fontSize: '1.8rem', marginBottom: '15px', color: '#fff' }}>We are not accepting Donation Right Now</h2>
+          <p style={{ fontSize: '1.1rem', lineHeight: '1.6', color: 'rgba(255,255,255,0.85)', marginBottom: '30px' }}>
+            Do connect if you want further clarity in our mail.
+          </p>
+          <button className="btn btn-primary w-100" onClick={handleClose}>Close Window</button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="modal-overlay open" id="donate-modal" style={{ display: 'flex' }}>
       <div className="modal-card donate-modal-card glass-card">
