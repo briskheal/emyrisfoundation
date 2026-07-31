@@ -319,8 +319,8 @@ export async function getCampaignDetail(id) {
     introText: `The beauty of blood donation lies in its simplicity and accessibility. It requires no special skills, just a willingness to give a part of oneself for the greater good. Every drop donated is a testament to the community's commitment to life, to each other.\n\nSo, let's take a moment to reflect on the power we hold within us—the power to save lives. Let us not wait for a crisis to act; let's create a culture where giving blood is as routine as any other civic duty. By doing so, we not only protect our immediate community but also contribute to a global network of care and compassion.\n\nIn essence, blood donation camps are more than just events; they are celebrations of life, love, and community. They are a call to action for each of us to be a part of something larger than ourselves, to be a part of the heartbeat of our community. Let's keep this heartbeat strong, for in doing so, we keep our society alive, vibrant, and interconnected.\n\nCome and shower your love in saving someone’s life. Join Hand and Fill up the consent form to contact you to invite.`,
     whyTitle: 'Why Healthy Volunteers Should Donate',
     whyGrid: [
-      { title: 'Constant Need for Supplies', text: 'Hospitals require a steady supply of blood for surgeries, accident victims, childbirth complications, and treatments for various illnesses like anemia, cancer, or thalassemia.' },
-      { title: 'Limited Shelf Life', text: 'Blood components have a limited shelf life (e.g., red blood cells last about 42 days), necessitating continuous replenishment.' },
+      { title: 'Constant Need for Blood Supplies', text: 'Hospitals require a steady supply of blood for surgeries, accident victims, childbirth complications, and treatments for various illnesses like anemia, cancer, or thalassemia.' },
+      { title: 'Limited shelf life', text: 'Blood components have a limited shelf life (e.g., red blood cells last about 42 days), necessitating continuous replenishment.' },
       { title: 'Local Availability', text: 'Local donation camps ensure a diverse blood supply within the community, which is crucial for emergency situations where immediate access to blood is life-saving.' },
       { title: 'Reducing Shortages', text: 'Blood shortages are common and can critically affect patient care. Regular donation camps help maintain a buffer stock.' },
       { title: 'Volunteer Opportunities', text: 'It provides a platform for community members to volunteer, from organizing the event to comforting donors, enhancing community spirit.' }
@@ -356,6 +356,11 @@ export async function getCampaignDetail(id) {
     
     let detail = await CampaignDetail.findByPk(id);
     if (detail) {
+      if (isBlood) {
+        detail.whyTitle = defaultData.whyTitle;
+        detail.whyGrid = defaultData.whyGrid;
+        await detail.save();
+      }
       return detail.toJSON();
     }
     

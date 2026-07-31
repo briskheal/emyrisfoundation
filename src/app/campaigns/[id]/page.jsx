@@ -79,10 +79,10 @@ export default async function CampaignPage({ params }) {
           {/* MAIN NARRATIVE + LIVE REGISTRATION FORM (SIDE-BY-SIDE) */}
           <section style={{ padding: '40px 0 30px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
             <div className="container">
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '40px', alignItems: 'start' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '40px', alignItems: 'stretch' }}>
                 
                 {/* Left Column: Campaign Narrative */}
-                <div className="campaign-narrative">
+                <div className="campaign-narrative" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                   <div style={{ marginBottom: '20px' }}>
                     <span className="section-subtitle" style={{ color: 'var(--primary-orange)', fontSize: '0.85rem' }}>Overview & Impact</span>
                     <h2 style={{ fontSize: '2rem', color: '#ffffff', marginBottom: '8px', fontWeight: '700' }}>
@@ -91,10 +91,12 @@ export default async function CampaignPage({ params }) {
                     <div className="title-underline" style={{ margin: '0 0 15px 0' }}></div>
                   </div>
 
-                  <div className="glass-card" style={{ padding: '25px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', fontSize: '1rem', lineHeight: '1.7', color: 'rgba(255,255,255,0.9)' }}>
-                    {data.introText ? data.introText.split('\n\n').map((para, idx) => (
-                      <p key={idx} style={{ marginBottom: '16px', textAlign: 'justify', opacity: '0.92' }}>{para}</p>
-                    )) : null}
+                  <div className="glass-card" style={{ padding: '25px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', fontSize: '1rem', lineHeight: '1.7', color: 'rgba(255,255,255,0.9)', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                    <div style={{ flexGrow: 1 }}>
+                      {data.introText ? data.introText.split('\n\n').map((para, idx) => (
+                        <p key={idx} style={{ marginBottom: '16px', textAlign: 'justify', opacity: '0.92' }}>{para}</p>
+                      )) : null}
+                    </div>
                     
                     <div style={{ background: 'rgba(235, 94, 40, 0.1)', borderLeft: '4px solid var(--primary-orange)', padding: '15px 20px', borderRadius: '4px', marginTop: '20px' }}>
                       <p style={{ margin: 0, fontSize: '0.95rem', fontWeight: '600', color: '#ffffff' }}>
@@ -107,9 +109,16 @@ export default async function CampaignPage({ params }) {
                 </div>
 
                 {/* Right Column: Embedded Registration Form */}
-                <div className="campaign-form-column" id="consent-section" style={{ position: 'sticky', top: '90px' }}>
+                <div className="campaign-form-column" id="consent-section" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                   <CampaignDetailForm campaignTitle={data.title} isBloodCampaign={isBlood} />
                 </div>
+              </div>
+
+              {/* Go Back Button */}
+              <div style={{ marginTop: '30px', textAlign: 'center' }}>
+                <Link href="/#campaigns" className="btn btn-outline" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 20px', fontSize: '0.95rem' }}>
+                  <i className="fa-solid fa-arrow-left"></i> Go Back to Campaigns
+                </Link>
               </div>
             </div>
           </section>
