@@ -95,9 +95,9 @@ const DonorManager = ({ token }) => {
       
       <div className="glass-card" style={{ padding: '20px', marginBottom: '20px' }}>
         <h3 style={{ color: '#15F5BA', marginBottom: '15px' }}>{editing ? 'Edit' : 'Add New'} Champion</h3>
-        <form onSubmit={handleSave} style={{ display: 'flex', gap: '15px', alignItems: 'flex-end', flexWrap: 'wrap' }}>
+        <form onSubmit={handleSave} style={{ display: 'grid', gridTemplateColumns: '2fr 2fr 80px 120px', gap: '15px', alignItems: 'end' }}>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', flex: '1 1 200px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
             <label style={{ color: '#fff', fontSize: '0.85rem' }}>Champion Name</label>
             <input 
               required
@@ -108,21 +108,21 @@ const DonorManager = ({ token }) => {
             />
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', flex: '1 1 200px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
             <label style={{ color: '#fff', fontSize: '0.85rem' }}>Logo/Photo (Auto WebP)</label>
-            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center', height: '42.5px' }}>
               <input 
                 type="file" 
                 accept="image/*"
                 onChange={handleImageChange}
                 className="admin-input" 
-                style={{ padding: '8px', flex: 1 }}
+                style={{ padding: '8px', flex: 1, height: '100%', boxSizing: 'border-box' }}
               />
-              {preview && <img src={preview} alt="Preview" style={{ height: '40px', borderRadius: '4px' }} />}
+              {preview && <img src={preview} alt="Preview" style={{ height: '36px', borderRadius: '4px' }} />}
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '80px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
             <label style={{ color: '#fff', fontSize: '0.85rem' }}>Order</label>
             <input 
               type="number" 
@@ -132,8 +132,8 @@ const DonorManager = ({ token }) => {
             />
           </div>
 
-          <div style={{ display: 'flex', gap: '10px', paddingBottom: '2px' }}>
-            <button type="submit" className="admin-btn">
+          <div style={{ display: 'flex', gap: '10px', height: '42.5px' }}>
+            <button type="submit" className="admin-btn" style={{ flex: 1, padding: '0 10px' }}>
               <i className="fa-solid fa-save"></i> Save
             </button>
             {editing && (
