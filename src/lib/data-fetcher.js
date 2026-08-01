@@ -411,7 +411,7 @@ export async function getCampaignDetail(id) {
     videos: []
   } : {
     id: 'welfare',
-    title: 'Social Welfare',l Welfare',
+    title: 'Social Welfare',
     motto: 'Together We Can Build Stronger Communities',
     bannerMsg: 'Welcome to Emyris Foundation where community and compassion converge.',
     narrativeHeading: 'Driving Transformation Together',
