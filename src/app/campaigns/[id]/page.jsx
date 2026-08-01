@@ -8,6 +8,7 @@ import { ModalProvider } from '../../../context/ModalContext';
 import Modals from '../../../components/Modals';
 import CampaignDetailForm from '../../../components/CampaignDetailForm';
 import ShikshaDonationForm from '../../../components/ShikshaDonationForm';
+import MediaScroller from '../../../components/MediaScroller';
 
 export const dynamic = 'force-dynamic';
 
@@ -168,18 +169,20 @@ export default async function CampaignPage({ params }) {
                   <div className="title-underline" style={{ margin: '0 auto' }}></div>
                 </div>
 
-                <div className="impact-gallery" style={{ display: 'flex', gap: '20px', overflowX: 'auto', paddingBottom: '15px' }}>
-                  {data.galleryPhotos.map((photo, idx) => (
-                    <div key={idx} className="impact-photo-card" style={{ minWidth: '320px', maxWidth: '380px', flex: '0 0 auto', borderRadius: '14px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
-                      <img src={photo.url} alt={photo.title || `Gallery ${idx}`} style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} />
-                      {photo.title && (
-                        <div style={{ padding: '12px 16px', background: 'rgba(255,255,255,0.04)', color: '#fff', fontSize: '0.95rem', fontWeight: '600' }}>
-                          <i className="fa-solid fa-camera" style={{ color: 'var(--primary-orange)', marginRight: '8px' }}></i> {photo.title}
+                  <MediaScroller>
+                    <div className="impact-gallery" style={{ display: 'flex', gap: '20px', minWidth: 'max-content' }}>
+                      {data.galleryPhotos.map((photo, idx) => (
+                        <div key={idx} className="impact-photo-card" style={{ width: '320px', flex: '0 0 auto', borderRadius: '14px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
+                          <img src={photo.url} alt={photo.title || `Gallery ${idx}`} style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} />
+                          {photo.title && (
+                            <div style={{ padding: '12px 16px', background: 'rgba(255,255,255,0.04)', color: '#fff', fontSize: '0.95rem', fontWeight: '600' }}>
+                              <i className="fa-solid fa-camera" style={{ color: 'var(--primary-orange)', marginRight: '8px' }}></i> {photo.title}
+                            </div>
+                          )}
                         </div>
-                      )}
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </MediaScroller>
               </div>
             </section>
           )}
@@ -201,23 +204,23 @@ export default async function CampaignPage({ params }) {
                   <div className="title-underline" style={{ margin: '0 auto' }}></div>
                 </div>
 
-                <div className="horizontal-scroll-container">
-                  <div className="videos-flex">
-                    {data.videos.map((vid, idx) => (
-                      <div key={idx} className="video-card">
-                        <iframe 
-                          width="100%" 
-                          height="200" 
-                          src={vid.url} 
-                          title={vid.title || `Video ${idx}`} 
-                          frameBorder="0" 
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                          allowFullScreen>
-                        </iframe>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                  <MediaScroller>
+                    <div className="videos-flex">
+                      {data.videos.map((vid, idx) => (
+                        <div key={idx} className="video-card">
+                          <iframe 
+                            width="100%" 
+                            height="200" 
+                            src={vid.url} 
+                            title={vid.title || `Video ${idx}`} 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen>
+                          </iframe>
+                        </div>
+                      ))}
+                    </div>
+                  </MediaScroller>
               </div>
             </section>
           )}
