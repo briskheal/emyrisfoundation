@@ -51,7 +51,7 @@ export default function ImageCropperModal({ imageSrc, onCropDone, onCancel, aspe
           max={3}
           step={0.1}
           aria-labelledby="Zoom"
-          onChange={(e) => setZoom(e.target.value)}
+          onChange={(e) => setZoom(Number(e.target.value))}
           style={{ width: '100%', marginBottom: '20px' }}
         />
         <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
