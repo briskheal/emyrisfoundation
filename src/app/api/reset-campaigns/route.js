@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { CampaignDetail } from '../../../../lib/db';
+import { CampaignDetail } from '../../../lib/db';
 
 export async function GET() {
   try {
