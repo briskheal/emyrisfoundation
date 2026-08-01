@@ -3602,6 +3602,7 @@ textarea.form-control {
 }
 .sdg-grid {
   display: flex;
+  align-items: stretch;
   gap: 15px;
   min-width: max-content;
 }
@@ -3610,6 +3611,9 @@ textarea.form-control {
   scroll-snap-align: start;
   flex-shrink: 0;
   padding: 15px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
 }
 .sdg-card h4 {
   color: var(--primary-orange);
