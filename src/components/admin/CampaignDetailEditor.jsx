@@ -14,7 +14,8 @@ const CampaignDetailEditor = ({ token }) => {
     setLoading(true);
     try {
       const res = await fetch(`/api/campaign-details/${activeCampaign}`, {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { 'Authorization': `Bearer ${token}` },
+        cache: 'no-store'
       });
       if (res.ok) {
         const data = await res.json();

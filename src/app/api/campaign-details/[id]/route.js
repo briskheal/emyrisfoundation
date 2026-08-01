@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { CampaignDetail } from '../../../../lib/db';
 import { getCampaignDetail } from '../../../../lib/data-fetcher';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request, { params }) {
   try {
     const id = params.id;
