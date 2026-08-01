@@ -12,6 +12,11 @@ export const getYoutubeEmbedUrl = (url) => {
   return url;
 };
 
+export const formatTitle = (title) => {
+  if (!title) return '';
+  return title.replace(/^(?:#\S+\s*)+/, '').trim();
+};
+
 const GalleryManager = ({ token }) => {
   const [media, setMedia] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -234,7 +239,7 @@ const GalleryManager = ({ token }) => {
               <iframe src={getYoutubeEmbedUrl(item.url)} style={{ width: '100%', height: '150px', border: 'none', borderRadius: '4px' }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
             )}
             <div style={{ marginTop: '10px' }}>
-              <p style={{ margin: 0, fontWeight: 'bold', fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.title || 'Untitled'}</p>
+              <p style={{ margin: 0, fontWeight: 'bold', fontSize: '0.9rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={formatTitle(item.title) || 'Untitled'}>{formatTitle(item.title) || 'Untitled'}</p>
               <p style={{ margin: 0, fontSize: '0.8rem', color: 'rgba(255,255,255,0.6)' }}>{item.month} {item.year}</p>
             </div>
             <button 

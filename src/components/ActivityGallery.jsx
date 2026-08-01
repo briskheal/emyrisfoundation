@@ -12,6 +12,12 @@ const getYoutubeEmbedUrl = (url) => {
   return url;
 };
 
+// Helper function to strip leading hashtags from titles
+const formatTitle = (title) => {
+  if (!title) return 'Activity Archive';
+  return title.replace(/^(?:#\S+\s*)+/, '').trim();
+};
+
 const ActivityGallery = () => {
   const [media, setMedia] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -159,7 +165,7 @@ const ActivityGallery = () => {
                     </div>
                     {/* Title permanently below the image */}
                     <div className="gallery-card-info">
-                      <h5 className="gallery-card-title" title={item.title || 'Activity Archive'}>{item.title || 'Activity Archive'}</h5>
+                      <h5 className="gallery-card-title" title={formatTitle(item.title)}>{formatTitle(item.title)}</h5>
                     </div>
                   </div>
                 ))}
