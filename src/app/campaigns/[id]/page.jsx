@@ -95,7 +95,7 @@ export default async function CampaignPage({ params }) {
                   <div className="glass-card" style={{ padding: '25px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', fontSize: '1rem', lineHeight: '1.7', color: 'rgba(255,255,255,0.9)', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                     <div style={{ flexGrow: 1 }}>
                       {data.introText ? data.introText.split('\n\n').map((para, idx) => (
-                        <p key={idx} style={{ marginBottom: '16px', textAlign: 'justify', opacity: '0.92' }}>{para}</p>
+                        <p key={idx} style={{ marginBottom: '16px', textAlign: 'justify', opacity: '0.92' }} dangerouslySetInnerHTML={{ __html: para }}></p>
                       )) : null}
                     </div>
                     
