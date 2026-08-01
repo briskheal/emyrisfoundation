@@ -419,19 +419,6 @@ export async function getCampaignDetail(id) {
     
     let detail = await CampaignDetail.findByPk(id);
     if (detail) {
-      if (['blood', 'shiksha', 'organ', 'plantation', 'welfare'].includes(id)) {
-        detail.title = defaultData.title;
-        detail.motto = defaultData.motto;
-        detail.whyTitle = defaultData.whyTitle;
-        detail.whyGrid = defaultData.whyGrid;
-        detail.introText = defaultData.introText;
-        detail.bannerMsg = defaultData.bannerMsg;
-        if (defaultData.galleryTitle) detail.galleryTitle = defaultData.galleryTitle;
-        if (defaultData.gallerySubtitle) detail.gallerySubtitle = defaultData.gallerySubtitle;
-        if (defaultData.videoTitle) detail.videoTitle = defaultData.videoTitle;
-        if (defaultData.videoSubtitle) detail.videoSubtitle = defaultData.videoSubtitle;
-        await detail.save();
-      }
       return detail.toJSON();
     }
     
