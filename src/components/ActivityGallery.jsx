@@ -1,6 +1,5 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
-import './ActivityGallery.css';
 import { useModals } from '../context/ModalContext';
 
 // Helper function to extract YouTube ID
