@@ -4,16 +4,12 @@ import React, { useState, useEffect, useRef } from 'react';
 // Helper function to extract YouTube ID
 const getYoutubeEmbedUrl = (url) => {
   if (!url) return '';
-  let videoId = '';
-  if (url.includes('youtu.be/')) {
-    videoId = url.split('youtu.be/')[1]?.split('?')[0];
-  } else if (url.includes('youtube.com/watch')) {
-    const urlParams = new URLSearchParams(url.split('?')[1]);
-    videoId = urlParams.get('v');
-  } else if (url.includes('youtube.com/embed/')) {
-    return url;
+  const regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|shorts\/)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  if (match && match[2].length === 11) {
+    return `https://www.youtube.com/embed/${match[2]}?rel=0&modestbranding=1`;
   }
-  return videoId ? `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1` : url;
+  return url;
 };
 
 const ActivityGallery = () => {
