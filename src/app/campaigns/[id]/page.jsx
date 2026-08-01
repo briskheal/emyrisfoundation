@@ -173,7 +173,7 @@ export default async function CampaignPage({ params }) {
                     <div className="impact-gallery" style={{ display: 'flex', gap: '20px', minWidth: 'max-content' }}>
                       {data.galleryPhotos.map((photo, idx) => (
                         <div key={idx} className="impact-photo-card" style={{ width: '320px', flex: '0 0 auto', borderRadius: '14px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
-                          <img src={photo.url} alt={photo.title || `Gallery ${idx}`} style={{ width: '100%', aspectRatio: '16 / 9', objectFit: 'cover', display: 'block' }} />
+                          <img src={photo.url} alt={photo.title || `Gallery ${idx}`} style={{ width: '100%', aspectRatio: '1 / 1', objectFit: 'cover', display: 'block' }} />
                           {photo.title && (
                             <div style={{ padding: '12px 16px', background: 'rgba(255,255,255,0.04)', color: '#fff', fontSize: '0.95rem', fontWeight: '600' }}>
                               <i className="fa-solid fa-camera" style={{ color: 'var(--primary-orange)', marginRight: '8px' }}></i> {photo.title}
