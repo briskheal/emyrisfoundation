@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { compressImage } from '../../lib/imageCompressor';
 
 export const getYoutubeEmbedUrl = (url) => {
   if (!url) return '';
@@ -80,11 +81,13 @@ const CampaignDetailEditor = ({ token }) => {
   };
 
   const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    const rawFile = e.target.files[0];
+    if (!rawFile) return;
 
     setUploading(true);
     try {
+      const file = await compressImage(rawFile);
+      
       const formData = new FormData();
       formData.append('file', file);
       
