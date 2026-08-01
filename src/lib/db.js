@@ -247,6 +247,8 @@ export const CampaignDetail = sequelize.define('CampaignDetail', {
   title: DataTypes.STRING,
   motto: DataTypes.STRING,
   bannerMsg: DataTypes.TEXT,
+  narrativeHeading: DataTypes.STRING,
+  narrativeQuote: DataTypes.TEXT,
   introText: DataTypes.TEXT,
   whyTitle: DataTypes.STRING,
   whyGrid: DataTypes.JSON,

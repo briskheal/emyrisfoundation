@@ -87,7 +87,7 @@ export default async function CampaignPage({ params }) {
                   <div style={{ marginBottom: '20px' }}>
                     <span className="section-subtitle" style={{ color: 'var(--primary-orange)', fontSize: '0.85rem' }}>Overview & Impact</span>
                     <h2 style={{ fontSize: '2rem', color: '#ffffff', marginBottom: '8px', fontWeight: '700' }}>
-                      {isBlood ? 'Every Drop is a Testament to Life' : 'Driving Transformation Together'}
+                      {data.narrativeHeading || (isBlood ? 'Every Drop is a Testament to Life' : 'Driving Transformation Together')}
                     </h2>
                     <div className="title-underline" style={{ margin: '0 0 15px 0' }}></div>
                   </div>
@@ -101,9 +101,9 @@ export default async function CampaignPage({ params }) {
                     
                     <div style={{ background: 'rgba(235, 94, 40, 0.1)', borderLeft: '4px solid var(--primary-orange)', padding: '15px 20px', borderRadius: '4px', marginTop: '20px' }}>
                       <p style={{ margin: 0, fontSize: '0.95rem', fontWeight: '600', color: '#ffffff' }}>
-                        {isBlood 
+                        {data.narrativeQuote || (isBlood 
                           ? '“Come and shower your love in saving someone’s life. Join hands and fill up the consent form to coordinate your invitation.”' 
-                          : '“Your participation builds resilient communities. Join hands and sign up today.”'}
+                          : '“Your participation builds resilient communities. Join hands and sign up today.”')}
                       </p>
                     </div>
                   </div>

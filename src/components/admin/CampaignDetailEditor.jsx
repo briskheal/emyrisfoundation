@@ -108,6 +108,17 @@ const CampaignDetailEditor = ({ token }) => {
           <textarea value={detail.introText || ''} onChange={e => setDetail({...detail, introText: e.target.value})} rows="10" style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: 'white', fontFamily: 'monospace', fontSize: '0.85rem' }}></textarea>
         </div>
 
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
+          <div style={{ gridColumn: '1 / -1' }}>
+            <label style={{ display: 'block', color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', marginBottom: '5px' }}>Narrative Heading</label>
+            <input type="text" value={detail.narrativeHeading || ''} onChange={e => setDetail({...detail, narrativeHeading: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: 'white' }} />
+          </div>
+          <div style={{ gridColumn: '1 / -1' }}>
+            <label style={{ display: 'block', color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', marginBottom: '5px' }}>Narrative Quote Block</label>
+            <textarea value={detail.narrativeQuote || ''} onChange={e => setDetail({...detail, narrativeQuote: e.target.value})} rows="2" style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: 'white' }}></textarea>
+          </div>
+        </div>
+
         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px', marginBottom: '20px' }}>
           <h4 style={{ color: '#15F5BA', marginBottom: '15px' }}>Core Motivators (Grid Cards)</h4>
           <div style={{ marginBottom: '15px' }}>
@@ -136,6 +147,28 @@ const CampaignDetailEditor = ({ token }) => {
           <button onClick={addGridItem} style={{ padding: '6px 12px', background: 'transparent', color: '#15F5BA', border: '1px dashed #15F5BA', borderRadius: '6px', cursor: 'pointer', fontSize: '0.8rem', marginTop: '5px' }}>
             + Add Card
           </button>
+        </div>
+
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px', marginBottom: '20px' }}>
+          <h4 style={{ color: '#15F5BA', marginBottom: '15px' }}>Media Archives Titles</h4>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
+            <div>
+              <label style={{ display: 'block', color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', marginBottom: '5px' }}>Gallery Title</label>
+              <input type="text" value={detail.galleryTitle || ''} onChange={e => setDetail({...detail, galleryTitle: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: 'white' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', marginBottom: '5px' }}>Gallery Subtitle</label>
+              <input type="text" value={detail.gallerySubtitle || ''} onChange={e => setDetail({...detail, gallerySubtitle: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: 'white' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', marginBottom: '5px' }}>Video Title</label>
+              <input type="text" value={detail.videoTitle || ''} onChange={e => setDetail({...detail, videoTitle: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: 'white' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', marginBottom: '5px' }}>Video Subtitle</label>
+              <input type="text" value={detail.videoSubtitle || ''} onChange={e => setDetail({...detail, videoSubtitle: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: 'white' }} />
+            </div>
+          </div>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginTop: '30px' }}>
