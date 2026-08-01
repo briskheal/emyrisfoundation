@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { verifyAuth } from '../../../lib/auth';
+import { verifyAuth } from '../../../../lib/auth';
 import { CampaignDetail } from '../../../../lib/db';
 import { getCampaignDetail } from '../../../../lib/data-fetcher';
 

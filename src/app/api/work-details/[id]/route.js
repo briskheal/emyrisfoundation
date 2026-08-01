@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { verifyAuth } from '../../../lib/auth';
+import { verifyAuth } from '../../../../lib/auth';
 import { WorkDetail } from '../../../../lib/db';
 
 const defaultEducationData = {

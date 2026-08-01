@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { verifyAuth } from '../../lib/auth';
+import { verifyAuth } from '../../../lib/auth';
 import { CorporateProfile } from '../../../lib/db';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';

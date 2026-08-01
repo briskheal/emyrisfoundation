@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { verifyAuth } from '../../lib/auth';
+import { verifyAuth } from '../../../lib/auth';
 import fs from 'fs/promises';
 import path from 'path';
 import sharp from 'sharp';

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { verifyAuth } from '../../lib/auth';
+import { verifyAuth } from '../../../lib/auth';
 import { JobOpening } from '../../../lib/db';
 
 export const dynamic = 'force-dynamic';
