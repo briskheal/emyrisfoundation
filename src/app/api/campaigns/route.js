@@ -52,6 +52,7 @@ export async function POST(req) {
 }
 
 export async function PUT(req) {
+  if (!verifyAuth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
     const token = req.headers.get('authorization')?.split(' ')[1];
     const decoded = jwt.verify(token, JWT_SECRET);

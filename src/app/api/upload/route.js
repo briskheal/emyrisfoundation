@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
+import { verifyAuth } from '../../lib/auth';
 import fs from 'fs/promises';
 import path from 'path';
 import sharp from 'sharp';
 
 export async function POST(req) {
+  if (!verifyAuth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
     const formData = await req.formData();
     const file = formData.get('file');

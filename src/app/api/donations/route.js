@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { verifyAuth } from '../../lib/auth';
 import { Donation } from '../../../lib/db';
 import jwt from 'jsonwebtoken';
 
@@ -8,6 +9,7 @@ export const dynamic = 'force-dynamic';
 
 // Public: POST a donation (from DonateModal after payment)
 export async function POST(req) {
+  if (!verifyAuth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
     const body = await req.json();
     const { donorName, email, phone, pan, amount, txnId } = body;
@@ -41,6 +43,7 @@ export async function GET(req) {
 
 // Protected: Update donation status (superadmin only)
 export async function PUT(req) {
+  if (!verifyAuth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
     const authHeader = req.headers.get('authorization');
     if (!authHeader) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });

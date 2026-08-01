@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { verifyAuth } from '../../lib/auth';
 import { AboutContent, sequelize } from '../../../lib/db';
 import jwt from 'jsonwebtoken';
 
@@ -31,6 +32,7 @@ export async function GET() {
 }
 
 export async function PUT(req) {
+  if (!verifyAuth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
     const authHeader = req.headers.get('authorization');
     if (!authHeader) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });

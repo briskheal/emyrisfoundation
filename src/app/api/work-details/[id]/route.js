@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { verifyAuth } from '../../../lib/auth';
 import { WorkDetail } from '../../../../lib/db';
 
 const defaultEducationData = {
@@ -51,6 +52,7 @@ export async function GET(request, { params }) {
 }
 
 export async function PUT(request, { params }) {
+  if (!verifyAuth(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
     const id = params.id;
     const body = await request.json();

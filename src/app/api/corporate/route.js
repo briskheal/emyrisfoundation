@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { verifyAuth } from '../../lib/auth';
 import { CorporateProfile } from '../../../lib/db';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
@@ -33,6 +34,7 @@ export async function GET() {
 
 // --- PROTECTED ADMIN ROUTE ---
 export async function PUT(req) {
+  if (!verifyAuth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
     const authHeader = req.headers.get('authorization');
     if (!authHeader) {

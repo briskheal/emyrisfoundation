@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { verifyAuth } from '../../../lib/auth';
 import { CampaignDetail } from '../../../../lib/db';
 import { getCampaignDetail } from '../../../../lib/data-fetcher';
 
@@ -25,6 +26,7 @@ export async function GET(request, { params }) {
 }
 
 export async function PUT(request, { params }) {
+  if (!verifyAuth(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
     const { id } = await params;
     const body = await request.json();

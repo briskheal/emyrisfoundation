@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { verifyAuth } from '../../lib/auth';
 import { PresenceLocation } from '../../../lib/db';
 import jwt from 'jsonwebtoken';
 
@@ -17,6 +18,7 @@ export async function GET() {
 }
 
 export async function POST(req) {
+  if (!verifyAuth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
     const authHeader = req.headers.get('authorization');
     if (!authHeader) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
@@ -32,6 +34,7 @@ export async function POST(req) {
 }
 
 export async function PUT(req) {
+  if (!verifyAuth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
     const token = req.headers.get('authorization')?.split(' ')[1];
     const decoded = jwt.verify(token, JWT_SECRET);
@@ -65,6 +68,7 @@ export async function PUT(req) {
 }
 
 export async function DELETE(req) {
+  if (!verifyAuth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
     const authHeader = req.headers.get('authorization');
     if (!authHeader) return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });

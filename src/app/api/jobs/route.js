@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { verifyAuth } from '../../lib/auth';
 import { JobOpening } from '../../../lib/db';
 
 export const dynamic = 'force-dynamic';
@@ -16,6 +17,7 @@ export async function GET() {
 }
 
 export async function POST(request) {
+  if (!verifyAuth(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
     const jobs = await request.json();
     
