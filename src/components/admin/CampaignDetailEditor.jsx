@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { compressImage } from '../../lib/imageCompressor';
+import ImageCropperModal from './ImageCropperModal';
 
 export const getYoutubeEmbedUrl = (url) => {
   if (!url) return '';
@@ -17,6 +18,7 @@ const CampaignDetailEditor = ({ token }) => {
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [cropImageSrc, setCropImageSrc] = useState(null);
   const fileInputRef = useRef(null);
   
   const [newVideoUrl, setNewVideoUrl] = useState('');
@@ -84,9 +86,21 @@ const CampaignDetailEditor = ({ token }) => {
     const rawFile = e.target.files[0];
     if (!rawFile) return;
 
+    // Load file to Cropper
+    const imageUrl = URL.createObjectURL(rawFile);
+    setCropImageSrc(imageUrl);
+    
+    // Reset file input so same file can be selected again
+    e.target.value = null;
+  };
+
+  const handleCropDone = async (croppedFile) => {
+    setCropImageSrc(null);
     setUploading(true);
+    
     try {
-      const file = await compressImage(rawFile);
+      // Pass cropped file through the webp compressor
+      const file = await compressImage(croppedFile);
       
       const formData = new FormData();
       formData.append('file', file);
@@ -100,18 +114,18 @@ const CampaignDetailEditor = ({ token }) => {
       if (!res.ok) throw new Error('Upload failed');
       const data = await res.json();
       
-      setDetail({
-        ...detail,
-        galleryPhotos: [...(detail.galleryPhotos || []), { url: data.url, title: 'New Photo' }]
-      });
-      
-      // Reset input
-      if (fileInputRef.current) fileInputRef.current.value = '';
+      if (data.url) {
+        setDetail(prev => ({
+          ...prev,
+          galleryPhotos: [...(prev.galleryPhotos || []), { url: data.url, title: 'New Photo' }]
+        }));
+      }
     } catch (err) {
       console.error(err);
-      alert('Failed to upload image.');
+      alert('Error uploading image');
+    } finally {
+      setUploading(false);
     }
-    setUploading(false);
   };
 
   const updatePhotoTitle = (index, newTitle) => {
@@ -251,7 +265,6 @@ const CampaignDetailEditor = ({ token }) => {
           </div>
         </div>
 
-        {/* Gallery Photos Upload Section */}
         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px', marginBottom: '20px' }}>
           <h4 style={{ color: '#15F5BA', marginBottom: '15px' }}>Gallery Photos</h4>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginBottom: '15px' }}>
@@ -340,6 +353,15 @@ const CampaignDetailEditor = ({ token }) => {
           {saved && <span style={{ color: '#15F5BA', fontSize: '0.9rem' }}><i className="fa-solid fa-check"></i> Successfully updated live site!</span>}
         </div>
       </div>
+      
+      {cropImageSrc && (
+        <ImageCropperModal 
+          imageSrc={cropImageSrc} 
+          onCropDone={handleCropDone} 
+          onCancel={() => setCropImageSrc(null)} 
+          aspectRatio={1.5}
+        />
+      )}
     </div>
   );
 };

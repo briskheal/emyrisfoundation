@@ -1,5 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
+import { compressImage } from '../../lib/imageCompressor';
+import ImageCropperModal from './ImageCropperModal';
 
 // Helper function to extract YouTube ID
 export const getYoutubeEmbedUrl = (url) => {
@@ -24,6 +26,7 @@ const GalleryManager = ({ token }) => {
   const [success, setSuccess] = useState('');
   const [uploading, setUploading] = useState(false);
   const [progressText, setProgressText] = useState('');
+  const [cropImageSrc, setCropImageSrc] = useState(null);
   const fileInputRef = useRef(null);
   const [formData, setFormData] = useState({
     type: 'photo',
@@ -58,6 +61,53 @@ const GalleryManager = ({ token }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleCropDone = async (croppedFile) => {
+    setCropImageSrc(null);
+    setProgressText('Uploading...');
+    
+    try {
+      const file = await compressImage(croppedFile);
+      const data = new FormData();
+      data.append('file', file);
+      
+      const uploadRes = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: data
+      });
+      
+      if (!uploadRes.ok) throw new Error('Upload failed');
+      const uploadData = await uploadRes.json();
+      const finalUrl = uploadData.url;
+
+      const mediaRes = await fetch('/api/gallery', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          type: formData.type,
+          title: formData.title || `Photo`,
+          year: formData.year,
+          month: formData.month,
+          url: finalUrl
+        })
+      });
+      if (!mediaRes.ok) throw new Error('Failed to save record');
+
+      setFormData({ ...formData, title: '', youtubeUrl: '' });
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      fetchMedia();
+    } catch (err) {
+      console.error(err);
+      alert('Error uploading cropped image');
+    } finally {
+      setUploading(false);
+      setProgressText('');
+    }
+  };
+
   const handleUpload = async (e) => {
     e.preventDefault();
     
@@ -74,44 +124,13 @@ const GalleryManager = ({ token }) => {
           return;
         }
         
-        for (let i = 0; i < files.length; i++) {
-          setProgressText(`Uploading & Optimizing ${i + 1} of ${files.length}...`);
-          const file = files[i];
-          const data = new FormData();
-          data.append('file', file);
-    
-          // Upload file
-          const uploadRes = await fetch('/api/upload', {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${token}` },
-            body: data
-          });
-    
-          if (!uploadRes.ok) throw new Error(`File ${i + 1} upload failed`);
-          const uploadData = await uploadRes.json();
-          const finalUrl = uploadData.url;
-
-          // Save media record
-          const mediaRes = await fetch('/api/gallery', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-              type: formData.type,
-              title: formData.title ? (files.length > 1 ? `${formData.title} ${i + 1}` : formData.title) : `Photo ${i + 1}`,
-              year: formData.year,
-              month: formData.month,
-              url: finalUrl
-            })
-          });
-          if (!mediaRes.ok) throw new Error(`Failed to save record for file ${i + 1}`);
-        }
-
-        setFormData({ ...formData, title: '', youtubeUrl: '' });
-        if (fileInputRef.current) fileInputRef.current.value = '';
-        fetchMedia();
+        // Single file at a time for cropping
+        const rawFile = files[0];
+        const imageUrl = URL.createObjectURL(rawFile);
+        setCropImageSrc(imageUrl);
+        
+        // Let the cropper handle the actual upload
+        return;
 
       } else {
         // Video
@@ -212,8 +231,8 @@ const GalleryManager = ({ token }) => {
           
           {formData.type === 'photo' ? (
             <div style={{ flex: '1 1 100%' }}>
-              <label style={{ display: 'block', marginBottom: '5px' }}>Image Files (Select multiple)</label>
-              <input type="file" ref={fileInputRef} accept="image/*" multiple style={{ width: '100%', padding: '6px' }} />
+              <label style={{ display: 'block', marginBottom: '5px' }}>Image File (Crop before upload)</label>
+              <input type="file" ref={fileInputRef} accept="image/*" style={{ width: '100%', padding: '6px' }} />
             </div>
           ) : (
             <div style={{ flex: '1 1 100%' }}>
@@ -250,6 +269,19 @@ const GalleryManager = ({ token }) => {
           </div>
         ))}
       </div>
+      
+      {cropImageSrc && (
+        <ImageCropperModal 
+          imageSrc={cropImageSrc} 
+          onCropDone={handleCropDone} 
+          onCancel={() => {
+            setCropImageSrc(null);
+            setUploading(false);
+            setProgressText('');
+          }} 
+          aspectRatio={1.5}
+        />
+      )}
     </div>
   );
 };
