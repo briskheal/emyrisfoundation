@@ -1,5 +1,7 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
+import './ActivityGallery.css';
+import { useModals } from '../context/ModalContext';
 
 // Helper function to extract YouTube ID
 const getYoutubeEmbedUrl = (url) => {
@@ -19,6 +21,7 @@ const formatTitle = (title) => {
 };
 
 const ActivityGallery = () => {
+  const { openModal } = useModals();
   const [media, setMedia] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterType, setFilterType] = useState('all');
@@ -133,7 +136,13 @@ const ActivityGallery = () => {
               
               <div className="gallery-fixed-track" ref={scrollRef}>
                 {media.map(item => (
-                  <div key={item.id} className="gallery-card">
+                  <div 
+                    key={item.id} 
+                    className="gallery-card"
+                    onClick={() => item.type === 'photo' && openModal('lightbox', { url: item.url, title: formatTitle(item.title) })}
+                    style={{ cursor: item.type === 'photo' ? 'zoom-in' : 'default' }}
+                    title={item.type === 'photo' ? 'Click to expand' : ''}
+                  >
                     <div className="gallery-card-media">
                       {item.type === 'photo' ? (
                         <img src={item.url} alt={item.title} loading="lazy" />

@@ -9,6 +9,7 @@ import Modals from '../../../components/Modals';
 import CampaignDetailForm from '../../../components/CampaignDetailForm';
 import ShikshaDonationForm from '../../../components/ShikshaDonationForm';
 import MediaScroller from '../../../components/MediaScroller';
+import InteractivePhotoCard from '../../../components/InteractivePhotoCard';
 
 export const dynamic = 'force-dynamic';
 
@@ -172,18 +173,7 @@ export default async function CampaignPage({ params }) {
                   <MediaScroller>
                     <div className="impact-gallery" style={{ display: 'flex', gap: '20px', minWidth: 'max-content' }}>
                       {data.galleryPhotos.map((photo, idx) => (
-                        <div key={idx} className="gallery-card">
-                          <div className="gallery-card-media">
-                            <img src={photo.url} alt={photo.title || `Gallery ${idx}`} />
-                          </div>
-                          {photo.title && (
-                            <div className="gallery-card-info">
-                              <h5 className="gallery-card-title">
-                                <i className="fa-solid fa-camera" style={{ color: 'var(--primary-orange)', marginRight: '8px' }}></i> {photo.title}
-                              </h5>
-                            </div>
-                          )}
-                        </div>
+                        <InteractivePhotoCard key={idx} photo={photo} />
                       ))}
                     </div>
                   </MediaScroller>
