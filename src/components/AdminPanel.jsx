@@ -18,6 +18,7 @@ import CampaignRegistrationManager from './admin/CampaignRegistrationManager';
 import GalleryManager from './admin/GalleryManager';
 import JobManager from './admin/JobManager';
 import WorkDetailEditor from './admin/WorkDetailEditor';
+import CampaignDetailEditor from './admin/CampaignDetailEditor';
 import { compressImage } from '../lib/imageCompressor';
 
 const AdminPanel = () => {
@@ -267,6 +268,7 @@ const AdminPanel = () => {
     { id: 'mentors', label: 'Mentors', icon: 'fa-chalkboard-user' },
     { id: 'work', label: 'Our Work', icon: 'fa-briefcase' },
     { id: 'campaigns', label: 'Campaigns', icon: 'fa-bullhorn' },
+    { id: 'campaign_content', label: 'Campaign Content', icon: 'fa-file-lines' },
     { id: 'careers', label: 'Careers & Jobs', icon: 'fa-briefcase' },
     { id: 'publications', label: 'Publications', icon: 'fa-file-pdf' },
     { id: 'presence', label: 'Presence / Locations', icon: 'fa-location-dot' },
@@ -363,6 +365,7 @@ const AdminPanel = () => {
         {activeTab === 'directors' && <DirectorManager token={token} />}
         {activeTab === 'mentors' && <MentorManager token={token} />}
         {activeTab === 'campaigns' && <CampaignManager token={token} />}
+        {activeTab === 'campaign_content' && <CampaignDetailEditor token={token} />}
         {activeTab === 'publications' && <PublicationManager token={token} />}
         {activeTab === 'work' && <WorkManager token={token} />}
         {activeTab === 'hero-stats' && <HeroStatManager token={token} />}
