@@ -81,7 +81,7 @@ export default function CampaignDetailForm({ campaignTitle, isBloodCampaign, cam
         </div>
         
         {/* Compact Grid: Gender, Age, optionally Blood Group */}
-        <div style={{ display: 'grid', gridTemplateColumns: isBloodCampaign ? 'repeat(auto-fit, minmax(80px, 1fr))' : '1fr 1fr', gap: '15px', marginBottom: '14px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: (isBloodCampaign || campaignId === 'organ') ? 'repeat(auto-fit, minmax(80px, 1fr))' : '1fr 1fr', gap: '15px', marginBottom: '14px' }}>
           <div className="form-group">
             <label style={{ color: 'rgba(255,255,255,0.9)', fontSize: '0.85rem', fontWeight: '600', display: 'block', marginBottom: '6px' }}>Gender – *</label>
             <select className="form-select" required value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} style={{ background: '#0b192c', color: '#fff', border: '1px solid rgba(255,255,255,0.2)' }}>
