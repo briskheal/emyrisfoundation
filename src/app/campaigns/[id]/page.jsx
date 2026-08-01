@@ -140,17 +140,19 @@ export default async function CampaignPage({ params }) {
                   <div className="title-underline" style={{ margin: '0 auto' }}></div>
                 </div>
 
-                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', marginTop: '10px' }}>
-                  {data.whyGrid.map((item, idx) => (
-                    <div key={idx} className="glass-card sdg-card" style={{ flex: '1 1 200px', maxWidth: '300px', padding: '22px 18px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '14px', display: 'flex', flexDirection: 'column' }}>
-                      <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(235, 94, 40, 0.2)', color: 'var(--primary-orange)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '14px' }}>
-                        0{idx + 1}
-                      </div>
-                      <h4 style={{ color: '#ffffff', fontSize: '1.1rem', fontWeight: '700', marginBottom: '10px' }}>{item.title}</h4>
-                      <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.9rem', lineHeight: '1.5', margin: 0, textAlign: 'justify', flex: 1 }}>{item.text}</p>
+                  <MediaScroller>
+                    <div className="sdg-grid" style={{ padding: '5px 0' }}>
+                      {data.whyGrid.map((item, idx) => (
+                        <div key={idx} className="glass-card sdg-card" style={{ padding: '22px 18px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '14px', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                          <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(235, 94, 40, 0.2)', color: 'var(--primary-orange)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '14px' }}>
+                            0{idx + 1}
+                          </div>
+                          <h4 style={{ color: '#ffffff', fontSize: '1.1rem', fontWeight: '700', marginBottom: '10px' }}>{item.title}</h4>
+                          <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.9rem', lineHeight: '1.5', margin: 0, textAlign: 'justify', flex: 1 }}>{item.text}</p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </MediaScroller>
               </div>
             </section>
           )}
