@@ -9,8 +9,18 @@ export default function SmoothScroll() {
         const element = document.querySelector(target.hash);
         if (element) {
           e.preventDefault();
-          element.scrollIntoView({ behavior: 'smooth' });
           window.history.pushState(null, '', target.hash);
+          
+          // Wait for mobile menu to close before scrolling to avoid layout shifts
+          setTimeout(() => {
+            const headerOffset = 80;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }, 350); // Slightly longer than the 0.3s menu transition
         }
       }
     };
