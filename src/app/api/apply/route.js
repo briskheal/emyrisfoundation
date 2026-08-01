@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { sendCareerEmail } from '../../../lib/mailer';
 import { ApplicationSubmission } from '../../../lib/db';
 import jwt from 'jsonwebtoken';
+import { rateLimit, verifyCaptcha } from '../../../lib/rate-limiter';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 
@@ -9,9 +10,14 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(req) {
   try {
+    const { isRateLimited } = rateLimit(req, 3);
+    if (isRateLimited) {
+      return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+    }
+
     const contentType = req.headers.get('content-type') || '';
     
-    let type, position, name, email, phone, details, attachment;
+    let type, position, name, email, phone, details, attachment, botField, captchaToken;
     
     if (contentType.includes('multipart/form-data')) {
       const formData = await req.formData();
@@ -21,6 +27,8 @@ export async function POST(req) {
       email = formData.get('email');
       phone = formData.get('phone');
       details = formData.get('details');
+      botField = formData.get('botField');
+      captchaToken = formData.get('captchaToken');
       
       const file = formData.get('resume');
       if (file && typeof file !== 'string' && file.size > 0) {
@@ -32,7 +40,16 @@ export async function POST(req) {
       }
     } else {
       const body = await req.json();
-      ({ type, position, name, email, phone, details } = body);
+      ({ type, position, name, email, phone, details, botField, captchaToken } = body);
+    }
+
+    if (botField) {
+      return NextResponse.json({ success: true, message: 'Application submitted successfully!' });
+    }
+
+    const isHuman = await verifyCaptcha(captchaToken);
+    if (!isHuman) {
+      return NextResponse.json({ error: 'Failed security verification. Please try again.' }, { status: 403 });
     }
 
     if (!type || !name || !email) {

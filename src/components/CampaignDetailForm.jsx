@@ -1,24 +1,33 @@
 'use client';
 import React, { useState } from 'react';
 import { useModals } from '../context/ModalContext';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 export default function CampaignDetailForm({ campaignTitle, isBloodCampaign, campaignId }) {
   const { openModal } = useModals();
-  const [formData, setFormData] = useState({ name: '', gender: 'Male', age: '', state: '', pin: '', address: '', bloodGroup: 'O+', phone: '', email: '' });
+  const [formData, setFormData] = useState({ name: '', gender: 'Male', age: '', state: '', pin: '', address: '', bloodGroup: 'O+', phone: '', email: '', botField: '' });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     try {
+      let captchaToken = '';
+      if (executeRecaptcha) {
+        captchaToken = await executeRecaptcha('campaign_register');
+      }
+
       const payload = {
         campaign: campaignTitle,
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
+        botField: formData.botField,
+        captchaToken,
         details: `Gender: ${formData.gender}\nAge: ${formData.age}\nState: ${formData.state}\nPin: ${formData.pin}\nAddress: ${formData.address}${(isBloodCampaign || campaignId === 'organ') ? `\nBlood Group: ${formData.bloodGroup}` : ''}`
       };
       const res = await fetch('/api/campaign', {
@@ -73,6 +82,7 @@ export default function CampaignDetailForm({ campaignTitle, isBloodCampaign, cam
 
       <div className="glass-card" style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', padding: '25px', background: 'rgba(11, 25, 44, 0.7)', border: '1px solid rgba(255, 255, 255, 0.15)', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
       <form onSubmit={handleSubmit}>
+        <input type="text" name="botField" value={formData.botField} onChange={e => setFormData({...formData, botField: e.target.value})} style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
         
         {/* Name */}
         <div className="form-group" style={{ marginBottom: '14px' }}>

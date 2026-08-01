@@ -1,12 +1,14 @@
 'use client';
 import React, { useState } from 'react';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', phone: '', message: '' });
+  const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', phone: '', message: '', botField: '' });
   const [status, setStatus] = useState({ loading: false, success: false, error: '' });
   const [num1, setNum1] = useState(0);
   const [num2, setNum2] = useState(0);
   const [captcha, setCaptcha] = useState('');
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   React.useEffect(() => {
     setNum1(Math.floor(Math.random() * 10) + 1);
@@ -24,15 +26,23 @@ const Contact = () => {
     }
     
     try {
+      let captchaToken = '';
+      if (executeRecaptcha) {
+        captchaToken = await executeRecaptcha('contact');
+      }
+
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({ ...formData, captchaToken })
       });
       const data = await res.json();
       if (res.ok) {
         setStatus({ loading: false, success: true, error: '' });
-        setFormData({ firstName: '', lastName: '', email: '', phone: '', message: '' });
+        setFormData({ firstName: '', lastName: '', email: '', phone: '', message: '', botField: '' });
+        setNum1(Math.floor(Math.random() * 10) + 1);
+        setNum2(Math.floor(Math.random() * 10) + 1);
+        setCaptcha('');
       } else {
         setStatus({ loading: false, success: false, error: data.error || 'Submission failed' });
       }
@@ -89,6 +99,8 @@ const Contact = () => {
           <div className="contact-form-block glass-card">
             <h3>Send Us a Message</h3>
             <form id="contact-form" onSubmit={handleSubmit}>
+              {/* Honeypot field - hidden from users, filled by bots */}
+              <input type="text" name="botField" value={formData.botField} onChange={e => setFormData({...formData, botField: e.target.value})} style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="c-first-name">First Name *</label>

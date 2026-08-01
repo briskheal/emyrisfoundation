@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { sendCampaignEmail } from '../../../lib/mailer';
 import { CampaignRegistration } from '../../../lib/db';
 import jwt from 'jsonwebtoken';
+import { rateLimit, verifyCaptcha } from '../../../lib/rate-limiter';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 
@@ -9,10 +10,24 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(req) {
   try {
-    const body = await req.json();
-    const { campaign, name, email, phone, details } = body;
+    const { isRateLimited } = rateLimit(req, 3);
+    if (isRateLimited) {
+      return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+    }
 
-    if (!campaign || !name) {
+    const body = await req.json();
+    const { name, email, phone, campaign, details, botField, captchaToken } = body;
+
+    if (botField) {
+      return NextResponse.json({ success: true, message: 'Registration received successfully!' });
+    }
+
+    const isHuman = await verifyCaptcha(captchaToken);
+    if (!isHuman) {
+      return NextResponse.json({ error: 'Failed security verification. Please try again.' }, { status: 403 });
+    }
+
+    if (!name || !email || !campaign) {
       return NextResponse.json({ error: 'Campaign and name are required.' }, { status: 400 });
     }
 

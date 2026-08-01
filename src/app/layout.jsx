@@ -9,6 +9,8 @@ export const metadata = {
   },
 };
 
+import GoogleCaptchaWrapper from '../components/GoogleCaptchaWrapper';
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -19,7 +21,9 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
       </head>
       <body>
-        <div id="root">{children}</div>
+        <GoogleCaptchaWrapper>
+          <div id="root">{children}</div>
+        </GoogleCaptchaWrapper>
       </body>
     </html>
   );

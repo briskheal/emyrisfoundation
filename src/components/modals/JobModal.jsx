@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useModals } from '../../context/ModalContext';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const JobModal = () => {
   const { activeModal, modalData, closeModal } = useModals();
@@ -12,8 +13,9 @@ const JobModal = () => {
   const [num2, setNum2] = useState(0);
   const [captcha, setCaptcha] = useState('');
   const [file, setFile] = useState(null);
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '', city: '', pincode: '', experience: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', city: '', pincode: '', experience: '', botField: '' });
 
   React.useEffect(() => {
     if (activeModal === 'job') {
@@ -62,12 +64,19 @@ const JobModal = () => {
     }
 
     try {
+      let captchaToken = '';
+      if (executeRecaptcha) {
+        captchaToken = await executeRecaptcha('job_apply');
+      }
+
       const payload = new FormData();
-      payload.append('type', 'job');
+      payload.append('type', 'Job Application');
       payload.append('position', jobTitle);
       payload.append('name', formData.name);
       payload.append('email', formData.email);
       payload.append('phone', formData.phone);
+      payload.append('botField', formData.botField);
+      payload.append('captchaToken', captchaToken);
       payload.append('details', `City: ${formData.city}\nPincode: ${formData.pincode}\nExperience:\n${formData.experience}`);
       payload.append('resume', file);
       
@@ -107,6 +116,7 @@ const JobModal = () => {
               <p id="job-apply-position-title">{jobTitle}</p>
             </div>
             <form onSubmit={handleSubmit}>
+              <input type="text" name="botField" value={formData.botField} onChange={e => setFormData({...formData, botField: e.target.value})} style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
               <div className="form-group">
                 <label>Full Name *</label>
                 <input type="text" className="form-control" required value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
