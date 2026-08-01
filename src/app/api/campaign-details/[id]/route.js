@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request, { params }) {
   try {
-    const id = params.id;
+    const { id } = await params;
     let detail = await CampaignDetail.findByPk(id);
     
     if (!detail) {
@@ -26,7 +26,7 @@ export async function GET(request, { params }) {
 
 export async function PUT(request, { params }) {
   try {
-    const id = params.id;
+    const { id } = await params;
     const body = await request.json();
     let detail = await CampaignDetail.findByPk(id);
     
