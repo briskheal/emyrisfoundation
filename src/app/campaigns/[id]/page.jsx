@@ -143,7 +143,7 @@ export default async function CampaignPage({ params }) {
                   <MediaScroller>
                     <div className="sdg-grid" style={{ padding: '5px 0' }}>
                       {data.whyGrid.map((item, idx) => (
-                        <div key={idx} className="glass-card sdg-card" style={{ padding: '22px 18px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '14px', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                        <div key={idx} className="glass-card sdg-card" style={{ padding: '22px 18px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '14px', display: 'flex', flexDirection: 'column' }}>
                           <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(235, 94, 40, 0.2)', color: 'var(--primary-orange)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '14px' }}>
                             0{idx + 1}
                           </div>
