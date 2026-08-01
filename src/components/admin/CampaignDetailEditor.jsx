@@ -264,7 +264,7 @@ const CampaignDetailEditor = ({ token }) => {
                 >
                   <i className="fa-solid fa-times"></i>
                 </button>
-                <img src={photo.url} alt="Gallery item" style={{ width: '100%', aspectRatio: '1 / 1', objectFit: 'cover', borderRadius: '4px', marginBottom: '8px' }} />
+                <img src={photo.url} alt="Gallery item" style={{ width: '100%', aspectRatio: '16 / 9', objectFit: 'cover', borderRadius: '4px', marginBottom: '8px' }} />
                 <input 
                   type="text" 
                   value={photo.title || ''} 
