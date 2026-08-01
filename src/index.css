@@ -3379,15 +3379,21 @@ textarea.form-control {
 
 @media (max-width: 768px) {
     .gallery-fixed-track {
-        flex-direction: column;
-        overflow-y: auto;
-        overflow-x: hidden;
-        max-height: 800px;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        max-height: none;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 15px;
     }
     
     .gallery-card {
-        flex: 0 0 auto;
-        width: 100%;
+        flex: 0 0 270px;
+        scroll-snap-align: center;
+    }
+
+    .gallery-card-media {
+        height: 180px;
     }
 
     .hide-on-mobile {
