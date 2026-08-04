@@ -38,7 +38,13 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
       setUploadStatus('uploading');
       const form = new FormData();
       form.append('file', compressedFile);
-      const res = await fetch('/api/upload', { method: 'POST', body: form });
+      const res = await fetch('/api/upload', { 
+        method: 'POST', 
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: form 
+      });
       const data = await res.json();
       if (data.success) {
         setFormData(prev => ({ ...prev, bannerImg: data.url }));
@@ -136,7 +142,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
           )}
           <input type="file" accept="image/*" onChange={handleUpload} disabled={uploadStatus !== ''} />
           {uploadStatus === 'compressing' && <span style={{ marginLeft: '10px', color: 'var(--primary-orange)' }}>Compressing image (this is fast)...</span>}
-          {uploadStatus === 'uploading' && <span style={{ marginLeft: '10px', color: 'var(--primary-blue)' }}>Uploading to server...</span>}
+          {uploadStatus === 'uploading' && <span style={{ marginLeft: '10px', color: '#15F5BA' }}>Uploading to server...</span>}
         </div>
 
         <div className="form-group" style={{ marginBottom: '20px' }}>

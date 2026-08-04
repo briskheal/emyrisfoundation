@@ -39,17 +39,23 @@ export const compressImage = (file, maxWidth = 1200, quality = 0.8) => {
 
         canvas.toBlob(
           (blob) => {
-            if (blob) {
-              // Ensure we return a proper File object just like the original one
-              const newFileName = file.name.replace(/\.[^/.]+$/, ".webp");
-              const compressedFile = new File([blob], newFileName, {
-                type: 'image/webp',
-                lastModified: Date.now(),
-              });
-              resolve(compressedFile);
-            } else {
-              // Fallback to original file if compression fails somehow
-              resolve(file);
+            try {
+              if (blob) {
+                // Ensure we return a proper File object just like the original one
+                const originalName = file.name || 'image.bin';
+                const newFileName = originalName.replace(/\.[^/.]+$/, "") + ".webp";
+                const compressedFile = new File([blob], newFileName, {
+                  type: 'image/webp',
+                  lastModified: Date.now(),
+                });
+                resolve(compressedFile);
+              } else {
+                // Fallback to original file if compression fails somehow
+                resolve(file);
+              }
+            } catch (err) {
+              console.error("Compression error:", err);
+              resolve(file); // fallback
             }
           },
           'image/webp',
