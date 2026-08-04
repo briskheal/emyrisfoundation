@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { verifyAuth } from '../../../lib/auth';
 import fs from 'fs/promises';
 import path from 'path';
-import sharp from 'sharp';
 
 export async function POST(req) {
   if (!verifyAuth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -25,22 +24,13 @@ export async function POST(req) {
     }
 
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    let finalBuffer = buffer;
-    let filename = '';
-
-    // Auto-compress and convert images to webp
-    if (file.type.startsWith('image/')) {
-      finalBuffer = await sharp(buffer)
-        .webp({ quality: 80 })
-        .toBuffer();
-      filename = `media-${uniqueSuffix}.webp`;
-    } else {
-      const ext = path.extname(file.name).toLowerCase() || '.bin';
-      filename = `media-${uniqueSuffix}${ext}`;
-    }
-
+    
+    // The client already converts images to WebP. Just save the file with its extension.
+    const ext = path.extname(file.name).toLowerCase() || '.bin';
+    const filename = `media-${uniqueSuffix}${ext}`;
     const filepath = path.join(uploadsDir, filename);
-    await fs.writeFile(filepath, finalBuffer);
+    
+    await fs.writeFile(filepath, buffer);
 
     return NextResponse.json({ 
       success: true, 
