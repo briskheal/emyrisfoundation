@@ -31,7 +31,19 @@ const WysiwygEditor = ({ value, onChange }) => {
   };
 
   return (
-    <div style={{ border: '1px solid #444', borderRadius: '8px', overflow: 'hidden', background: '#1a1a1a' }}>
+    <div className="wysiwyg-wrapper" style={{ border: '1px solid #444', borderRadius: '8px', overflow: 'hidden', background: '#1a1a1a' }}>
+      <style>{`
+        .wysiwyg-wrapper .editor-content-area h1,
+        .wysiwyg-wrapper .editor-content-area h2,
+        .wysiwyg-wrapper .editor-content-area h3,
+        .wysiwyg-wrapper .editor-content-area h4,
+        .wysiwyg-wrapper .editor-content-area h5,
+        .wysiwyg-wrapper .editor-content-area h6 {
+          color: white !important;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+      `}</style>
       {/* Toolbar */}
       <div style={{ padding: '10px', background: '#2d2d2d', borderBottom: '1px solid #444', display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
         
@@ -126,6 +138,7 @@ const WysiwygEditor = ({ value, onChange }) => {
       {mode === 'visual' ? (
         <div
           ref={editorRef}
+          className="editor-content-area"
           contentEditable
           onInput={handleVisualInput}
           onBlur={handleVisualInput}
