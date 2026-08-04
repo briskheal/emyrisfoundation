@@ -29,9 +29,10 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
     const file = e.target.files[0];
     if (!file) return;
     setUploading(true);
-    const form = new FormData();
-    form.append('file', file);
     try {
+      const compressedFile = await compressImage(file);
+      const form = new FormData();
+      form.append('file', compressedFile);
       const res = await fetch('/api/upload', { method: 'POST', body: form });
       const data = await res.json();
       if (data.success) {
