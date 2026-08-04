@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import WysiwygEditor from './WysiwygEditor';
-import { compressImage } from '../../../utils/imageCompressor';
+import { compressImage } from '../../../lib/imageCompressor';
 
 const BlogDetailEditor = ({ blog, token, onBack }) => {
   const [formData, setFormData] = useState({
