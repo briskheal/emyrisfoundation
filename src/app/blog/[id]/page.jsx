@@ -11,6 +11,13 @@ import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
+const getResponsiveSize = (sizeStr) => {
+  if (sizeStr === '2.5rem') return 'clamp(1.8rem, 4vw, 2.5rem)'; // Small
+  if (sizeStr === '4.5rem') return 'clamp(2.2rem, 6vw, 4.5rem)'; // Large
+  if (sizeStr === '5.5rem') return 'clamp(2.5rem, 8vw, 5.5rem)'; // Huge
+  return 'clamp(2rem, 5vw, 3.5rem)'; // Normal/Default
+};
+
 export default async function BlogDetailPage({ params }) {
   const { id } = await params;
   
@@ -41,7 +48,7 @@ export default async function BlogDetailPage({ params }) {
               <div style={{ background: 'var(--primary-orange)', color: 'white', padding: '6px 16px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 600, display: 'inline-block', marginBottom: '15px' }}>
                 {new Date(blog.publishedAt).toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')}
               </div>
-              <h1 style={{ color: 'white', fontSize: blog.titleSize || '3.5rem', margin: '0 0 10px 0', fontFamily: 'var(--font-title)', maxWidth: '900px', lineHeight: 1.1 }}>
+              <h1 style={{ color: 'white', fontSize: getResponsiveSize(blog.titleSize), margin: '0 0 10px 0', fontFamily: 'var(--font-title)', maxWidth: '900px', lineHeight: 1.1 }}>
                 {blog.title}
               </h1>
               {blog.author && (
@@ -58,7 +65,7 @@ export default async function BlogDetailPage({ params }) {
           
           {!blog.bannerImg && (
             <div style={{ marginBottom: '40px' }}>
-              <h1 style={{ color: 'var(--primary-blue)', fontSize: blog.titleSize || '3rem', fontFamily: 'var(--font-title)' }}>
+              <h1 style={{ color: 'var(--primary-blue)', fontSize: getResponsiveSize(blog.titleSize), fontFamily: 'var(--font-title)' }}>
                 {blog.title}
               </h1>
               <p style={{ color: 'var(--text-muted)' }}>
