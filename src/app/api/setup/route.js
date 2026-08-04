@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { sequelize, AdminUser, CorporateProfile, HeroSlide, Campaign, WorkActivity, PresenceLocation, JobOpening } from '../../../lib/db';
+import { sequelize, AdminUser, CorporateProfile, HeroSlide, Campaign, WorkActivity, PresenceLocation, JobOpening, Blog } from '../../../lib/db';
 import bcrypt from 'bcrypt';
 import fs from 'fs';
 import path from 'path';

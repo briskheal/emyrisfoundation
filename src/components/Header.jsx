@@ -94,7 +94,7 @@ const Header = () => {
           <div className={`nav-dropdown ${activeDropdown === 'resources' ? 'active' : ''}`}>
             <Link href="/#resources" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'resources')}>Resources <i className="fa-solid fa-chevron-down"></i></Link>
             <div className="dropdown-menu">
-              <Link href="/#blog" onClick={() => setMobileMenuOpen(false)}>Blog</Link>
+              <Link href="/blog" onClick={() => setMobileMenuOpen(false)}>Blog</Link>
               <Link href="/#activity-gallery" onClick={() => setMobileMenuOpen(false)}>Gallery</Link>
               <Link href="/#publications" onClick={() => setMobileMenuOpen(false)}>Reports</Link>
               <Link href="/#faq-section" onClick={() => setMobileMenuOpen(false)}>FAQs</Link>

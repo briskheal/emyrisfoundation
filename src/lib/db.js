@@ -242,6 +242,17 @@ export const WorkDetail = sequelize.define('WorkDetail', {
   videos: DataTypes.JSON
 });
 
+export const Blog = sequelize.define('Blog', {
+  id: { type: DataTypes.STRING, primaryKey: true },
+  title: DataTypes.STRING,
+  bannerImg: DataTypes.STRING,
+  content: DataTypes.TEXT('long'),
+  author: DataTypes.STRING,
+  publishedAt: DataTypes.DATE,
+  order: { type: DataTypes.INTEGER, defaultValue: 0 },
+  updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
+});
+
 export const CampaignDetail = sequelize.define('CampaignDetail', {
   id: { type: DataTypes.STRING, primaryKey: true },
   title: DataTypes.STRING,
