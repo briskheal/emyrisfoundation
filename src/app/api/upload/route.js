@@ -26,7 +26,7 @@ export async function POST(req) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
     
     // The client already converts images to WebP. Just save the file with its extension.
-    const ext = path.extname(file.name).toLowerCase() || '.bin';
+    const ext = (file.name && path.extname(file.name)) ? path.extname(file.name).toLowerCase() : '.bin';
     const filename = `media-${uniqueSuffix}${ext}`;
     const filepath = path.join(uploadsDir, filename);
     
