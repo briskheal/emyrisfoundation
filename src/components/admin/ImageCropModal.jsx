@@ -1,5 +1,7 @@
+'use client';
 import React, { useState, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
+import 'react-easy-crop/react-easy-crop.css';
 
 // Helper to extract the cropped image from canvas
 const createImage = (url) =>

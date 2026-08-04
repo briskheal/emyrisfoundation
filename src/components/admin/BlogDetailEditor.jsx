@@ -47,7 +47,9 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
     reader.readAsDataURL(file);
     
     // Reset file input so same file can be selected again
-    e.target.value = '';
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   const handleCropComplete = async (croppedFile) => {

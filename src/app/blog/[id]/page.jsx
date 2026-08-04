@@ -35,7 +35,7 @@ export default async function BlogDetailPage({ params }) {
         
         {/* Banner Section (Image Only) */}
         {blog.bannerImg && (
-          <div style={{ width: '100%', height: '400px', position: 'relative' }}>
+          <div style={{ width: '100%', aspectRatio: '3 / 1', position: 'relative' }}>
             <img 
               src={blog.bannerImg} 
               alt={blog.title} 
