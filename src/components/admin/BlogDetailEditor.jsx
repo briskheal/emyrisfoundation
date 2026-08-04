@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { compressImage } from '../../lib/imageCompressor';
+import WysiwygEditor from './WysiwygEditor';
 
 const BlogDetailEditor = ({ blog, token, onBack }) => {
   const [formData, setFormData] = useState({
@@ -118,14 +118,11 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
 
         <div className="form-group" style={{ marginBottom: '20px' }}>
           <label style={{ display: 'block', marginBottom: '8px', color: '#333', fontWeight: 600 }}>
-            Blog Content (HTML allowed)
+            Blog Content (Rich Text Editor)
           </label>
-          <textarea
-            value={formData.content}
-            onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-            style={{ width: '100%', minHeight: '300px', padding: '12px', border: '1px solid #ddd', borderRadius: '8px', fontFamily: 'inherit', background: '#fff', color: '#333' }}
-            placeholder="Write your blog content here..."
-            required
+          <WysiwygEditor 
+            value={formData.content} 
+            onChange={(html) => setFormData({ ...formData, content: html })} 
           />
         </div>
 
