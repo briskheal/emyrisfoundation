@@ -3,7 +3,6 @@ import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import { notFound } from 'next/navigation';
 import { Blog, CorporateProfile } from '../../../lib/db';
-import DOMPurify from 'isomorphic-dompurify';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -15,8 +14,6 @@ export default async function BlogDetailPage({ params }) {
   if (!blog) return notFound();
 
   const corp = await CorporateProfile.findOne();
-
-  const cleanContent = DOMPurify.sanitize(blog.content);
 
   return (
     <>
@@ -78,7 +75,7 @@ export default async function BlogDetailPage({ params }) {
           }}>
             <div 
               className="rich-text-content"
-              dangerouslySetInnerHTML={{ __html: cleanContent }} 
+              dangerouslySetInnerHTML={{ __html: blog.content }} 
             />
           </div>
           

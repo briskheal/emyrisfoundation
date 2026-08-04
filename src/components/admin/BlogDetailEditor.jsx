@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css';
-
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+import { compressImage } from '../../lib/imageCompressor';
 
 const BlogDetailEditor = ({ blog, token, onBack }) => {
   const [formData, setFormData] = useState({
@@ -69,16 +66,6 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
     setSaving(false);
   };
 
-  const modules = {
-    toolbar: [
-      [{ 'header': [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-      ['link', 'image', 'video'],
-      ['clean']
-    ],
-  };
-
   return (
     <div className="admin-section">
       <button onClick={onBack} className="admin-btn" style={{ marginBottom: '20px', background: 'var(--text-muted)' }}>
@@ -127,17 +114,17 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
           {uploading && <span style={{ marginLeft: '10px', color: 'var(--primary-orange)' }}>Uploading and compressing...</span>}
         </div>
 
-        <div>
-          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px' }}>Blog Content (Rich Text)</label>
-          <div style={{ background: '#fff', border: '1px solid #ccc', borderRadius: '4px' }}>
-            <ReactQuill 
-              theme="snow"
-              modules={modules}
-              value={formData.content}
-              onChange={(val) => setFormData({...formData, content: val})}
-              style={{ height: '400px', marginBottom: '40px' }}
-            />
-          </div>
+        <div className="form-group" style={{ marginBottom: '20px' }}>
+          <label style={{ display: 'block', marginBottom: '8px', color: 'var(--text-dark)', fontWeight: 600 }}>
+            Blog Content (HTML allowed)
+          </label>
+          <textarea
+            value={formData.content}
+            onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+            style={{ width: '100%', minHeight: '300px', padding: '12px', border: '1px solid #ddd', borderRadius: '8px', fontFamily: 'inherit' }}
+            placeholder="Write your blog content here..."
+            required
+          />
         </div>
 
         <button onClick={handleSave} className="admin-btn" style={{ padding: '15px', fontSize: '1.1rem' }} disabled={saving}>
