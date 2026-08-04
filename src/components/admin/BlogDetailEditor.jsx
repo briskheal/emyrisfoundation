@@ -3,11 +3,11 @@ import WysiwygEditor from './WysiwygEditor';
 
 const BlogDetailEditor = ({ blog, token, onBack }) => {
   const [formData, setFormData] = useState({
-    title: '',
-    bannerImg: '',
-    content: '',
-    author: '',
-    publishedAt: ''
+    title: blog?.title || '',
+    bannerImg: blog?.bannerImg || '',
+    content: blog?.content || '',
+    author: blog?.author || '',
+    publishedAt: blog?.publishedAt ? new Date(blog.publishedAt).toISOString().slice(0,10) : ''
   });
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);

@@ -4,12 +4,14 @@ const WysiwygEditor = ({ value, onChange }) => {
   const editorRef = useRef(null);
   const [mode, setMode] = useState('visual'); // 'visual' or 'html'
 
-  // Initialize content on mount and sync when value changes (if not actively editing)
+  // Initialize content on mount and sync when value changes externally (e.g. initial load)
   useEffect(() => {
     if (mode === 'visual' && editorRef.current && editorRef.current.innerHTML !== value) {
+      // Only update if it doesn't match to prevent cursor jumping during active typing
+      // Because handleVisualInput updates `value` to equal `innerHTML`, this will only trigger on external changes
       editorRef.current.innerHTML = value || '';
     }
-  }, [mode]); // Only re-sync when switching back to visual mode
+  }, [mode, value]);
 
   const handleVisualInput = () => {
     if (editorRef.current) {
