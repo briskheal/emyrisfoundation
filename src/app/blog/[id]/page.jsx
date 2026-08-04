@@ -85,10 +85,8 @@ export default async function BlogDetailPage({ params }) {
           </div>
           
           <div style={{ textAlign: 'center', marginTop: '60px' }}>
-            <Link href="/blog">
-              <button className="btn-primary">
-                &larr; Back to all Blogs
-              </button>
+            <Link href="/blog" className="btn btn-primary" style={{ display: 'inline-block', padding: '12px 24px', borderRadius: '8px', textDecoration: 'none' }}>
+              &larr; Back to all Blogs
             </Link>
           </div>
         </div>
