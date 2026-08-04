@@ -39,7 +39,7 @@ export default async function BlogDetailPage({ params }) {
             }} />
             <div className="container" style={{ position: 'absolute', bottom: '40px', left: 0, right: 0, zIndex: 10 }}>
               <div style={{ background: 'var(--primary-orange)', color: 'white', padding: '6px 16px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 600, display: 'inline-block', marginBottom: '15px' }}>
-                {new Date(blog.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                {new Date(blog.publishedAt).toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')}
               </div>
               <h1 style={{ color: 'white', fontSize: blog.titleSize || '3.5rem', margin: '0 0 10px 0', fontFamily: 'var(--font-title)', maxWidth: '900px', lineHeight: 1.1 }}>
                 {blog.title}
@@ -62,7 +62,7 @@ export default async function BlogDetailPage({ params }) {
                 {blog.title}
               </h1>
               <p style={{ color: 'var(--text-muted)' }}>
-                {new Date(blog.publishedAt).toLocaleDateString()} {blog.author && `| By ${blog.author}`}
+                {new Date(blog.publishedAt).toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')} {blog.author && `| By ${blog.author}`}
               </p>
             </div>
           )}

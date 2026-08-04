@@ -54,9 +54,9 @@ export default async function BlogListingPage() {
                       />
                     </div>
                     <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                      <p style={{ color: 'var(--accent-teal)', fontSize: '0.85rem', fontWeight: 600, marginBottom: '10px' }}>
-                        {new Date(blog.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                      </p>
+                      <div style={{ background: 'var(--primary-blue)', color: 'white', padding: '4px 12px', borderRadius: '15px', fontSize: '0.8rem', fontWeight: 600, display: 'inline-block', marginBottom: '10px' }}>
+                        {new Date(blog.publishedAt).toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')}
+                      </div>
                       <h3 style={{ margin: '0 0 15px 0', fontSize: '1.4rem', color: 'var(--primary-blue)' }}>
                         {blog.title}
                       </h3>

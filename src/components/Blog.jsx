@@ -21,7 +21,7 @@ const Blog = ({ initialBlogs = [] }) => {
               return (
                 <div key={post.id} className="glass-card" style={{ padding: '25px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
                   <div style={{ color: '#15F5BA', fontSize: '0.85rem', fontWeight: 'bold' }}>
-                    {new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    {new Date(post.publishedAt).toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')}
                   </div>
                   <h3 style={{ color: '#fff', fontSize: '1.3rem', margin: 0 }}>{post.title}</h3>
                   <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', lineHeight: '1.6', margin: 0, flexGrow: 1 }}>{excerpt}</p>

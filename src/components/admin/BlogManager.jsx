@@ -87,7 +87,7 @@ const BlogManager = ({ token, onEdit }) => {
           <div key={blog.id} style={{ padding: '15px', border: '1px solid #ddd', borderRadius: '8px', background: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <h4 style={{ margin: '0 0 5px 0', color: 'black' }}>{blog.title}</h4>
-              <small style={{ color: '#555' }}>{new Date(blog.publishedAt).toLocaleDateString()}</small>
+              <small style={{ color: '#555' }}>{new Date(blog.publishedAt).toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')}</small>
             </div>
             <div style={{ display: 'flex', gap: '10px' }}>
               <button style={{ padding: '8px 16px', background: 'var(--primary-blue)', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer' }} onClick={() => onEdit(blog)}>Edit Content</button>
