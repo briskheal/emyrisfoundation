@@ -11,6 +11,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
   });
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     if (blog) {
@@ -56,7 +57,8 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
         body: JSON.stringify(formData)
       });
       if (res.ok) {
-        alert('Saved successfully!');
+        setSaved(true);
+        setTimeout(() => setSaved(false), 3000);
       } else {
         alert('Save failed');
       }
