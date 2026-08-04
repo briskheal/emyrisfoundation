@@ -39,6 +39,6 @@ export async function POST(req) {
 
   } catch (error) {
     console.error('Upload Error:', error);
-    return NextResponse.json({ error: 'Failed to process file' }, { status: 500 });
+    return NextResponse.json({ error: error.message || 'Failed to process file' }, { status: 500 });
   }
 }
