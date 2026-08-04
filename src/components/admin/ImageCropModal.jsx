@@ -44,6 +44,34 @@ async function getCroppedImg(imageSrc, pixelCrop, fileName) {
   });
 }
 
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error("Cropper caught error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'red', zIndex: 9999, padding: '50px', color: 'white' }}>
+          <h2>Cropper Crashed!</h2>
+          <p>{this.state.error && this.state.error.toString()}</p>
+          <button onClick={this.props.onCancel}>Cancel</button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 const ImageCropModal = ({ imageSrc, fileName, aspect = 3 / 1, onCropComplete, onCancel }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -69,11 +97,12 @@ const ImageCropModal = ({ imageSrc, fileName, aspect = 3 / 1, onCropComplete, on
   };
 
   return (
-    <div style={{
-      position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-      backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 9999,
-      display: 'flex', flexDirection: 'column'
-    }}>
+    <ErrorBoundary onCancel={onCancel}>
+      <div style={{
+        position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 9999,
+        display: 'flex', flexDirection: 'column'
+      }}>
       <div style={{ position: 'relative', flex: 1 }}>
         <Cropper
           image={imageSrc}
@@ -109,6 +138,7 @@ const ImageCropModal = ({ imageSrc, fileName, aspect = 3 / 1, onCropComplete, on
         </div>
       </div>
     </div>
+    </ErrorBoundary>
   );
 };
 

@@ -40,6 +40,10 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
       if (!file) {
         return;
       }
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
       
       const reader = new FileReader();
       reader.onload = () => {
@@ -50,10 +54,6 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
         alert('FileReader error: ' + err);
       };
       reader.readAsDataURL(file);
-      
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-      }
     } catch (err) {
       alert('Error in handleFileSelect: ' + err.message);
     }
