@@ -75,7 +75,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
         &larr; Back to Blogs
       </button>
 
-      <h2>Editing Blog: {formData.title}</h2>
+      <h2 style={{ color: 'var(--primary-orange)', marginBottom: '20px' }}>Editing Blog: {formData.title}</h2>
 
       <div style={{ display: 'grid', gap: '20px', marginTop: '20px' }}>
         <div>
