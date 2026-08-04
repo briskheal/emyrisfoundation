@@ -95,9 +95,10 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
             <select
               value={formData.titleSize}
               onChange={(e) => setFormData({...formData, titleSize: e.target.value})}
-              style={{ width: '150px', padding: '10px', borderRadius: '6px', border: '1px solid #ccc', background: '#fff', color: 'black', cursor: 'pointer' }}
+              style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc', background: 'white' }}
               title="Title Font Size"
             >
+              <option value="1.5rem">Smallest</option>
               <option value="2.5rem">Small</option>
               <option value="3.5rem">Normal (Default)</option>
               <option value="4.5rem">Large</option>

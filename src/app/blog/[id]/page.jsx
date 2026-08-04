@@ -12,6 +12,7 @@ import Link from 'next/link';
 export const dynamic = 'force-dynamic';
 
 const getResponsiveSize = (sizeStr) => {
+  if (sizeStr === '1.5rem') return 'clamp(1.2rem, 2vw, 1.5rem)'; // Smallest
   if (sizeStr === '2.5rem') return 'clamp(1.5rem, 3vw, 2rem)'; // Small
   if (sizeStr === '4.5rem') return 'clamp(2rem, 5vw, 3rem)'; // Large
   if (sizeStr === '5.5rem') return 'clamp(2.2rem, 6vw, 3.5rem)'; // Huge
