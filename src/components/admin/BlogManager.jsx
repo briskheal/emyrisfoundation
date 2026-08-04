@@ -68,7 +68,7 @@ const BlogManager = ({ token, onEdit }) => {
   return (
     <div className="admin-section">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <h2 style={{ color: 'var(--primary-blue)' }}>Manage Blogs</h2>
+        <h2 style={{ color: 'var(--primary-orange)' }}>Manage Blogs</h2>
       </div>
 
       <form onSubmit={handleAdd} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
