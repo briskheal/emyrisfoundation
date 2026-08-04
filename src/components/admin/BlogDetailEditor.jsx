@@ -60,7 +60,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
   };
 
   const handleDeleteBanner = () => {
-    if (confirm('Are you sure you want to delete the banner?')) {
+    if (confirm('Are you sure you want to delete the banner? (You MUST click "Save Content" at the top to permanently remove it from the database)')) {
       setFormData(prev => ({ ...prev, bannerImg: '' }));
     }
   };
@@ -194,6 +194,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
           <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFileSelect} disabled={uploadStatus !== ''} />
           {uploadStatus === 'compressing' && <span style={{ marginLeft: '10px', color: 'var(--primary-orange)' }}>Compressing image (this is fast)...</span>}
           {uploadStatus === 'uploading' && <span style={{ marginLeft: '10px', color: '#15F5BA' }}>Uploading to server...</span>}
+          {uploadStatus === '' && formData.bannerImg && <span style={{ marginLeft: '10px', color: '#15F5BA', fontWeight: 'bold' }}>✓ Uploaded! Remember to click "Save Content" to keep it.</span>}
         </div>
 
         <div className="form-group" style={{ marginBottom: '20px' }}>
