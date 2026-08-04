@@ -12,7 +12,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
     publishedAt: blog?.publishedAt ? new Date(blog.publishedAt).toISOString().slice(0,10) : ''
   });
   const [saving, setSaving] = useState(false);
-  const [uploading, setUploading] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState(''); // '' | 'compressing' | 'uploading'
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
@@ -31,9 +31,11 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
   const handleUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    setUploading(true);
+    setUploadStatus('compressing');
     try {
       const compressedFile = await compressImage(file);
+      
+      setUploadStatus('uploading');
       const form = new FormData();
       form.append('file', compressedFile);
       const res = await fetch('/api/upload', { method: 'POST', body: form });
@@ -45,9 +47,9 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
       }
     } catch (err) {
       alert('Failed to upload image: ' + (err.message || String(err)));
-      setUploading(false);
+      setUploadStatus('');
     }
-    setUploading(false);
+    setUploadStatus('');
   };
 
   const handleSave = async () => {
@@ -132,8 +134,9 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
           {formData.bannerImg && (
             <img src={formData.bannerImg} alt="Banner" style={{ width: '100%', maxWidth: '300px', borderRadius: '8px', marginBottom: '10px' }} />
           )}
-          <input type="file" accept="image/*" onChange={handleUpload} disabled={uploading} />
-          {uploading && <span style={{ marginLeft: '10px', color: 'var(--primary-orange)' }}>Uploading and compressing...</span>}
+          <input type="file" accept="image/*" onChange={handleUpload} disabled={uploadStatus !== ''} />
+          {uploadStatus === 'compressing' && <span style={{ marginLeft: '10px', color: 'var(--primary-orange)' }}>Compressing image (this is fast)...</span>}
+          {uploadStatus === 'uploading' && <span style={{ marginLeft: '10px', color: 'var(--primary-blue)' }}>Uploading to server...</span>}
         </div>
 
         <div className="form-group" style={{ marginBottom: '20px' }}>
