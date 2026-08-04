@@ -2,7 +2,11 @@ import React from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Link from 'next/link';
-import { Blog, CorporateProfile } from '../../lib/db';
+import { Blog } from '../../lib/db';
+import { getCorporateData } from '../../lib/data-fetcher';
+import { CorporateProvider } from '../../context/CorporateContext';
+import { ModalProvider } from '../../context/ModalContext';
+import Modals from '../../components/Modals';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,12 +15,13 @@ export default async function BlogListingPage() {
     order: [['publishedAt', 'DESC'], ['order', 'ASC']]
   });
   
-  const corp = await CorporateProfile.findOne();
+  const corpData = await getCorporateData();
 
   return (
-    <>
-      <Header />
-      <div style={{ paddingTop: '80px', minHeight: '80vh', background: 'var(--bg-light)', paddingBottom: '60px' }}>
+    <CorporateProvider initialData={corpData}>
+      <ModalProvider>
+        <Header />
+        <div style={{ paddingTop: '80px', minHeight: '80vh', background: 'var(--bg-light)', paddingBottom: '60px' }}>
         <div className="container" style={{ paddingTop: '40px' }}>
           <div style={{ textAlign: 'center', marginBottom: '50px' }}>
             <h1 style={{ fontSize: '3rem', fontFamily: 'var(--font-title)', color: 'var(--primary-blue)', marginBottom: '15px' }}>
@@ -68,7 +73,9 @@ export default async function BlogListingPage() {
           </div>
         </div>
       </div>
-      <Footer corp={corp} />
-    </>
+        <Footer />
+        <Modals />
+      </ModalProvider>
+    </CorporateProvider>
   );
 }

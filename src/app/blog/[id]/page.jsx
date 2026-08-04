@@ -2,7 +2,11 @@ import React from 'react';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import { notFound } from 'next/navigation';
-import { Blog, CorporateProfile } from '../../../lib/db';
+import { Blog } from '../../../lib/db';
+import { getCorporateData } from '../../../lib/data-fetcher';
+import { CorporateProvider } from '../../../context/CorporateContext';
+import { ModalProvider } from '../../../context/ModalContext';
+import Modals from '../../../components/Modals';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -13,12 +17,13 @@ export default async function BlogDetailPage({ params }) {
   const blog = await Blog.findByPk(id);
   if (!blog) return notFound();
 
-  const corp = await CorporateProfile.findOne();
+  const corpData = await getCorporateData();
 
   return (
-    <>
-      <Header />
-      <div style={{ paddingTop: '80px', minHeight: '80vh', background: 'var(--bg-light)' }}>
+    <CorporateProvider initialData={corpData}>
+      <ModalProvider>
+        <Header />
+        <div style={{ paddingTop: '80px', minHeight: '80vh', background: 'var(--bg-light)' }}>
         
         {/* Banner Section */}
         {blog.bannerImg && (
@@ -88,7 +93,9 @@ export default async function BlogDetailPage({ params }) {
           </div>
         </div>
       </div>
-      <Footer corp={corp} />
-    </>
+        <Footer />
+        <Modals />
+      </ModalProvider>
+    </CorporateProvider>
   );
 }
