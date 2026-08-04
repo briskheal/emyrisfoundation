@@ -68,7 +68,7 @@ const BlogManager = ({ token, onEdit }) => {
   return (
     <div className="admin-section">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <h2>Manage Blogs</h2>
+        <h2 style={{ color: 'var(--primary-blue)' }}>Manage Blogs</h2>
       </div>
 
       <form onSubmit={handleAdd} style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
@@ -77,7 +77,7 @@ const BlogManager = ({ token, onEdit }) => {
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
           placeholder="New Blog Title"
-          style={{ padding: '8px', flex: 1, border: '1px solid #ccc', borderRadius: '4px' }}
+          style={{ padding: '12px', flex: 1, border: '1px solid #ccc', borderRadius: '8px', background: '#fff', color: '#333', fontSize: '1rem' }}
         />
         <button type="submit" className="admin-btn">Add Blog</button>
       </form>
@@ -86,7 +86,7 @@ const BlogManager = ({ token, onEdit }) => {
         {blogs.map(blog => (
           <div key={blog.id} style={{ padding: '15px', border: '1px solid #ddd', borderRadius: '8px', background: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <h4 style={{ margin: '0 0 5px 0' }}>{blog.title}</h4>
+              <h4 style={{ margin: '0 0 5px 0', color: '#333' }}>{blog.title}</h4>
               <small style={{ color: '#666' }}>{new Date(blog.publishedAt).toLocaleDateString()}</small>
             </div>
             <div style={{ display: 'flex', gap: '10px' }}>
