@@ -1,4 +1,4 @@
-import { CorporateProfile, HeroSlide, HeroStat, Donor, Campaign, WorkActivity, PresenceLocation, WorkDetail, CampaignDetail } from './db';
+import { CorporateProfile, HeroSlide, HeroStat, Donor, Campaign, WorkActivity, PresenceLocation, WorkDetail, CampaignDetail, Blog } from './db';
 import fs from 'fs';
 import path from 'path';
 
@@ -446,6 +446,16 @@ export async function getCampaignDetail(id) {
   } catch (error) {
     console.error('getCampaignDetail DB error, returning fallback data:', error);
     return defaultData;
+  }
+}
+
+
+export async function getBlogs() {
+  try {
+    const blogs = await Blog.findAll({ limit: 3, order: [['publishedAt', 'DESC'], ['order', 'ASC']] });
+    return blogs.map(b => b.toJSON());
+  } catch (err) {
+    return [];
   }
 }
 
