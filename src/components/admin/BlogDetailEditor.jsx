@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import WysiwygEditor from './WysiwygEditor';
 import { compressImage } from '../../lib/imageCompressor';
+import ImageCropModal from './ImageCropModal';
 
 const BlogDetailEditor = ({ blog, token, onBack }) => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,11 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
   const [saving, setSaving] = useState(false);
   const [uploadStatus, setUploadStatus] = useState(''); // '' | 'compressing' | 'uploading'
   const [saved, setSaved] = useState(false);
+  
+  // Crop state
+  const [cropSrc, setCropSrc] = useState(null);
+  const [cropFileName, setCropFileName] = useState('');
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (blog) {
@@ -28,12 +34,27 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
     }
   }, [blog]);
 
-  const handleUpload = async (e) => {
+  const handleFileSelect = (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    
+    // Read file as data URL to pass to cropper
+    const reader = new FileReader();
+    reader.onload = () => {
+      setCropSrc(reader.result);
+      setCropFileName(file.name);
+    };
+    reader.readAsDataURL(file);
+    
+    // Reset file input so same file can be selected again
+    e.target.value = '';
+  };
+
+  const handleCropComplete = async (croppedFile) => {
+    setCropSrc(null); // Close modal
     setUploadStatus('compressing');
     try {
-      const compressedFile = await compressImage(file);
+      const compressedFile = await compressImage(croppedFile);
       
       setUploadStatus('uploading');
       const form = new FormData();
@@ -56,6 +77,10 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
       setUploadStatus('');
     }
     setUploadStatus('');
+  };
+
+  const handleCropCancel = () => {
+    setCropSrc(null);
   };
 
   const handleSave = async () => {
@@ -140,7 +165,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
           {formData.bannerImg && (
             <img src={formData.bannerImg} alt="Banner" style={{ width: '100%', maxWidth: '300px', borderRadius: '8px', marginBottom: '10px' }} />
           )}
-          <input type="file" accept="image/*" onChange={handleUpload} disabled={uploadStatus !== ''} />
+          <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFileSelect} disabled={uploadStatus !== ''} />
           {uploadStatus === 'compressing' && <span style={{ marginLeft: '10px', color: 'var(--primary-orange)' }}>Compressing image (this is fast)...</span>}
           {uploadStatus === 'uploading' && <span style={{ marginLeft: '10px', color: '#15F5BA' }}>Uploading to server...</span>}
         </div>
