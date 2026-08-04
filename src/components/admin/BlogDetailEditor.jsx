@@ -4,6 +4,7 @@ import WysiwygEditor from './WysiwygEditor';
 const BlogDetailEditor = ({ blog, token, onBack }) => {
   const [formData, setFormData] = useState({
     title: blog?.title || '',
+    titleSize: blog?.titleSize || '3.5rem',
     bannerImg: blog?.bannerImg || '',
     content: blog?.content || '',
     author: blog?.author || '',
@@ -17,6 +18,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
     if (blog) {
       setFormData({
         title: blog.title || '',
+        titleSize: blog.titleSize || '3.5rem',
         bannerImg: blog.bannerImg || '',
         content: blog.content || '',
         author: blog.author || '',
@@ -80,12 +82,26 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
       <div style={{ display: 'grid', gap: '20px', marginTop: '20px' }}>
         <div>
           <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: 'var(--primary-orange)' }}>Title</label>
-          <input 
-            type="text" 
-            value={formData.title} 
-            onChange={(e) => setFormData({...formData, title: e.target.value})}
-            style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #ccc', background: '#fff', color: 'black' }}
-          />
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <input 
+              type="text" 
+              value={formData.title} 
+              onChange={(e) => setFormData({...formData, title: e.target.value})}
+              style={{ flex: 1, padding: '10px', borderRadius: '6px', border: '1px solid #ccc', background: '#fff', color: 'black' }}
+              placeholder="Blog Title"
+            />
+            <select
+              value={formData.titleSize}
+              onChange={(e) => setFormData({...formData, titleSize: e.target.value})}
+              style={{ width: '150px', padding: '10px', borderRadius: '6px', border: '1px solid #ccc', background: '#fff', color: 'black', cursor: 'pointer' }}
+              title="Title Font Size"
+            >
+              <option value="2.5rem">Small</option>
+              <option value="3.5rem">Normal (Default)</option>
+              <option value="4.5rem">Large</option>
+              <option value="5.5rem">Huge</option>
+            </select>
+          </div>
         </div>
 
         <div>

@@ -248,6 +248,7 @@ export const Blog = sequelize.define('Blog', {
   bannerImg: DataTypes.STRING,
   content: DataTypes.TEXT('long'),
   author: DataTypes.STRING,
+  titleSize: { type: DataTypes.STRING, defaultValue: '3.5rem' },
   publishedAt: DataTypes.DATE,
   order: { type: DataTypes.INTEGER, defaultValue: 0 },
   updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },

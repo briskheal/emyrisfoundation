@@ -41,7 +41,7 @@ export default async function BlogDetailPage({ params }) {
               <div style={{ background: 'var(--primary-orange)', color: 'white', padding: '6px 16px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 600, display: 'inline-block', marginBottom: '15px' }}>
                 {new Date(blog.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
               </div>
-              <h1 style={{ color: 'white', fontSize: '3.5rem', margin: '0 0 10px 0', fontFamily: 'var(--font-title)', maxWidth: '900px', lineHeight: 1.1 }}>
+              <h1 style={{ color: 'white', fontSize: blog.titleSize || '3.5rem', margin: '0 0 10px 0', fontFamily: 'var(--font-title)', maxWidth: '900px', lineHeight: 1.1 }}>
                 {blog.title}
               </h1>
               {blog.author && (
@@ -58,7 +58,7 @@ export default async function BlogDetailPage({ params }) {
           
           {!blog.bannerImg && (
             <div style={{ marginBottom: '40px' }}>
-              <h1 style={{ color: 'var(--primary-blue)', fontSize: '3rem', fontFamily: 'var(--font-title)' }}>
+              <h1 style={{ color: 'var(--primary-blue)', fontSize: blog.titleSize || '3rem', fontFamily: 'var(--font-title)' }}>
                 {blog.title}
               </h1>
               <p style={{ color: 'var(--text-muted)' }}>
@@ -85,8 +85,8 @@ export default async function BlogDetailPage({ params }) {
           </div>
           
           <div style={{ textAlign: 'center', marginTop: '60px' }}>
-            <Link href="/blog" className="btn btn-primary" style={{ display: 'inline-block', padding: '12px 24px', borderRadius: '8px', textDecoration: 'none' }}>
-              &larr; Back to all Blogs
+            <Link href="/#blog" className="btn btn-primary" style={{ display: 'inline-block', padding: '12px 24px', borderRadius: '8px', textDecoration: 'none' }}>
+              &larr; Back to Main Blog
             </Link>
           </div>
         </div>
