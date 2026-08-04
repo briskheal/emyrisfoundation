@@ -86,8 +86,8 @@ const BlogManager = ({ token, onEdit }) => {
         {blogs.map(blog => (
           <div key={blog.id} style={{ padding: '15px', border: '1px solid #ddd', borderRadius: '8px', background: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <h4 style={{ margin: '0 0 5px 0', color: '#333' }}>{blog.title}</h4>
-              <small style={{ color: '#666' }}>{new Date(blog.publishedAt).toLocaleDateString()}</small>
+              <h4 style={{ margin: '0 0 5px 0', color: 'black' }}>{blog.title}</h4>
+              <small style={{ color: '#555' }}>{new Date(blog.publishedAt).toLocaleDateString()}</small>
             </div>
             <div style={{ display: 'flex', gap: '10px' }}>
               <button style={{ padding: '8px 16px', background: 'var(--primary-blue)', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer' }} onClick={() => onEdit(blog)}>Edit Content</button>

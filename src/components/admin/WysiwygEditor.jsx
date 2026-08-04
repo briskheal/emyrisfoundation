@@ -23,9 +23,9 @@ const WysiwygEditor = ({ value, onChange }) => {
   };
 
   return (
-    <div style={{ border: '1px solid #ddd', borderRadius: '8px', overflow: 'hidden', background: '#fff' }}>
+    <div style={{ border: '1px solid #444', borderRadius: '8px', overflow: 'hidden', background: '#1a1a1a' }}>
       {/* Toolbar */}
-      <div style={{ padding: '10px', background: '#f5f5f5', borderBottom: '1px solid #ddd', display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
+      <div style={{ padding: '10px', background: '#2d2d2d', borderBottom: '1px solid #444', display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
         <button type="button" onClick={() => execCmd('bold')} style={btnStyle} title="Bold">
           <i className="fa-solid fa-bold"></i>
         </button>
@@ -84,7 +84,7 @@ const WysiwygEditor = ({ value, onChange }) => {
         style={{
           minHeight: '350px',
           padding: '20px',
-          color: '#333',
+          color: '#fff',
           outline: 'none',
           fontFamily: 'inherit',
           lineHeight: 1.6,
@@ -96,12 +96,12 @@ const WysiwygEditor = ({ value, onChange }) => {
 };
 
 const btnStyle = {
-  background: 'white',
-  border: '1px solid #ddd',
+  background: '#333',
+  border: '1px solid #444',
   borderRadius: '4px',
   padding: '6px 12px',
   cursor: 'pointer',
-  color: '#444',
+  color: '#fff',
   fontSize: '1rem',
   display: 'flex',
   alignItems: 'center',
@@ -111,16 +111,16 @@ const btnStyle = {
 
 const dividerStyle = {
   width: '1px',
-  background: '#ddd',
+  background: '#555',
   margin: '0 5px'
 };
 
 const selectStyle = {
-  background: 'white',
-  border: '1px solid #ddd',
+  background: '#333',
+  border: '1px solid #444',
   borderRadius: '4px',
   padding: '6px',
-  color: '#444',
+  color: '#fff',
   cursor: 'pointer'
 };
 

@@ -78,37 +78,37 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
 
       <div style={{ display: 'grid', gap: '20px', marginTop: '20px' }}>
         <div>
-          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#333' }}>Title</label>
+          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: 'black' }}>Title</label>
           <input 
             type="text" 
             value={formData.title} 
             onChange={(e) => setFormData({...formData, title: e.target.value})}
-            style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #ccc', background: '#fff', color: '#333' }}
+            style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #ccc', background: '#fff', color: 'black' }}
           />
         </div>
 
         <div>
-          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#333' }}>Author</label>
+          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: 'black' }}>Author</label>
           <input 
             type="text" 
             value={formData.author} 
             onChange={(e) => setFormData({...formData, author: e.target.value})}
-            style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #ccc', background: '#fff', color: '#333' }}
+            style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #ccc', background: '#fff', color: 'black' }}
           />
         </div>
 
         <div>
-          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#333' }}>Publish Date</label>
+          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: 'black' }}>Publish Date</label>
           <input 
             type="date" 
             value={formData.publishedAt} 
             onChange={(e) => setFormData({...formData, publishedAt: e.target.value})}
-            style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #ccc', background: '#fff', color: '#333' }}
+            style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #ccc', background: '#fff', color: 'black' }}
           />
         </div>
 
         <div>
-          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: '#333' }}>Banner Image (Auto-converts to WebP)</label>
+          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: 'black' }}>Banner Image (Auto-converts to WebP)</label>
           {formData.bannerImg && (
             <img src={formData.bannerImg} alt="Banner" style={{ width: '100%', maxWidth: '300px', borderRadius: '8px', marginBottom: '10px' }} />
           )}
@@ -117,7 +117,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
         </div>
 
         <div className="form-group" style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '8px', color: '#333', fontWeight: 600 }}>
+          <label style={{ display: 'block', marginBottom: '8px', color: 'black', fontWeight: 600 }}>
             Blog Content (Rich Text Editor)
           </label>
           <WysiwygEditor 
