@@ -35,20 +35,33 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
   }, [blog]);
 
   const handleFileSelect = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    
-    // Read file as data URL to pass to cropper
-    const reader = new FileReader();
-    reader.onload = () => {
-      setCropSrc(reader.result);
-      setCropFileName(file.name);
-    };
-    reader.readAsDataURL(file);
-    
-    // Reset file input so same file can be selected again
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+    try {
+      const file = e.target.files[0];
+      if (!file) {
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = () => {
+        setCropSrc(reader.result);
+        setCropFileName(file.name);
+      };
+      reader.onerror = (err) => {
+        alert('FileReader error: ' + err);
+      };
+      reader.readAsDataURL(file);
+      
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    } catch (err) {
+      alert('Error in handleFileSelect: ' + err.message);
+    }
+  };
+
+  const handleDeleteBanner = () => {
+    if (confirm('Are you sure you want to delete the banner?')) {
+      setFormData(prev => ({ ...prev, bannerImg: '' }));
     }
   };
 
@@ -165,8 +178,19 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
         <div>
           <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: 'var(--primary-orange)' }}>Banner Image (Auto-converts to WebP)</label>
           {formData.bannerImg && (
-            <img src={formData.bannerImg} alt="Banner" style={{ width: '100%', maxWidth: '300px', borderRadius: '8px', marginBottom: '10px' }} />
+            <div style={{ position: 'relative', display: 'inline-block', marginBottom: '10px' }}>
+              <img src={formData.bannerImg} alt="Banner" style={{ width: '100%', maxWidth: '300px', borderRadius: '8px' }} />
+              <button 
+                type="button" 
+                onClick={handleDeleteBanner}
+                style={{ position: 'absolute', top: '5px', right: '5px', background: 'red', color: 'white', border: 'none', borderRadius: '50%', width: '24px', height: '24px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                title="Delete Banner"
+              >
+                ✕
+              </button>
+            </div>
           )}
+          <br/>
           <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFileSelect} disabled={uploadStatus !== ''} />
           {uploadStatus === 'compressing' && <span style={{ marginLeft: '10px', color: 'var(--primary-orange)' }}>Compressing image (this is fast)...</span>}
           {uploadStatus === 'uploading' && <span style={{ marginLeft: '10px', color: '#15F5BA' }}>Uploading to server...</span>}
