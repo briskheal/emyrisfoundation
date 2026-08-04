@@ -79,7 +79,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
 
       <div style={{ display: 'grid', gap: '20px', marginTop: '20px' }}>
         <div>
-          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: 'black' }}>Title</label>
+          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: 'var(--primary-orange)' }}>Title</label>
           <input 
             type="text" 
             value={formData.title} 
@@ -89,7 +89,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
         </div>
 
         <div>
-          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: 'black' }}>Author</label>
+          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: 'var(--primary-orange)' }}>Author</label>
           <input 
             type="text" 
             value={formData.author} 
@@ -99,7 +99,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
         </div>
 
         <div>
-          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: 'black' }}>Publish Date</label>
+          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: 'var(--primary-orange)' }}>Publish Date</label>
           <input 
             type="date" 
             value={formData.publishedAt} 
@@ -109,7 +109,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
         </div>
 
         <div>
-          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: 'black' }}>Banner Image (Auto-converts to WebP)</label>
+          <label style={{ display: 'block', fontWeight: '600', marginBottom: '8px', color: 'var(--primary-orange)' }}>Banner Image (Auto-converts to WebP)</label>
           {formData.bannerImg && (
             <img src={formData.bannerImg} alt="Banner" style={{ width: '100%', maxWidth: '300px', borderRadius: '8px', marginBottom: '10px' }} />
           )}
@@ -118,7 +118,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
         </div>
 
         <div className="form-group" style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '8px', color: 'black', fontWeight: 600 }}>
+          <label style={{ display: 'block', marginBottom: '8px', color: 'var(--primary-orange)', fontWeight: 600 }}>
             Blog Content (Rich Text Editor)
           </label>
           <WysiwygEditor 
