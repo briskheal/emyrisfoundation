@@ -79,7 +79,7 @@ const BlogManager = ({ token, onEdit }) => {
           placeholder="New Blog Title"
           style={{ padding: '12px', flex: 1, border: '1px solid #ccc', borderRadius: '8px', background: '#fff', color: '#333', fontSize: '1rem' }}
         />
-        <button type="submit" className="admin-btn">Add Blog</button>
+        <button type="submit" style={{ padding: '10px 20px', background: 'var(--primary-orange)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>Add Blog</button>
       </form>
 
       <div style={{ display: 'grid', gap: '15px' }}>
@@ -90,8 +90,8 @@ const BlogManager = ({ token, onEdit }) => {
               <small style={{ color: '#666' }}>{new Date(blog.publishedAt).toLocaleDateString()}</small>
             </div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button className="admin-btn" style={{ background: 'var(--secondary-blue)' }} onClick={() => onEdit(blog)}>Edit Content</button>
-              <button className="admin-btn" style={{ background: '#dc3545' }} onClick={() => handleDelete(blog.id)}>Delete</button>
+              <button style={{ padding: '8px 16px', background: 'var(--primary-blue)', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer' }} onClick={() => onEdit(blog)}>Edit Content</button>
+              <button style={{ padding: '8px 16px', background: '#dc3545', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer' }} onClick={() => handleDelete(blog.id)}>Delete</button>
             </div>
           </div>
         ))}

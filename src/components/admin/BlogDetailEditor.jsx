@@ -68,7 +68,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
 
   return (
     <div className="admin-section">
-      <button onClick={onBack} className="admin-btn" style={{ marginBottom: '20px', background: 'var(--text-muted)' }}>
+      <button onClick={onBack} style={{ marginBottom: '20px', padding: '8px 16px', background: 'var(--text-muted)', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
         &larr; Back to Blogs
       </button>
 
@@ -127,9 +127,10 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
           />
         </div>
 
-        <button onClick={handleSave} className="admin-btn" style={{ padding: '15px', fontSize: '1.1rem' }} disabled={saving}>
+        <button onClick={handleSave} style={{ padding: '15px 30px', background: 'var(--primary-blue)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '1.1rem', fontWeight: 'bold' }} disabled={saving}>
           {saving ? 'Saving...' : 'Save Blog'}
         </button>
+        {saved && <span style={{ marginLeft: '15px', color: 'green', fontWeight: 'bold' }}>Saved Successfully!</span>}
       </div>
     </div>
   );
