@@ -40,10 +40,11 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
       if (data.success) {
         setFormData(prev => ({ ...prev, bannerImg: data.url }));
       } else {
-        alert('Upload failed');
+        alert('Upload failed: ' + (data.error || 'Server error'));
       }
     } catch (err) {
-      alert('Upload failed');
+      alert('Failed to upload image: ' + (err.message || String(err)));
+      setUploading(false);
     }
     setUploading(false);
   };
