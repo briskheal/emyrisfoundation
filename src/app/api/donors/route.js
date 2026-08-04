@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { Donor } from '../../../lib/db';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import sharp from 'sharp';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -42,20 +41,15 @@ export async function POST(req) {
 
     let imageUrl = ''; // Empty by default
 
-    if (file && file.size > 0) {
+    if (file) {
       const buffer = Buffer.from(await file.arrayBuffer());
-      
       const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-      try {
-        await fs.access(uploadsDir);
-      } catch {
-        await fs.mkdir(uploadsDir, { recursive: true });
-      }
+      await fs.mkdir(uploadsDir, { recursive: true });
 
-      const filename = `donor_${Date.now()}_${Math.round(Math.random() * 1E9)}.webp`;
-      const finalBuffer = await sharp(buffer).webp({ quality: 80 }).toBuffer();
+      const ext = path.extname(file.name).toLowerCase() || '.bin';
+      const filename = `donor_${Date.now()}_${Math.round(Math.random() * 1E9)}${ext}`;
       const filepath = path.join(uploadsDir, filename);
-      await fs.writeFile(filepath, finalBuffer);
+      await fs.writeFile(filepath, buffer);
       
       imageUrl = `/api/media/${filename}`;
     }
