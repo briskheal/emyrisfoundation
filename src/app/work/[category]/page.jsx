@@ -40,6 +40,7 @@ export default async function WorkCategoryPage({ params }) {
           backgroundImage: `url('${data.bannerImg || `/Emyris Foundation Photos/emyris_hero_${category}.webp`}')`,
           aspectRatio: '3 / 1',
           width: '100%',
+          height: 'auto',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           position: 'relative'

@@ -65,6 +65,7 @@ export default async function CampaignPage({ params }) {
             backgroundImage: `url('${data.bannerImg || heroBg}')`, 
             aspectRatio: '3 / 1',
             width: '100%',
+            height: 'auto',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             position: 'relative' 
