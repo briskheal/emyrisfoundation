@@ -233,6 +233,7 @@ export const JobOpening = sequelize.define('JobOpening', {
 export const WorkDetail = sequelize.define('WorkDetail', {
   id: { type: DataTypes.STRING, primaryKey: true }, // e.g. 'work-education'
   bannerTitle: DataTypes.STRING,
+  bannerImg: DataTypes.STRING,
   whyTitle: DataTypes.STRING,
   whyText: DataTypes.TEXT,
   sdgGrid: DataTypes.JSON,
@@ -257,6 +258,7 @@ export const Blog = sequelize.define('Blog', {
 export const CampaignDetail = sequelize.define('CampaignDetail', {
   id: { type: DataTypes.STRING, primaryKey: true },
   title: DataTypes.STRING,
+  bannerImg: DataTypes.STRING,
   motto: DataTypes.STRING,
   bannerMsg: DataTypes.TEXT,
   narrativeHeading: DataTypes.STRING,

@@ -104,6 +104,8 @@ export async function getPresenceLocations() {
 }
 export async function getWorkDetail(id) {
   try {
+    await WorkDetail.sync({ alter: true });
+    
     let detail = await WorkDetail.findByPk(id);
     if (detail) {
       let updated = false;
