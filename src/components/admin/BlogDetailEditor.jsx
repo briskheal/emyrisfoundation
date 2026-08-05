@@ -122,7 +122,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
   };
 
   return (
-    <div className="admin-section">
+    <div style={{ background: 'rgba(255,255,255,0.05)', padding: '20px', borderRadius: '12px' }}>
       <button onClick={onBack} style={{ marginBottom: '20px', padding: '8px 16px', background: 'var(--text-muted)', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
         &larr; Back to Blogs
       </button>
@@ -137,13 +137,13 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
               type="text" 
               value={formData.title} 
               onChange={(e) => setFormData({...formData, title: e.target.value})}
-              style={{ flex: 1, padding: '10px', borderRadius: '6px', border: '1px solid #ccc', background: '#fff', color: 'black' }}
+              style={{ flex: 1, padding: '10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: 'white' }}
               placeholder="Blog Title"
             />
             <select
               value={formData.titleSize}
               onChange={(e) => setFormData({...formData, titleSize: e.target.value})}
-              style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc', background: 'white' }}
+              style={{ padding: '8px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.2)', background: '#222', color: 'white' }}
               title="Title Font Size"
             >
               <option value="1.5rem">Smallest</option>
@@ -161,7 +161,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
             type="text" 
             value={formData.author} 
             onChange={(e) => setFormData({...formData, author: e.target.value})}
-            style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #ccc', background: '#fff', color: 'black' }}
+            style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: 'white' }}
           />
         </div>
 
@@ -171,7 +171,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
             type="date" 
             value={formData.publishedAt} 
             onChange={(e) => setFormData({...formData, publishedAt: e.target.value})}
-            style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #ccc', background: '#fff', color: 'black' }}
+            style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.2)', background: '#222', color: 'white' }}
           />
         </div>
 
@@ -206,7 +206,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
           {uploadStatus === '' && formData.bannerImg && <span style={{ marginLeft: '10px', color: '#15F5BA', fontWeight: 'bold', display: 'block', marginTop: '5px' }}>✓ Image loaded! Click "Save Banner" to keep it.</span>}
         </div>
 
-        <div className="form-group" style={{ marginBottom: '20px' }}>
+        <div style={{ marginBottom: '20px' }}>
           <label style={{ display: 'block', marginBottom: '8px', color: 'var(--primary-orange)', fontWeight: 600 }}>
             Blog Content (Rich Text Editor)
           </label>
