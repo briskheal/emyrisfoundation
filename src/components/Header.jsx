@@ -69,11 +69,11 @@ const Header = () => {
           <div className={`nav-dropdown ${activeDropdown === 'campaigns' ? 'active' : ''}`}>
             <Link href="/#campaigns" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'campaigns')}>Campaigns <i className="fa-solid fa-chevron-down"></i></Link>
             <div className="dropdown-menu">
-              <Link href="/?campTab=campaign-shiksha#campaigns" onClick={() => handleTabClick('campaigns', 'campaign-shiksha')}>Shiksha Hi Surakhya</Link>
-              <Link href="/?campTab=campaign-blood#campaigns" onClick={() => handleTabClick('campaigns', 'campaign-blood')}>Blood Donation</Link>
-              <Link href="/?campTab=campaign-organ#campaigns" onClick={() => handleTabClick('campaigns', 'campaign-organ')}>Organ Donation</Link>
-              <Link href="/?campTab=campaign-plantation#campaigns" onClick={() => handleTabClick('campaigns', 'campaign-plantation')}>Plantation Awareness</Link>
-              <Link href="/?campTab=campaign-welfare#campaigns" onClick={() => handleTabClick('campaigns', 'campaign-welfare')}>Social Welfare</Link>
+              <Link href="/?campTab=shiksha#campaigns" onClick={() => handleTabClick('campaigns', 'shiksha')}>Shiksha Hi Surakhya</Link>
+              <Link href="/?campTab=blood#campaigns" onClick={() => handleTabClick('campaigns', 'blood')}>Blood Donation</Link>
+              <Link href="/?campTab=organ#campaigns" onClick={() => handleTabClick('campaigns', 'organ')}>Organ Donation</Link>
+              <Link href="/?campTab=plantation#campaigns" onClick={() => handleTabClick('campaigns', 'plantation')}>Plantation Awareness</Link>
+              <Link href="/?campTab=welfare#campaigns" onClick={() => handleTabClick('campaigns', 'welfare')}>Social Welfare</Link>
             </div>
           </div>
 
