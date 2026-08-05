@@ -25,6 +25,28 @@ const Campaigns = ({ initialCampaigns }) => {
     }
   }, [initialCampaigns, activeTab]);
 
+  useEffect(() => {
+    // Check URL parameters when component mounts or URL changes
+    const checkUrlParams = () => {
+      if (typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search);
+        const campTab = params.get('campTab');
+        if (campTab && campaigns.some(c => c.id === campTab)) {
+          setActiveTab(campTab);
+        }
+      }
+    };
+    
+    checkUrlParams();
+    window.addEventListener('hashchange', checkUrlParams);
+    window.addEventListener('popstate', checkUrlParams);
+    
+    return () => {
+      window.removeEventListener('hashchange', checkUrlParams);
+      window.removeEventListener('popstate', checkUrlParams);
+    };
+  }, [campaigns]);
+
   const tagColors = {
     "health": "red",
     "education": "blue",

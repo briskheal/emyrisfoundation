@@ -14,12 +14,35 @@ const OurWork = ({ initialWork }) => {
         .then(data => {
           if (Array.isArray(data) && data.length > 0) {
             setWorkList(data);
-            setActiveTab(data[0].id);
+            if (!activeTab) setActiveTab(data[0].id);
           }
         })
         .catch(err => console.error("Failed to load work", err));
     }
-  }, [initialWork]);
+  }, [initialWork, activeTab]);
+
+  useEffect(() => {
+    // Check URL parameters when component mounts or URL changes
+    const checkUrlParams = () => {
+      if (typeof window !== 'undefined') {
+        const params = new URLSearchParams(window.location.search);
+        const workTab = params.get('workTab');
+        if (workTab && workList.some(w => w.id === workTab)) {
+          setActiveTab(workTab);
+        }
+      }
+    };
+    
+    checkUrlParams();
+    // Listen for next.js navigation or hash changes
+    window.addEventListener('hashchange', checkUrlParams);
+    window.addEventListener('popstate', checkUrlParams);
+    
+    return () => {
+      window.removeEventListener('hashchange', checkUrlParams);
+      window.removeEventListener('popstate', checkUrlParams);
+    };
+  }, [workList]);
 
   const iconMap = {
     "work-education": "fa-graduation-cap",

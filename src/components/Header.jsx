@@ -52,11 +52,11 @@ const Header = () => {
           <div className={`nav-dropdown ${activeDropdown === 'work' ? 'active' : ''}`}>
             <Link href="/#work" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'work')}>Our Work <i className="fa-solid fa-chevron-down"></i></Link>
             <div className="dropdown-menu">
-              <Link href="/#work" onClick={() => setMobileMenuOpen(false)}>Education</Link>
-              <Link href="/#work" onClick={() => setMobileMenuOpen(false)}>Health</Link>
-              <Link href="/#work" onClick={() => setMobileMenuOpen(false)}>Livelihood</Link>
-              <Link href="/#work" onClick={() => setMobileMenuOpen(false)}>Women Empowerment</Link>
-              <Link href="/#work" onClick={() => setMobileMenuOpen(false)}>Farmer's Connect</Link>
+              <Link href="/?workTab=work-education#work" onClick={() => setMobileMenuOpen(false)}>Education</Link>
+              <Link href="/?workTab=work-health#work" onClick={() => setMobileMenuOpen(false)}>Health</Link>
+              <Link href="/?workTab=work-livelihood#work" onClick={() => setMobileMenuOpen(false)}>Livelihood</Link>
+              <Link href="/?workTab=work-women#work" onClick={() => setMobileMenuOpen(false)}>Women Empowerment</Link>
+              <Link href="/?workTab=work-farmers#work" onClick={() => setMobileMenuOpen(false)}>Farmer's Connect</Link>
               <Link href="/#presence" onClick={() => setMobileMenuOpen(false)}>Where We Work</Link>
             </div>
           </div>
@@ -64,11 +64,11 @@ const Header = () => {
           <div className={`nav-dropdown ${activeDropdown === 'campaigns' ? 'active' : ''}`}>
             <Link href="/#campaigns" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'campaigns')}>Campaigns <i className="fa-solid fa-chevron-down"></i></Link>
             <div className="dropdown-menu">
-              <Link href="/#campaigns" onClick={() => setMobileMenuOpen(false)}>Shiksha Hi Surakhya</Link>
-              <Link href="/#campaigns" onClick={() => setMobileMenuOpen(false)}>Blood Donation</Link>
-              <Link href="/#campaigns" onClick={() => setMobileMenuOpen(false)}>Organ Donation</Link>
-              <Link href="/#campaigns" onClick={() => setMobileMenuOpen(false)}>Plantation Awareness</Link>
-              <Link href="/#campaigns" onClick={() => setMobileMenuOpen(false)}>Social Welfare</Link>
+              <Link href="/?campTab=campaign-shiksha#campaigns" onClick={() => setMobileMenuOpen(false)}>Shiksha Hi Surakhya</Link>
+              <Link href="/?campTab=campaign-blood#campaigns" onClick={() => setMobileMenuOpen(false)}>Blood Donation</Link>
+              <Link href="/?campTab=campaign-organ#campaigns" onClick={() => setMobileMenuOpen(false)}>Organ Donation</Link>
+              <Link href="/?campTab=campaign-plantation#campaigns" onClick={() => setMobileMenuOpen(false)}>Plantation Awareness</Link>
+              <Link href="/?campTab=campaign-welfare#campaigns" onClick={() => setMobileMenuOpen(false)}>Social Welfare</Link>
             </div>
           </div>
 
