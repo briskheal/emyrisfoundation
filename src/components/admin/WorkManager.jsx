@@ -165,7 +165,7 @@ const WorkManager = ({ token }) => {
           </div>
 
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', marginBottom: '5px' }}>Image (Will auto-convert to WebP)</label>
+            <label style={{ display: 'block', color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', marginBottom: '5px' }}>Grid Card Thumbnail (Single Image only. Go to 'Work Content' for Banners & Gallery)</label>
             <input type="file" accept="image/*" onChange={handleUpload} style={{ color: 'white', marginBottom: '10px' }} />
             {uploading && <span style={{ color: '#15F5BA', fontSize: '0.8rem' }}>Uploading & Optimizing...</span>}
             {formData.img && (

@@ -270,6 +270,7 @@ const AdminPanel = () => {
     { id: 'directors', label: 'Directors', icon: 'fa-user-tie' },
     { id: 'mentors', label: 'Mentors', icon: 'fa-chalkboard-user' },
     { id: 'work', label: 'Our Work', icon: 'fa-briefcase' },
+    { id: 'work_content', label: 'Work Content', icon: 'fa-file-lines' },
     { id: 'campaigns', label: 'Campaigns', icon: 'fa-bullhorn' },
     { id: 'campaign_content', label: 'Campaign Content', icon: 'fa-file-lines' },
     { id: 'blogs', label: 'Blog Posts', icon: 'fa-blog' },
@@ -374,6 +375,7 @@ const AdminPanel = () => {
         {activeTab === 'blogs' && editingBlog && <BlogDetailEditor token={token} blog={editingBlog} onBack={() => setEditingBlog(null)} />}
         {activeTab === 'publications' && <PublicationManager token={token} />}
         {activeTab === 'work' && <WorkManager token={token} />}
+        {activeTab === 'work_content' && <WorkDetailEditor token={token} />}
         {activeTab === 'hero-stats' && <HeroStatManager token={token} />}
         {activeTab === 'presence' && <PresenceManager token={token} />}
         {activeTab === 'donors' && <DonorManager token={token} />}
