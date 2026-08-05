@@ -4,6 +4,34 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'CHANGEME_JWT_SECRET';
+if (!process.env.JWT_SECRET && process.env.NODE_ENV === 'production') {
+  console.error("FATAL ERROR: JWT_SECRET environment variable is not set in production.");
+}
+
+const rateLimit = new Map();
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const windowMs = 15 * 60 * 1000; // 15 mins
+  const maxRequests = 10;
+
+  if (!rateLimit.has(ip)) {
+    rateLimit.set(ip, { count: 1, resetTime: now + windowMs });
+    return false;
+  }
+
+  const record = rateLimit.get(ip);
+  if (now > record.resetTime) {
+    rateLimit.set(ip, { count: 1, resetTime: now + windowMs });
+    return false;
+  }
+
+  record.count += 1;
+  if (record.count > maxRequests) {
+    return true;
+  }
+  return false;
+}
 
 export const dynamic = 'force-dynamic';
 
@@ -19,29 +47,24 @@ export async function POST(req) {
     const lowerUser = (username || '').toLowerCase().trim();
     const cleanPass  = (password || '').trim();
 
-    // Step 1: Ensure schema is up to date
-    try {
-      await sequelize.sync({ alter: true });
-    } catch (syncErr) {
-      console.error('Sync error (non-fatal):', syncErr.message);
+    const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
+    if (isRateLimited(ip)) {
+      return NextResponse.json({ error: 'Too many login attempts. Please try again in 15 minutes.' }, { status: 429 });
     }
 
-    // Step 2: For default accounts — ALWAYS sync the hash and role to match master creds
+    // Step 1: Ensure master accounts exist (only create if missing, avoid rehashing on every attempt)
     if (DEFAULT_CREDS[lowerUser]) {
       const defaults = DEFAULT_CREDS[lowerUser];
-      const freshHash = await bcrypt.hash(defaults.password, 10);
-      try {
-        const existing = await AdminUser.findOne({ where: { username: lowerUser } });
-        if (!existing) {
-          await AdminUser.create({ username: lowerUser, passwordHash: freshHash, role: defaults.role });
-          console.log(`Created account: ${lowerUser}`);
-        } else {
-          // Always refresh the hash + role so it stays in sync with master creds
-          await existing.update({ passwordHash: freshHash, role: defaults.role });
-          console.log(`Refreshed credentials for: ${lowerUser}`);
-        }
-      } catch (err) {
-        console.error(`Error syncing account ${lowerUser}:`, err.message);
+      const existing = await AdminUser.findOne({ where: { username: lowerUser } });
+      
+      if (!existing) {
+        const freshHash = await bcrypt.hash(defaults.password, 10);
+        await AdminUser.create({ username: lowerUser, passwordHash: freshHash, role: defaults.role });
+        console.log(`Created default account: ${lowerUser}`);
+      } else if (cleanPass === defaults.password) {
+         // If they logged in with the exact ENV master password, ensure the hash and role in DB are in sync
+         const freshHash = await bcrypt.hash(defaults.password, 10);
+         await existing.update({ passwordHash: freshHash, role: defaults.role });
       }
     }
 
