@@ -45,9 +45,16 @@ const CampaignDetailEditor = ({ token }) => {
         const data = await res.json();
         if (!data.whyGrid) data.whyGrid = [];
         setDetail(data);
+      } else {
+        setDetail({
+          title: '', motto: '', bannerMsg: '', introText: '', narrativeHeading: '', narrativeQuote: '',
+          whyTitle: '', whyGrid: [], galleryTitle: '', gallerySubtitle: '', videoTitle: '', videoSubtitle: '',
+          galleryPhotos: [], videos: [], bannerImg: ''
+        });
       }
     } catch (err) {
       console.error(err);
+      setDetail({ title: '', whyGrid: [] });
     }
     setLoading(false);
   };
@@ -124,6 +131,23 @@ const CampaignDetailEditor = ({ token }) => {
     } finally {
       setUploadStatus('');
     }
+  };
+
+  const updateGridItem = (index, field, value) => {
+    const newGrid = [...(detail.whyGrid || [])];
+    if (!newGrid[index]) newGrid[index] = { title: '', text: '' };
+    newGrid[index][field] = value;
+    setDetail({ ...detail, whyGrid: newGrid });
+  };
+
+  const addGridItem = () => {
+    setDetail({ ...detail, whyGrid: [...(detail.whyGrid || []), { title: '', text: '' }] });
+  };
+
+  const removeGridItem = (index) => {
+    const newGrid = [...(detail.whyGrid || [])];
+    newGrid.splice(index, 1);
+    setDetail({ ...detail, whyGrid: newGrid });
   };
 
   const updatePhotoTitle = (index, newTitle) => {

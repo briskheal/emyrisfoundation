@@ -24,13 +24,23 @@ const WorkDetailEditor = ({ token }) => {
   const fetchDetail = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/work-details/${activeWork}`);
+      const res = await fetch(`/api/work-details/${activeWork}`);
       if (res.ok) {
         const data = await res.json();
         setDetail(data);
+      } else {
+        // If it doesn't exist yet, start with a blank template
+        setDetail({
+          bannerImg: '',
+          bannerTitle: '',
+          whyTitle: '',
+          whyText: '',
+          impactMedia: []
+        });
       }
     } catch (err) {
       console.error(err);
+      setDetail({ bannerImg: '', bannerTitle: '', whyTitle: '', whyText: '', impactMedia: [] });
     }
     setLoading(false);
   };
@@ -115,7 +125,7 @@ const WorkDetailEditor = ({ token }) => {
     }
   };
 
-  if (loading || !detail) return <div>Loading...</div>;
+  if (loading || !detail) return <div style={{ color: 'white', padding: '20px' }}>Loading...</div>;
 
   return (
     <div className="admin-card">
