@@ -52,6 +52,7 @@ export default async function WorkCategoryPage({ params }) {
           aspectRatio: '3 / 1',
           width: '100%',
           height: 'auto',
+          minHeight: 'unset',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           position: 'relative'
