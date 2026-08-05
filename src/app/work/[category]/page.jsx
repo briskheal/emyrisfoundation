@@ -15,6 +15,17 @@ export default async function WorkCategoryPage({ params }) {
   const data = await getWorkDetail(detailId);
   const corporateData = await getCorporateData();
 
+  const getCurrentFinancialYear = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth(); // 0 is Jan, 3 is Apr
+    if (month >= 3) {
+      return `${year.toString().slice(-2)}-${(year + 1).toString().slice(-2)}`;
+    }
+    return `${(year - 1).toString().slice(-2)}-${year.toString().slice(-2)}`;
+  };
+  const currentFy = getCurrentFinancialYear();
+
   if (!data) {
     return (
       <CorporateProvider initialData={corporateData}>
@@ -118,7 +129,7 @@ export default async function WorkCategoryPage({ params }) {
           <section className="work-detail-impact" style={{ padding: '20px 0', backgroundColor: 'rgba(0,0,0,0.2)' }}>
             <div className="container">
               <div className="section-title-wrapper text-center" style={{ marginBottom: '10px' }}>
-                <h2 className="section-title" style={{ fontSize: '1.8rem' }}>Impact 23-24</h2>
+                <h2 className="section-title" style={{ fontSize: '1.8rem' }}>Impact {currentFy}</h2>
                 <div className="title-underline"></div>
               </div>
               <div className="impact-gallery">
