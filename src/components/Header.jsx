@@ -11,10 +11,15 @@ const Header = () => {
   const { corporate } = useCorporate();
   const { openModal } = useModals();
 
-  const toggleDropdown = (e, menuName) => {
-    if (window.innerWidth <= 992) {
-      e.preventDefault();
-      setActiveDropdown(activeDropdown === menuName ? null : menuName);
+  const toggleDropdown = (e, dropdown) => {
+    e.preventDefault();
+    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
+  };
+
+  const handleTabClick = (type, tabId) => {
+    setMobileMenuOpen(false);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('changeTab', { detail: { type, tabId } }));
     }
   };
 
@@ -52,11 +57,11 @@ const Header = () => {
           <div className={`nav-dropdown ${activeDropdown === 'work' ? 'active' : ''}`}>
             <Link href="/#work" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'work')}>Our Work <i className="fa-solid fa-chevron-down"></i></Link>
             <div className="dropdown-menu">
-              <Link href="/?workTab=work-education#work" onClick={() => setMobileMenuOpen(false)}>Education</Link>
-              <Link href="/?workTab=work-health#work" onClick={() => setMobileMenuOpen(false)}>Health</Link>
-              <Link href="/?workTab=work-livelihood#work" onClick={() => setMobileMenuOpen(false)}>Livelihood</Link>
-              <Link href="/?workTab=work-women#work" onClick={() => setMobileMenuOpen(false)}>Women Empowerment</Link>
-              <Link href="/?workTab=work-farmers#work" onClick={() => setMobileMenuOpen(false)}>Farmer's Connect</Link>
+              <Link href="/?workTab=work-education#work" onClick={() => handleTabClick('work', 'work-education')}>Education</Link>
+              <Link href="/?workTab=work-health#work" onClick={() => handleTabClick('work', 'work-health')}>Health</Link>
+              <Link href="/?workTab=work-livelihood#work" onClick={() => handleTabClick('work', 'work-livelihood')}>Livelihood</Link>
+              <Link href="/?workTab=work-women#work" onClick={() => handleTabClick('work', 'work-women')}>Women Empowerment</Link>
+              <Link href="/?workTab=work-farmers#work" onClick={() => handleTabClick('work', 'work-farmers')}>Farmer's Connect</Link>
               <Link href="/#presence" onClick={() => setMobileMenuOpen(false)}>Where We Work</Link>
             </div>
           </div>
@@ -64,11 +69,11 @@ const Header = () => {
           <div className={`nav-dropdown ${activeDropdown === 'campaigns' ? 'active' : ''}`}>
             <Link href="/#campaigns" className="nav-link dropdown-toggle" onClick={(e) => toggleDropdown(e, 'campaigns')}>Campaigns <i className="fa-solid fa-chevron-down"></i></Link>
             <div className="dropdown-menu">
-              <Link href="/?campTab=campaign-shiksha#campaigns" onClick={() => setMobileMenuOpen(false)}>Shiksha Hi Surakhya</Link>
-              <Link href="/?campTab=campaign-blood#campaigns" onClick={() => setMobileMenuOpen(false)}>Blood Donation</Link>
-              <Link href="/?campTab=campaign-organ#campaigns" onClick={() => setMobileMenuOpen(false)}>Organ Donation</Link>
-              <Link href="/?campTab=campaign-plantation#campaigns" onClick={() => setMobileMenuOpen(false)}>Plantation Awareness</Link>
-              <Link href="/?campTab=campaign-welfare#campaigns" onClick={() => setMobileMenuOpen(false)}>Social Welfare</Link>
+              <Link href="/?campTab=campaign-shiksha#campaigns" onClick={() => handleTabClick('campaigns', 'campaign-shiksha')}>Shiksha Hi Surakhya</Link>
+              <Link href="/?campTab=campaign-blood#campaigns" onClick={() => handleTabClick('campaigns', 'campaign-blood')}>Blood Donation</Link>
+              <Link href="/?campTab=campaign-organ#campaigns" onClick={() => handleTabClick('campaigns', 'campaign-organ')}>Organ Donation</Link>
+              <Link href="/?campTab=campaign-plantation#campaigns" onClick={() => handleTabClick('campaigns', 'campaign-plantation')}>Plantation Awareness</Link>
+              <Link href="/?campTab=campaign-welfare#campaigns" onClick={() => handleTabClick('campaigns', 'campaign-welfare')}>Social Welfare</Link>
             </div>
           </div>
 

@@ -40,10 +40,18 @@ const Campaigns = ({ initialCampaigns }) => {
     checkUrlParams();
     window.addEventListener('hashchange', checkUrlParams);
     window.addEventListener('popstate', checkUrlParams);
+
+    const handleCustomTabChange = (e) => {
+      if (e.detail?.type === 'campaigns' && campaigns.some(c => c.id === e.detail.tabId)) {
+        setActiveTab(e.detail.tabId);
+      }
+    };
+    window.addEventListener('changeTab', handleCustomTabChange);
     
     return () => {
       window.removeEventListener('hashchange', checkUrlParams);
       window.removeEventListener('popstate', checkUrlParams);
+      window.removeEventListener('changeTab', handleCustomTabChange);
     };
   }, [campaigns]);
 

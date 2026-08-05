@@ -37,10 +37,18 @@ const OurWork = ({ initialWork }) => {
     // Listen for next.js navigation or hash changes
     window.addEventListener('hashchange', checkUrlParams);
     window.addEventListener('popstate', checkUrlParams);
+
+    const handleCustomTabChange = (e) => {
+      if (e.detail?.type === 'work' && workList.some(w => w.id === e.detail.tabId)) {
+        setActiveTab(e.detail.tabId);
+      }
+    };
+    window.addEventListener('changeTab', handleCustomTabChange);
     
     return () => {
       window.removeEventListener('hashchange', checkUrlParams);
       window.removeEventListener('popstate', checkUrlParams);
+      window.removeEventListener('changeTab', handleCustomTabChange);
     };
   }, [workList]);
 
