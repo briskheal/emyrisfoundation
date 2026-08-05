@@ -128,14 +128,19 @@ const WorkDetailEditor = ({ token }) => {
   if (loading || !detail) return <div style={{ color: 'white', padding: '20px' }}>Loading...</div>;
 
   return (
-    <div className="admin-card">
-      <div className="admin-card-header">
-        <h2>Dedicated Page Details</h2>
+    <div style={{ background: 'rgba(255,255,255,0.05)', padding: '20px', borderRadius: '12px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <h3 style={{ color: 'white' }}><i className="fa-solid fa-file-lines" style={{ color: '#15F5BA' }}></i> Work Pillar Page Editor</h3>
       </div>
-      <div className="admin-card-body">
-        <div className="form-group mb-4">
-          <label>Select Pillar to Edit:</label>
-          <select className="form-control" value={activeWork} onChange={e => setActiveWork(e.target.value)}>
+      
+      <div style={{ background: 'rgba(0,0,0,0.2)', padding: '20px', borderRadius: '8px', marginBottom: '20px' }}>
+        <div style={{ marginBottom: '15px' }}>
+          <label style={{ display: 'block', color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem', marginBottom: '8px' }}>Select Pillar to Edit:</label>
+          <select 
+            value={activeWork} 
+            onChange={e => setActiveWork(e.target.value)}
+            style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.2)', background: '#222', color: 'white' }}
+          >
             <option value="work-education">Education</option>
             <option value="work-health">Healthcare</option>
             <option value="work-livelihood">Livelihood</option>
@@ -144,24 +149,25 @@ const WorkDetailEditor = ({ token }) => {
           </select>
         </div>
 
-        <div className="form-group mb-4">
-          <label>Banner Title</label>
-          <input type="text" className="form-control" value={detail.bannerTitle || ''} onChange={e => setDetail({...detail, bannerTitle: e.target.value})} />
-        </div>
-        
-        <div className="form-group mb-4">
-          <label>Why Title</label>
-          <input type="text" className="form-control" value={detail.whyTitle || ''} onChange={e => setDetail({...detail, whyTitle: e.target.value})} />
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
+          <div>
+            <label style={{ display: 'block', color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', marginBottom: '5px' }}>Banner Title</label>
+            <input type="text" value={detail.bannerTitle || ''} onChange={e => setDetail({...detail, bannerTitle: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: 'white' }} />
+          </div>
+          <div>
+            <label style={{ display: 'block', color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', marginBottom: '5px' }}>Why Title</label>
+            <input type="text" value={detail.whyTitle || ''} onChange={e => setDetail({...detail, whyTitle: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: 'white' }} />
+          </div>
         </div>
 
-        <div className="form-group mb-4">
-          <label>Why Text (RTE / SDGs)</label>
-          <textarea className="form-control" rows="5" value={detail.whyText || ''} onChange={e => setDetail({...detail, whyText: e.target.value})}></textarea>
+        <div style={{ marginBottom: '25px' }}>
+          <label style={{ display: 'block', color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', marginBottom: '5px' }}>Why Text (RTE / SDGs)</label>
+          <textarea rows="5" value={detail.whyText || ''} onChange={e => setDetail({...detail, whyText: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: 'white' }}></textarea>
         </div>
 
         {/* Impact Photos Preview */}
-        <div className="form-group mb-4">
-          <label style={{ color: '#15F5BA' }}>Impact Photos Gallery</label>
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px', marginBottom: '20px' }}>
+          <h4 style={{ color: '#15F5BA', marginBottom: '15px' }}>Impact Photos Gallery</h4>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', marginTop: '10px' }}>
             {(detail.impactMedia || []).map((photo, idx) => (
               <div key={idx} style={{ position: 'relative', width: '150px' }}>
