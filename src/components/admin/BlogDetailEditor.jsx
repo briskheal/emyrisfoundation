@@ -221,6 +221,16 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
         </button>
         {saved && <span style={{ marginLeft: '15px', color: 'green', fontWeight: 'bold' }}>Saved Successfully!</span>}
       </div>
+
+      {cropSrc && (
+        <ImageCropModal 
+          imageSrc={cropSrc}
+          fileName={cropFileName}
+          aspect={3 / 1}
+          onCropComplete={handleCropComplete}
+          onCancel={handleCropCancel}
+        />
+      )}
     </div>
   );
 };
