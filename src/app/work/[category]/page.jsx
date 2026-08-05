@@ -6,6 +6,8 @@ import Footer from '../../../components/Footer';
 import { CorporateProvider } from '../../../context/CorporateContext';
 import { ModalProvider } from '../../../context/ModalContext';
 import Modals from '../../../components/Modals';
+import MediaScroller from '../../../components/MediaScroller';
+import InteractivePhotoCard from '../../../components/InteractivePhotoCard';
 
 export const dynamic = 'force-dynamic';
 
@@ -133,13 +135,13 @@ export default async function WorkCategoryPage({ params }) {
                 <h2 className="section-title" style={{ fontSize: '1.8rem' }}>Impact {currentFy}</h2>
                 <div className="title-underline"></div>
               </div>
-              <div className="impact-gallery">
-                {data.impactMedia.map((media, idx) => (
-                  <div key={idx} className="impact-photo-card">
-                    <img src={media.url} alt={`Impact ${idx}`} className="img-fluid" style={{ borderRadius: '8px' }} />
-                  </div>
-                ))}
-              </div>
+              <MediaScroller>
+                <div className="impact-gallery" style={{ display: 'flex', gap: '20px', minWidth: 'max-content' }}>
+                  {data.impactMedia.map((photo, idx) => (
+                    <InteractivePhotoCard key={idx} photo={photo} />
+                  ))}
+                </div>
+              </MediaScroller>
             </div>
           </section>
         )}
