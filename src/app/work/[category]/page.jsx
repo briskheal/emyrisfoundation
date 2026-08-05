@@ -34,7 +34,7 @@ export default async function WorkCategoryPage({ params }) {
     <CorporateProvider initialData={corporateData}>
       <ModalProvider>
         <Header />
-        <main id="app-content">
+        <main id="app-content" style={{ paddingTop: '80px' }}>
         {/* HERO BANNER */}
         <section className="work-detail-hero" style={{ 
           backgroundImage: `url('${data.bannerImg || `/Emyris Foundation Photos/emyris_hero_${category}.webp`}')`,

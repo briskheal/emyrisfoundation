@@ -59,7 +59,7 @@ export default async function CampaignPage({ params }) {
     <CorporateProvider initialData={corporateData}>
       <ModalProvider>
         <Header />
-        <main id="app-content" style={{ background: '#0b192c', minHeight: '100vh', color: '#fff' }}>
+        <main id="app-content" style={{ background: '#0b192c', minHeight: '100vh', color: '#fff', paddingTop: '80px' }}>
           {/* HERO BANNER */}
           <section className="work-detail-hero" style={{ 
             backgroundImage: `url('${data.bannerImg || heroBg}')`, 
