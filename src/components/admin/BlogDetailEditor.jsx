@@ -15,6 +15,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
   const [saving, setSaving] = useState(false);
   const [uploadStatus, setUploadStatus] = useState(''); // '' | 'compressing' | 'uploading'
   const [saved, setSaved] = useState(false);
+  const [debugMsg, setDebugMsg] = useState('');
   
   // Crop state
   const [cropSrc, setCropSrc] = useState(null);
@@ -36,10 +37,13 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
 
   const handleFileSelect = (e) => {
     try {
+      setDebugMsg('handleFileSelect started');
       const file = e.target.files[0];
       if (!file) {
+        setDebugMsg('No file selected');
         return;
       }
+      setDebugMsg('File selected: ' + file.name + ' (' + file.size + ' bytes)');
 
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
@@ -47,14 +51,18 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
       
       const reader = new FileReader();
       reader.onload = () => {
+        setDebugMsg(prev => prev + ' | FileReader onload fired. Data URL length: ' + reader.result.length);
         setCropSrc(reader.result);
         setCropFileName(file.name);
       };
       reader.onerror = (err) => {
+        setDebugMsg(prev => prev + ' | FileReader error: ' + err);
         alert('FileReader error: ' + err);
       };
       reader.readAsDataURL(file);
+      setDebugMsg(prev => prev + ' | readAsDataURL called');
     } catch (err) {
+      setDebugMsg('Error in handleFileSelect: ' + err.message);
       alert('Error in handleFileSelect: ' + err.message);
     }
   };
@@ -191,6 +199,7 @@ const BlogDetailEditor = ({ blog, token, onBack }) => {
             </div>
           )}
           <br/>
+          {debugMsg && <div style={{ background: '#333', color: 'yellow', padding: '10px', marginTop: '10px', fontSize: '12px' }}>DEBUG: {debugMsg}</div>}
           <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFileSelect} disabled={uploadStatus !== ''} />
           {uploadStatus === 'compressing' && <span style={{ marginLeft: '10px', color: 'var(--primary-orange)' }}>Compressing image (this is fast)...</span>}
           {uploadStatus === 'uploading' && <span style={{ marginLeft: '10px', color: '#15F5BA' }}>Uploading to server...</span>}
