@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { useModals } from '../context/ModalContext';
 
 // Helper function to extract YouTube ID
@@ -144,7 +145,7 @@ const ActivityGallery = () => {
                   >
                     <div className="gallery-card-media">
                       {item.type === 'photo' ? (
-                        <img src={item.url} alt={item.title} loading="lazy" />
+                        <Image src={item.url} alt={item.title} fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 30vw" />
                       ) : (
                         <div className="netflix-video-wrapper">
                           <iframe 

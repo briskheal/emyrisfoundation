@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 const AboutUs = () => {
   const [about, setAbout] = useState({});
@@ -90,9 +91,11 @@ const AboutUs = () => {
               <div key={d.id} className="profile-card director-card glass-card">
                 <div className="profile-header">
                   <div className="profile-avatar">
-                    {d.img ? (
-                      <img src={d.img} className="profile-avatar-img" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}} alt={d.name} />
-                    ) : (
+                      {d.img ? (
+                        <div style={{ position: 'relative', width: '100%', height: '100%', borderRadius: '50%', overflow: 'hidden' }}>
+                          <Image src={d.img} className="profile-avatar-img" fill style={{ objectFit: 'cover' }} alt={d.name} />
+                        </div>
+                      ) : (
                       <i className="fa-solid fa-user-tie"></i>
                     )}
                   </div>
@@ -117,9 +120,11 @@ const AboutUs = () => {
               <div key={m.id} className="profile-card mentor-card glass-card">
                 <div className="profile-header">
                   <div className="profile-avatar mentor-avatar">
-                    {m.img ? (
-                      <img src={m.img} className="profile-avatar-img" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}} alt={m.name} />
-                    ) : (
+                      {m.img ? (
+                        <div style={{ position: 'relative', width: '100%', height: '100%', borderRadius: '50%', overflow: 'hidden' }}>
+                          <Image src={m.img} className="profile-avatar-img" fill style={{ objectFit: 'cover' }} alt={m.name} />
+                        </div>
+                      ) : (
                       <i className="fa-solid fa-user-graduate"></i>
                     )}
                   </div>

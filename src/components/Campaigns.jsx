@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useModals } from '../context/ModalContext';
 import fallbackCampaigns from '../data/campaigns.json';
 
@@ -130,7 +131,7 @@ const Campaigns = ({ initialCampaigns }) => {
                   </div>
                   
                   <div className="panel-visual">
-                    <img src={imageSrc} alt={c.title} className="panel-img" />
+                    <Image src={imageSrc} alt={c.title} className="panel-img" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 50vw" />
                     <div className={`panel-stat-bubble ${tagClass}`}>
                       <h4>Active</h4>
                       <p>{c.tag}</p>

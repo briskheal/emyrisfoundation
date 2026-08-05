@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Blog } from '../../lib/db';
 import { getCorporateData } from '../../lib/data-fetcher';
 import { CorporateProvider } from '../../context/CorporateContext';
@@ -46,11 +47,13 @@ export default async function BlogListingPage() {
                   onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
                   onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                   >
-                    <div style={{ width: '100%', height: '220px', overflow: 'hidden' }}>
-                      <img 
+                    <div style={{ position: 'relative', width: '100%', height: '220px', overflow: 'hidden' }}>
+                      <Image 
                         src={blog.bannerImg || '/placeholder.webp'} 
                         alt={blog.title} 
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        fill
+                        style={{ objectFit: 'cover' }}
+                        sizes="(max-width: 768px) 100vw, 33vw"
                       />
                     </div>
                     <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>

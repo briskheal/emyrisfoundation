@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import fallbackWork from '../data/work.json';
 
 const OurWork = ({ initialWork }) => {
@@ -118,8 +119,8 @@ const OurWork = ({ initialWork }) => {
                     </div>
 
                   </div>
-                  <div className="panel-visual">
-                    <img src={w.img} alt={w.title} className="panel-img" />
+                  <div className="panel-visual" style={{ position: 'relative', minHeight: '300px' }}>
+                    <Image src={w.img} alt={w.title} className="panel-img" fill style={{ objectFit: 'cover' }} sizes="(max-width: 768px) 100vw, 50vw" />
                     <div className={`panel-stat-bubble ${colorMap[w.id] || ''}`}>
                       <h4>{w.statVal}</h4>
                       <p>{w.statLbl}</p>
