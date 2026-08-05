@@ -70,22 +70,14 @@ export default async function CampaignPage({ params }) {
             backgroundPosition: 'center',
             position: 'relative' 
           }}>
-            <div className="work-hero-overlay" style={{ padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', background: 'transparent' }}>
-              <div className="container text-center">
-                <span className="section-subtitle" style={{ color: 'var(--primary-orange)', display: 'inline-block', marginBottom: '8px', fontSize: '1rem', letterSpacing: '1.5px', textTransform: 'uppercase', fontWeight: '700', textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
-                  {data.motto}
-                </span>
-                <h1 className="hero-title" style={{ fontSize: '2.8rem', color: '#ffffff', marginBottom: '15px', fontWeight: '800', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
-                  {data.title}
-                </h1>
-                {data.bannerMsg && (
-                  <p style={{ maxWidth: '750px', margin: '0 auto', fontSize: '1.15rem', color: 'rgba(255,255,255,0.9)', lineHeight: '1.6' }}>
-                    {data.bannerMsg}
-                  </p>
-                )}
-              </div>
-            </div>
           </section>
+
+          {/* SCROLLING TITLE TICKER */}
+          <div className="ticker-wrapper">
+            <div className="ticker-text">
+              <span className="dot">•</span> {data.motto} - {data.title} {data.bannerMsg ? ` - ${data.bannerMsg}` : ''} <span className="dot">•</span> {data.motto} - {data.title} {data.bannerMsg ? ` - ${data.bannerMsg}` : ''} <span className="dot">•</span>
+            </div>
+          </div>
 
           {/* MAIN NARRATIVE + LIVE REGISTRATION FORM (SIDE-BY-SIDE) */}
           <section style={{ padding: '40px 0 30px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>

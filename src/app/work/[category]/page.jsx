@@ -45,12 +45,14 @@ export default async function WorkCategoryPage({ params }) {
           backgroundPosition: 'center',
           position: 'relative'
         }}>
-          <div className="work-hero-overlay" style={{ padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', background: 'transparent' }}>
-            <div className="container text-center">
-              <h1 className="hero-title" style={{ fontSize: '2.8rem', color: '#ffffff', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>{data.bannerTitle}</h1>
-            </div>
-          </div>
         </section>
+
+        {/* SCROLLING TITLE TICKER */}
+        <div className="ticker-wrapper">
+          <div className="ticker-text">
+            <span className="dot">•</span> {data.bannerTitle} <span className="dot">•</span> {data.bannerTitle} <span className="dot">•</span>
+          </div>
+        </div>
 
         {/* WHY SECTION */}
         <section className="work-detail-why" style={{ padding: '20px 0' }}>
