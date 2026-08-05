@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { compressImage } from '../../lib/imageCompressor';
 import ImageCropperModal from './ImageCropperModal';
+import ImageCropModal from './ImageCropModal';
 
 export const getYoutubeEmbedUrl = (url) => {
   if (!url) return '';
@@ -18,7 +19,16 @@ const CampaignDetailEditor = ({ token }) => {
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [cropImageSrc, setCropImageSrc] = useState(null);
+  const [saving, setSaving] = useState(false);
+  
+  // Banner crop state
+  const [cropSrc, setCropSrc] = useState(null);
+  const [cropFileName, setCropFileName] = useState('');
+  const bannerInputRef = useRef(null);
+  const [bannerUploadStatus, setBannerUploadStatus] = useState('');
+
+  // Gallery crop state
+  const [galleryCropImageSrc, setGalleryCropImageSrc] = useState(null);
   const fileInputRef = useRef(null);
   
   const [newVideoUrl, setNewVideoUrl] = useState('');
@@ -47,6 +57,7 @@ const CampaignDetailEditor = ({ token }) => {
   };
 
   const handleSave = async () => {
+    setSaving(true);
     try {
       const res = await fetch(`/api/campaign-details/${activeCampaign}`, {
         method: 'PUT',
@@ -62,6 +73,53 @@ const CampaignDetailEditor = ({ token }) => {
       }
     } catch (err) {
       console.error(err);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleBannerSelect = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    if (bannerInputRef.current) bannerInputRef.current.value = '';
+    
+    const reader = new FileReader();
+    reader.onload = () => {
+      setCropSrc(reader.result);
+      setCropFileName(file.name);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleBannerCropComplete = async (croppedFile) => {
+    setCropSrc(null);
+    setBannerUploadStatus('compressing');
+    
+    try {
+      const compressedFile = await compressImage(croppedFile, 1200, 0.85);
+      
+      setBannerUploadStatus('uploading');
+      const formData = new FormData();
+      formData.append('file', compressedFile);
+      
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: formData
+      });
+      
+      if (!res.ok) throw new Error('Upload failed');
+      const data = await res.json();
+      
+      if (data.url) {
+        setDetail({...detail, bannerImg: data.url});
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error uploading banner');
+    } finally {
+      setBannerUploadStatus('');
     }
   };
 
@@ -88,14 +146,14 @@ const CampaignDetailEditor = ({ token }) => {
 
     // Load file to Cropper
     const imageUrl = URL.createObjectURL(rawFile);
-    setCropImageSrc(imageUrl);
+    setGalleryCropImageSrc(imageUrl);
     
     // Reset file input so same file can be selected again
     e.target.value = null;
   };
 
   const handleCropDone = async (croppedFile) => {
-    setCropImageSrc(null);
+    setGalleryCropImageSrc(null);
     setUploading(true);
     
     try {
@@ -181,7 +239,24 @@ const CampaignDetailEditor = ({ token }) => {
           </select>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
+        <div className="form-group mb-4" style={{ background: 'rgba(255,255,255,0.05)', padding: '15px', borderRadius: '8px', marginBottom: '15px' }}>
+            <label style={{ color: '#15F5BA', fontWeight: 'bold' }}>Page Banner Image (3:1 Ratio)</label>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '10px' }}>
+              <input type="file" accept="image/*" ref={bannerInputRef} onChange={handleBannerSelect} disabled={bannerUploadStatus !== ''} style={{ color: 'white' }} />
+              <button 
+                onClick={handleSave} 
+                disabled={saving || !detail.bannerImg} 
+                style={{ padding: '6px 12px', background: 'var(--primary-orange)', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 'bold' }}
+              >
+                {saving ? 'Saving...' : 'Save Banner'}
+              </button>
+            </div>
+            {bannerUploadStatus === 'compressing' && <span style={{ marginLeft: '10px', color: 'var(--primary-orange)' }}>Compressing image (this is fast)...</span>}
+            {bannerUploadStatus === 'uploading' && <span style={{ marginLeft: '10px', color: '#15F5BA' }}>Uploading to server...</span>}
+            {bannerUploadStatus === '' && detail.bannerImg && <span style={{ marginLeft: '10px', color: '#15F5BA', fontWeight: 'bold', display: 'block', marginTop: '5px' }}>✓ Image loaded! Click "Save Banner" to keep it.</span>}
+          </div>
+  
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
           <div>
             <label style={{ display: 'block', color: 'rgba(255,255,255,0.7)', fontSize: '0.8rem', marginBottom: '5px' }}>Page Title</label>
             <input type="text" value={detail.title || ''} onChange={e => setDetail({...detail, title: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.2)', background: 'transparent', color: 'white' }} />
@@ -347,18 +422,28 @@ const CampaignDetailEditor = ({ token }) => {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginTop: '30px' }}>
-          <button onClick={handleSave} style={{ padding: '10px 24px', background: '#15F5BA', color: '#000', fontWeight: 'bold', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
-            <i className="fa-solid fa-save"></i> Save Page Changes
+          <button onClick={handleSave} disabled={saving} style={{ padding: '10px 24px', background: '#15F5BA', color: '#000', fontWeight: 'bold', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>
+            <i className="fa-solid fa-save"></i> {saving ? 'Saving...' : 'Save Page Changes'}
           </button>
           {saved && <span style={{ color: '#15F5BA', fontSize: '0.9rem' }}><i className="fa-solid fa-check"></i> Successfully updated live site!</span>}
         </div>
       </div>
       
-      {cropImageSrc && (
+      {cropSrc && (
+        <ImageCropModal 
+          imageSrc={cropSrc}
+          fileName={cropFileName}
+          aspect={3 / 1}
+          onCropComplete={handleBannerCropComplete}
+          onCancel={() => setCropSrc(null)}
+        />
+      )}
+
+      {galleryCropImageSrc && (
         <ImageCropperModal 
-          imageSrc={cropImageSrc} 
+          imageSrc={galleryCropImageSrc} 
           onCropDone={handleCropDone} 
-          onCancel={() => setCropImageSrc(null)} 
+          onCancel={() => setGalleryCropImageSrc(null)} 
           aspectRatio={1.5}
         />
       )}

@@ -36,10 +36,17 @@ export default async function WorkCategoryPage({ params }) {
         <Header />
         <main id="app-content">
         {/* HERO BANNER */}
-        <section className="work-detail-hero" style={{ backgroundImage: `url('/Emyris Foundation Photos/emyris_hero_${category}.webp')` }}>
-          <div className="work-hero-overlay">
+        <section className="work-detail-hero" style={{ 
+          backgroundImage: `url('${data.bannerImg || `/Emyris Foundation Photos/emyris_hero_${category}.webp`}')`,
+          aspectRatio: '3 / 1',
+          width: '100%',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          position: 'relative'
+        }}>
+          <div className="work-hero-overlay" style={{ padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', background: 'transparent' }}>
             <div className="container text-center">
-              <h1 className="hero-title">{data.bannerTitle}</h1>
+              <h1 className="hero-title" style={{ fontSize: '2.8rem', color: '#ffffff', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>{data.bannerTitle}</h1>
             </div>
           </div>
         </section>

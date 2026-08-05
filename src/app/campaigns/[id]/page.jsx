@@ -61,13 +61,20 @@ export default async function CampaignPage({ params }) {
         <Header />
         <main id="app-content" style={{ background: '#0b192c', minHeight: '100vh', color: '#fff' }}>
           {/* HERO BANNER */}
-          <section className="work-detail-hero" style={{ backgroundImage: `url('${heroBg}')`, position: 'relative' }}>
-            <div className="work-hero-overlay" style={{ background: 'linear-gradient(180deg, rgba(11,25,44,0.65) 0%, rgba(11,25,44,0.95) 100%)', padding: '120px 0 40px', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '320px' }}>
+          <section className="work-detail-hero" style={{ 
+            backgroundImage: `url('${data.bannerImg || heroBg}')`, 
+            aspectRatio: '3 / 1',
+            width: '100%',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            position: 'relative' 
+          }}>
+            <div className="work-hero-overlay" style={{ padding: '0', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', background: 'transparent' }}>
               <div className="container text-center">
-                <span className="section-subtitle" style={{ color: 'var(--primary-orange)', display: 'inline-block', marginBottom: '8px', fontSize: '1rem', letterSpacing: '1.5px', textTransform: 'uppercase', fontWeight: '700' }}>
+                <span className="section-subtitle" style={{ color: 'var(--primary-orange)', display: 'inline-block', marginBottom: '8px', fontSize: '1rem', letterSpacing: '1.5px', textTransform: 'uppercase', fontWeight: '700', textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
                   {data.motto}
                 </span>
-                <h1 className="hero-title" style={{ fontSize: '2.8rem', color: '#ffffff', marginBottom: '15px', fontWeight: '800' }}>
+                <h1 className="hero-title" style={{ fontSize: '2.8rem', color: '#ffffff', marginBottom: '15px', fontWeight: '800', textShadow: '2px 2px 4px rgba(0,0,0,0.7)' }}>
                   {data.title}
                 </h1>
                 {data.bannerMsg && (
