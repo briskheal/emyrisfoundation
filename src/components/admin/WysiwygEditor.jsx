@@ -28,6 +28,13 @@ const WysiwygEditor = ({ value, onChange }) => {
     onChange(e.target.value);
   };
 
+  const handlePaste = (e) => {
+    if (mode !== 'visual') return;
+    e.preventDefault();
+    const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+    document.execCommand('insertText', false, text);
+  };
+
   const execCmd = (cmd, arg = null) => {
     if (mode !== 'visual') return;
     document.execCommand(cmd, false, arg);
@@ -150,6 +157,7 @@ const WysiwygEditor = ({ value, onChange }) => {
           contentEditable
           onInput={handleVisualInput}
           onBlur={handleVisualInput}
+          onPaste={handlePaste}
           style={{
             minHeight: '350px',
             padding: '20px',
