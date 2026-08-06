@@ -165,10 +165,17 @@ const PublicationManager = ({ token }) => {
             <label style={{ display: 'block', color: 'rgba(255,255,255,0.6)', fontSize: '0.82rem', marginBottom: '5px' }}>PDF File Upload</label>
             <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
               <label style={{ padding: '10px 16px', background: 'rgba(255,255,255,0.1)', borderRadius: '8px', color: 'white', cursor: 'pointer', fontSize: '0.9rem' }}>
-                <i className="fa-solid fa-upload"></i> {uploading ? 'Uploading...' : 'Upload PDF'}
+                <i className="fa-solid fa-upload"></i> {uploading ? 'Uploading...' : (formData.pdfLink ? 'Replace PDF' : 'Upload PDF')}
                 <input type="file" accept=".pdf" onChange={handleUpload} style={{ display: 'none' }} />
               </label>
-              {formData.pdfLink && <span style={{ color: '#4ade80', fontSize: '0.85rem' }}><i className="fa-solid fa-circle-check"></i> File attached</span>}
+              {formData.pdfLink && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ color: '#4ade80', fontSize: '0.85rem' }}><i className="fa-solid fa-circle-check"></i> File attached</span>
+                  <button type="button" onClick={() => setFormData({...formData, pdfLink: ''})} style={{ background: 'transparent', border: 'none', color: '#ef4444', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <i className="fa-solid fa-xmark"></i> Remove
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
