@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ConflictBanner, LastEditedBadge } from '../../lib/useConflictSave';
 
 const PublicationManager = ({ token }) => {
+  const formRef = useRef(null);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [conflictInfo, setConflictInfo] = useState(null);
@@ -96,7 +97,15 @@ const PublicationManager = ({ token }) => {
 
   const editItem = (item) => {
     setEditing(item.id);
-    setFormData(item);
+    setFormData({
+      id: item.id || '',
+      title: item.title || '',
+      year: item.year || '',
+      pdfLink: item.pdfLink || ''
+    });
+    setTimeout(() => {
+      formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
   };
 
   const cancelEdit = () => {
@@ -131,7 +140,7 @@ const PublicationManager = ({ token }) => {
         ))}
       </div>
 
-      <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px dashed rgba(255,255,255,0.2)', borderRadius: '12px', padding: '24px' }}>
+      <div ref={formRef} style={{ background: 'rgba(255,255,255,0.02)', border: '1px dashed rgba(255,255,255,0.2)', borderRadius: '12px', padding: '24px' }}>
         <h4 style={{ color: 'white', marginTop: 0 }}>{editing ? 'Edit Publication' : 'Add New Publication'}</h4>
         <form onSubmit={handleSave} style={{ display: 'grid', gap: '16px' }}>
           
