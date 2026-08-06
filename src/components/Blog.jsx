@@ -19,13 +19,13 @@ const Blog = ({ initialBlogs = [] }) => {
               const strippedContent = post.content ? post.content.replace(/<[^>]+>/g, '') : '';
               const excerpt = strippedContent.length > 100 ? strippedContent.substring(0, 100) + '...' : strippedContent;
               return (
-                <div key={post.id} className="glass-card" style={{ flex: '0 0 320px', scrollSnapAlign: 'start', background: 'rgba(30, 62, 98, 0.4)', borderColor: 'rgba(255,255,255,0.1)', padding: '25px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                  <div style={{ color: '#15F5BA', fontSize: '0.85rem', fontWeight: 'bold' }}>
+                <div key={post.id} className="glass-card" style={{ flex: '0 0 320px', scrollSnapAlign: 'start', background: 'rgba(30, 62, 98, 0.4)', borderColor: 'rgba(255,255,255,0.1)', padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <div style={{ color: '#15F5BA', fontSize: '0.8rem', fontWeight: 'bold' }}>
                     {new Date(post.publishedAt).toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')}
                   </div>
-                  <h3 style={{ color: '#fff', fontSize: '1.3rem', margin: 0 }}>{post.title}</h3>
-                  <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', lineHeight: '1.6', margin: 0, flexGrow: 1 }}>{excerpt}</p>
-                  <Link href={`/blog/${post.id}`} style={{ color: '#f97316', fontWeight: 'bold', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                  <h3 style={{ color: '#fff', fontSize: '1.1rem', lineHeight: '1.4', margin: 0 }}>{post.title}</h3>
+                  <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', lineHeight: '1.5', margin: 0, flexGrow: 1 }}>{excerpt}</p>
+                  <Link href={`/blog/${post.id}`} style={{ color: '#f97316', fontSize: '0.9rem', fontWeight: 'bold', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
                     Read More <i className="fa-solid fa-arrow-right"></i>
                   </Link>
                 </div>
