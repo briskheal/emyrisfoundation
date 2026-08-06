@@ -19,7 +19,7 @@ const Blog = ({ initialBlogs = [] }) => {
               const strippedContent = post.content ? post.content.replace(/<[^>]+>/g, '') : '';
               const excerpt = strippedContent.length > 100 ? strippedContent.substring(0, 100) + '...' : strippedContent;
               return (
-                <div key={post.id} className="glass-card" style={{ padding: '25px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                <div key={post.id} className="glass-card" style={{ background: 'rgba(30, 62, 98, 0.4)', borderColor: 'rgba(255,255,255,0.1)', padding: '25px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
                   <div style={{ color: '#15F5BA', fontSize: '0.85rem', fontWeight: 'bold' }}>
                     {new Date(post.publishedAt).toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')}
                   </div>
