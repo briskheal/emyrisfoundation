@@ -35,7 +35,13 @@ const PublicationManager = ({ token }) => {
     const form = new FormData();
     form.append('file', file);
     try {
-      const res = await fetch('/api/upload', { method: 'POST', body: form });
+      const res = await fetch('/api/upload', { 
+        method: 'POST', 
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: form 
+      });
       const data = await res.json();
       if (data.success) {
         setFormData(prev => ({ ...prev, pdfLink: data.url }));
