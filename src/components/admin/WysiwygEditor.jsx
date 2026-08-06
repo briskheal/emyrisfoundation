@@ -13,6 +13,11 @@ const WysiwygEditor = ({ value, onChange }) => {
     }
   }, [mode, value]);
 
+  useEffect(() => {
+    // Force Chrome/Firefox to use <p> instead of <div> on Enter key
+    document.execCommand('defaultParagraphSeparator', false, 'p');
+  }, []);
+
   const handleVisualInput = () => {
     if (editorRef.current) {
       onChange(editorRef.current.innerHTML);
@@ -79,6 +84,9 @@ const WysiwygEditor = ({ value, onChange }) => {
         </button>
         <button type="button" onClick={() => execCmd('justifyRight')} style={btnStyle} title="Align Right" disabled={mode === 'html'}>
           <i className="fa-solid fa-align-right"></i>
+        </button>
+        <button type="button" onClick={() => execCmd('justifyFull')} style={btnStyle} title="Justify Full" disabled={mode === 'html'}>
+          <i className="fa-solid fa-align-justify"></i>
         </button>
 
         <div style={dividerStyle}></div>
