@@ -11,15 +11,15 @@ const Blog = ({ initialBlogs = [] }) => {
           <div className="title-underline"></div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px', marginTop: '40px' }}>
+        <div style={{ display: 'flex', flexWrap: 'nowrap', overflowX: 'auto', gap: '30px', marginTop: '40px', paddingBottom: '20px', scrollSnapType: 'x mandatory' }}>
           {initialBlogs.length === 0 ? (
-            <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.7)', gridColumn: '1 / -1' }}>No blogs published yet. Check back soon!</p>
+            <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.7)', width: '100%' }}>No blogs published yet. Check back soon!</p>
           ) : (
-            initialBlogs.slice(0, 3).map(post => {
+            initialBlogs.map(post => {
               const strippedContent = post.content ? post.content.replace(/<[^>]+>/g, '') : '';
               const excerpt = strippedContent.length > 100 ? strippedContent.substring(0, 100) + '...' : strippedContent;
               return (
-                <div key={post.id} className="glass-card" style={{ background: 'rgba(30, 62, 98, 0.4)', borderColor: 'rgba(255,255,255,0.1)', padding: '25px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                <div key={post.id} className="glass-card" style={{ flex: '0 0 320px', scrollSnapAlign: 'start', background: 'rgba(30, 62, 98, 0.4)', borderColor: 'rgba(255,255,255,0.1)', padding: '25px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
                   <div style={{ color: '#15F5BA', fontSize: '0.85rem', fontWeight: 'bold' }}>
                     {new Date(post.publishedAt).toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')}
                   </div>
