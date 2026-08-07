@@ -3,12 +3,12 @@ import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 
 export async function GET(req) {
+  const careerUser = process.env.ZOHO_CAREER_USER || '';
+  const mainUser = process.env.ZOHO_USER || '';
   return NextResponse.json({
-    has_ZOHO_USER: !!process.env.ZOHO_USER,
-    has_ZOHO_CAREER_USER: !!process.env.ZOHO_CAREER_USER,
-    has_ZOHO_CARRER_USER: !!process.env.ZOHO_CARRER_USER,
-    has_ZOHO_CAREERS_USER: !!process.env.ZOHO_CAREERS_USER,
-    has_CAREER_USER: !!process.env.CAREER_USER,
-    raw_keys: Object.keys(process.env).filter(k => k.includes('ZOHO') || k.includes('CAREER'))
+    ZOHO_CAREER_USER_is_career: careerUser.toLowerCase().includes('career'),
+    ZOHO_CAREER_USER_is_contact: careerUser.toLowerCase().includes('contact'),
+    ZOHO_USER_is_career: mainUser.toLowerCase().includes('career'),
+    ZOHO_USER_is_contact: mainUser.toLowerCase().includes('contact'),
   });
 }
