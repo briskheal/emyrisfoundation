@@ -67,11 +67,9 @@ export async function sendContactEmail({ firstName, lastName, email, phone, subj
 export async function sendCareerEmail({ type, name, email, phone, position, details, attachment }) {
   const typeLabel = { job: 'Job Application', internship: 'Internship Application', volunteer: 'Volunteer Registration' }[type] || type;
   
-  // 1. Send to Admin (CC contact@ in case career@ is an invalid alias)
   const mailOptions = {
     from: `"Emyris Foundation" <${process.env.ZOHO_USER}>`,
     to: 'career@emyrisfoundation.com',
-    cc: 'contact@emyrisfoundation.com',
     replyTo: email,
     subject: `[${typeLabel}] ${position || type} - ${name}`,
     html: `
