@@ -19,6 +19,7 @@ import DonorWall from '../components/DonorWall';
 import Footer from '../components/Footer';
 import Modals from '../components/Modals';
 import SmoothScroll from '../components/SmoothScroll';
+import ScrollToTop from '../components/ScrollToTop';
 
 import { getCorporateData, getHeroSlides, getHeroStats, getDonors, getWorkActivities, getCampaigns, getPresenceLocations, getBlogs } from '../lib/data-fetcher';
 
@@ -60,6 +61,7 @@ export default async function Home() {
         </main>
         <Footer />
         <Modals />
+        <ScrollToTop />
       </ModalProvider>
     </CorporateProvider>
   );
