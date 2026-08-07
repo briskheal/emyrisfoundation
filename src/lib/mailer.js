@@ -4,34 +4,27 @@ import nodemailer from 'nodemailer';
  * Zoho Mail SMTP transporter
  * Uses environment variables set in Coolify
  */
-const transporter = nodemailer.createTransport({
-  host: 'smtp.zoho.in',         // Zoho India server (use smtp.zoho.com for global)
-  port: 465,
-  secure: true,                  // SSL
-  auth: {
-    user: process.env.ZOHO_USER, // e.g. contact@emyrisfoundation.com
-    pass: process.env.ZOHO_PASS, // App-specific password from Zoho
-  },
-});
+// Transporters are now initialized dynamically inside each function
 
 /**
  * Secondary Zoho Mail SMTP transporter for Career emails
  * Uses ZOHO_CAREER_USER and ZOHO_CAREER_PASS if available
  */
-const careerTransporter = nodemailer.createTransport({
-  host: 'smtp.zoho.in',
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.ZOHO_CAREER_USER || process.env.ZOHO_CARRER_USER || process.env.ZOHO_USER,
-    pass: process.env.ZOHO_CAREER_PASS || process.env.ZOHO_CARRER_PASS || process.env.ZOHO_PASS,
-  },
-});
+// Transporters are now initialized dynamically inside each function
 
 /**
  * Send a contact form email to contact@emyrisfoundation.com
  */
 export async function sendContactEmail({ firstName, lastName, email, phone, subject, message }) {
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.zoho.in',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.ZOHO_USER,
+      pass: process.env.ZOHO_PASS,
+    },
+  });
   // 1. Send to Admin
   const adminPromise = transporter.sendMail({
     from: `"Emyris Foundation" <${process.env.ZOHO_USER}>`,
@@ -79,6 +72,15 @@ export async function sendContactEmail({ firstName, lastName, email, phone, subj
  * Send a career/internship/volunteer application email to career@emyrisfoundation.com
  */
 export async function sendCareerEmail({ type, name, email, phone, position, details, attachment }) {
+  const careerTransporter = nodemailer.createTransport({
+    host: 'smtp.zoho.in',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.ZOHO_CAREER_USER || process.env.ZOHO_CARRER_USER || process.env.ZOHO_USER,
+      pass: process.env.ZOHO_CAREER_PASS || process.env.ZOHO_CARRER_PASS || process.env.ZOHO_PASS,
+    },
+  });
   const typeLabel = { job: 'Job Application', internship: 'Internship Application', volunteer: 'Volunteer Registration' }[type] || type;
   
   const senderEmail = process.env.ZOHO_CAREER_USER || process.env.ZOHO_CARRER_USER || process.env.ZOHO_USER;
@@ -135,6 +137,15 @@ export async function sendCareerEmail({ type, name, email, phone, position, deta
  * Send a campaign consent registration email
  */
 export async function sendCampaignEmail({ campaign, name, email, phone }) {
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.zoho.in',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.ZOHO_USER,
+      pass: process.env.ZOHO_PASS,
+    },
+  });
   // 1. Send to Admin
   const adminPromise = transporter.sendMail({
     from: `"Emyris Foundation" <${process.env.ZOHO_USER}>`,
