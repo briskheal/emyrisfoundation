@@ -15,7 +15,7 @@ const ApplicationManager = () => {
         if (!res.ok) {
           if (res.status === 401) {
             alert('Your session has expired. Please log in again.');
-            window.location.href = '/admin-login';
+            window.location.href = '/admin';
           }
           throw new Error('Failed to fetch');
         }
