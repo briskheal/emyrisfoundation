@@ -15,6 +15,20 @@ const transporter = nodemailer.createTransport({
 });
 
 /**
+ * Secondary Zoho Mail SMTP transporter for Career emails
+ * Uses ZOHO_CAREER_USER and ZOHO_CAREER_PASS if available
+ */
+const careerTransporter = nodemailer.createTransport({
+  host: 'smtp.zoho.in',
+  port: 465,
+  secure: true,
+  auth: {
+    user: process.env.ZOHO_CAREER_USER || process.env.ZOHO_CARRER_USER || process.env.ZOHO_USER,
+    pass: process.env.ZOHO_CAREER_PASS || process.env.ZOHO_CARRER_PASS || process.env.ZOHO_PASS,
+  },
+});
+
+/**
  * Send a contact form email to contact@emyrisfoundation.com
  */
 export async function sendContactEmail({ firstName, lastName, email, phone, subject, message }) {
@@ -67,8 +81,10 @@ export async function sendContactEmail({ firstName, lastName, email, phone, subj
 export async function sendCareerEmail({ type, name, email, phone, position, details, attachment }) {
   const typeLabel = { job: 'Job Application', internship: 'Internship Application', volunteer: 'Volunteer Registration' }[type] || type;
   
+  const senderEmail = process.env.ZOHO_CAREER_USER || process.env.ZOHO_CARRER_USER || process.env.ZOHO_USER;
+
   const mailOptions = {
-    from: `"Emyris Foundation" <${process.env.ZOHO_USER}>`,
+    from: `"Emyris Careers" <${senderEmail}>`,
     to: 'career@emyrisfoundation.com',
     replyTo: email,
     subject: `[${typeLabel}] ${position || type} - ${name}`,
@@ -94,11 +110,11 @@ export async function sendCareerEmail({ type, name, email, phone, position, deta
     mailOptions.attachments = [attachment];
   }
 
-  const adminPromise = transporter.sendMail(mailOptions);
+  const adminPromise = careerTransporter.sendMail(mailOptions);
 
   // 2. Send Auto-reply to Applicant
-  const userPromise = transporter.sendMail({
-    from: `"Emyris Foundation" <${process.env.ZOHO_USER}>`,
+  const userPromise = careerTransporter.sendMail({
+    from: `"Emyris Careers" <${senderEmail}>`,
     to: email,
     subject: `Your ${typeLabel} has been received!`,
     html: `
