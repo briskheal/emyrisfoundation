@@ -3781,3 +3781,30 @@ textarea.form-control {
 .rich-text-content li {
     margin-bottom: 0.5rem;
 }
+
+/* Mobile Horizontal Scroll for Support Cards */
+@media (max-width: 768px) {
+  .support-cards-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 20px;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -15px; /* Pull to edges */
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .support-cards-grid::-webkit-scrollbar {
+    height: 6px;
+  }
+  .support-cards-grid::-webkit-scrollbar-thumb {
+    background: var(--primary-orange);
+    border-radius: 10px;
+  }
+  .support-item {
+    min-width: 280px;
+    scroll-snap-align: center;
+    flex-shrink: 0;
+  }
+}
+

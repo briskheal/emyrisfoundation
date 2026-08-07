@@ -91,18 +91,20 @@ const SupportModal = () => {
                   <input type="text" className="form-control" required placeholder="John Doe" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
                 </div>
               </div>
-              <div className="form-group">
-                <label>Email Address <span style={{color: 'red'}}>*</span></label>
-                <div className="input-with-icon">
-                  <i className="fa-regular fa-envelope"></i>
-                  <input type="email" className="form-control" required placeholder="john@example.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+              <div className="form-row">
+                <div className="form-group">
+                  <label>Email Address <span style={{color: 'red'}}>*</span></label>
+                  <div className="input-with-icon">
+                    <i className="fa-regular fa-envelope"></i>
+                    <input type="email" className="form-control" required placeholder="john@example.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                  </div>
                 </div>
-              </div>
-              <div className="form-group">
-                <label>Phone Number</label>
-                <div className="input-with-icon">
-                  <i className="fa-solid fa-phone"></i>
-                  <input type="tel" className="form-control" placeholder="+91 XXXXX XXXXX" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
+                <div className="form-group">
+                  <label>Phone Number</label>
+                  <div className="input-with-icon">
+                    <i className="fa-solid fa-phone"></i>
+                    <input type="tel" className="form-control" placeholder="+91 XXXXX XXXXX" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
+                  </div>
                 </div>
               </div>
               <div className="form-group">
