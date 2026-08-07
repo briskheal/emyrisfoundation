@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { HeroSlide } from '../../../lib/db';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'CHANGEME_JWT_SECRET';
 
 const verifyAuth = (req) => {
   const authHeader = req.headers.get('authorization');
@@ -95,3 +95,4 @@ export async function DELETE(req) {
     return NextResponse.json({ error: 'Failed to delete slide' }, { status: 500 });
   }
 }
+

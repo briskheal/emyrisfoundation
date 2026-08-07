@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import path from 'path';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'CHANGEME_JWT_SECRET';
 
 export const dynamic = 'force-dynamic';
 
@@ -96,3 +96,4 @@ export async function DELETE(req) {
     return NextResponse.json({ error: 'Unauthorized or error' }, { status: 401 });
   }
 }
+

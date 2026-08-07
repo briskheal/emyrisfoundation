@@ -3,7 +3,7 @@ import { verifyAuth } from '../../../lib/auth';
 import { PresenceLocation } from '../../../lib/db';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'CHANGEME_JWT_SECRET';
 
 export const dynamic = 'force-dynamic';
 
@@ -82,3 +82,4 @@ export async function DELETE(req) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
+

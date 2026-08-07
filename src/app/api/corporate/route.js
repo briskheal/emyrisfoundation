@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import path from 'path';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'CHANGEME_JWT_SECRET';
 
 // --- PUBLIC ROUTE ---
 export const dynamic = 'force-dynamic';
@@ -78,3 +78,4 @@ export async function PUT(req) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
+

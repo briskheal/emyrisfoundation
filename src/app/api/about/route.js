@@ -3,7 +3,7 @@ import { verifyAuth } from '../../../lib/auth';
 import { AboutContent, sequelize } from '../../../lib/db';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'CHANGEME_JWT_SECRET';
 
 export const dynamic = 'force-dynamic';
 
@@ -56,3 +56,4 @@ export async function PUT(req) {
     return NextResponse.json({ error: 'Unauthorized or Server error' }, { status: 401 });
   }
 }
+

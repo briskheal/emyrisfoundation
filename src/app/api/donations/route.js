@@ -3,7 +3,7 @@ import { verifyAuth } from '../../../lib/auth';
 import { Donation } from '../../../lib/db';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'CHANGEME_JWT_SECRET';
 
 export const dynamic = 'force-dynamic';
 
@@ -59,3 +59,4 @@ export async function PUT(req) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
+
