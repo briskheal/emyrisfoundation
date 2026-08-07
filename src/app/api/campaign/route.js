@@ -32,13 +32,7 @@ export async function POST(req) {
     }
 
     // Save to Database
-    await CampaignRegistration.create({
-      campaign,
-      name,
-      email,
-      phone,
-      details
-    });
+    // Database save removed as per user request to save memory. Forwarding email only.
 
     await sendCampaignEmail({ campaign, name, email, phone });
 

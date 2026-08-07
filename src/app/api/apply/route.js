@@ -57,14 +57,7 @@ export async function POST(req) {
     }
 
     // Save to Database
-    await ApplicationSubmission.create({
-      type,
-      position: position || null,
-      name,
-      email,
-      phone,
-      details
-    });
+    // Database save removed as per user request to save memory. Forwarding email only.
 
     await sendCareerEmail({ type, name, email, phone, position, details, attachment });
 

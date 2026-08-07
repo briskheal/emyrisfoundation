@@ -37,12 +37,7 @@ export async function POST(req) {
     const fullName = `${firstName} ${lastName || ''}`.trim();
     
     // Save to Database
-    await ContactSubmission.create({
-      name: fullName,
-      email,
-      phone,
-      message: `Subject: ${subject || 'No Subject'}\n\n${message}`
-    });
+    // Database save removed as per user request to save memory. Forwarding email only.
 
     // Send Email
     await sendContactEmail({ firstName, lastName, email, phone, subject, message });
