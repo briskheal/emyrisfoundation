@@ -56,7 +56,7 @@ export async function GET(req) {
     const submissions = await CampaignRegistration.findAll({ order: [['createdAt', 'DESC']] });
     return NextResponse.json(submissions);
   } catch (error) {
-    return NextResponse.json({ error: 'Unauthorized or error' }, { status: 401 });
+    return NextResponse.json({ error: error.message || 'Unknown Server Error' }, { status: 401 });
   }
 }
 
@@ -70,7 +70,7 @@ export async function DELETE(req) {
     if (submission) await submission.destroy();
     return NextResponse.json({ message: 'Deleted' });
   } catch (error) {
-    return NextResponse.json({ error: 'Unauthorized or error' }, { status: 401 });
+    return NextResponse.json({ error: error.message || 'Unknown Server Error' }, { status: 401 });
   }
 }
 

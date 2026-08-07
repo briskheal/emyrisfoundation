@@ -13,11 +13,7 @@ const ContactSubmissionsManager = () => {
     })
       .then(res => {
         if (!res.ok) {
-          if (res.status === 401) {
-            alert('Your session has expired. Please log in again.');
-            window.location.href = '/admin';
-          }
-          throw new Error('Failed to fetch');
+          return res.json().then(e => { throw new Error(e.error || 'API Error'); });
         }
         return res.json();
       })
@@ -26,7 +22,7 @@ const ContactSubmissionsManager = () => {
         setLoading(false);
       })
       .catch(err => {
-        console.error(err);
+        alert('Fetch failed: ' + err.message);
         setLoading(false);
       });
   };
