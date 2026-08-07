@@ -188,3 +188,64 @@ export async function sendCampaignEmail({ campaign, name, email, phone }) {
 
   return Promise.allSettled([adminPromise, userPromise]);
 }
+
+
+/**
+ * Send an individual support email to support@emyrisfoundation.com
+ */
+export async function sendSupportEmail({ supportType, name, email, phone, message }) {
+  const nodemailer = require('nodemailer');
+  const supportTransporter = nodemailer.createTransport({
+    host: 'smtp.zoho.in',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.ZOHO_SUPPORT_USER || process.env.ZOHO_USER,
+      pass: process.env.ZOHO_SUPPORT_PASS || process.env.ZOHO_PASS,
+    },
+  });
+
+  const senderEmail = process.env.ZOHO_SUPPORT_USER || process.env.ZOHO_USER;
+
+  // 1. Send to Admin
+  const adminPromise = supportTransporter.sendMail({
+    from: `"Emyris Support" <${senderEmail}>`,
+    to: 'support@emyrisfoundation.com',
+    replyTo: email,
+    subject: `[Support: ${supportType}] - ${name}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); padding: 24px; border-radius: 8px 8px 0 0;">
+          <h2 style="color: white; margin: 0;">New Support Interest</h2>
+        </div>
+        <div style="background: #f9f9f9; padding: 24px; border: 1px solid #eee; border-radius: 0 0 8px 8px;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr><td style="padding: 8px 0; color: #666; width: 130px;">Category</td><td style="padding: 8px 0; font-weight: bold;">${supportType}</td></tr>
+            <tr><td style="padding: 8px 0; color: #666;">Name</td><td style="padding: 8px 0;">${name}</td></tr>
+            <tr><td style="padding: 8px 0; color: #666;">Email</td><td style="padding: 8px 0;"><a href="mailto:${email}">${email}</a></td></tr>
+            <tr><td style="padding: 8px 0; color: #666;">Phone</td><td style="padding: 8px 0;">${phone || 'N/A'}</td></tr>
+          </table>
+          ${message ? `<div style="margin-top: 16px; padding: 16px; background: white; border-left: 4px solid #3b82f6; border-radius: 4px; white-space: pre-wrap; color: #333; line-height: 1.6;">${message}</div>` : ''}
+          <p style="margin-top: 16px; color: #999; font-size: 0.85rem;">Sent from emyrisfoundation.com</p>
+        </div>
+      </div>`,
+  });
+
+  // 2. Send Auto-reply to Supporter
+  const userPromise = supportTransporter.sendMail({
+    from: `"Emyris Support" <${senderEmail}>`,
+    to: email,
+    subject: `Thank you for supporting Emyris Foundation!`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+        <p>Dear ${name},</p>
+        <p>Thank you so much for expressing interest in our <strong>${supportType}</strong> program!</p>
+        <p>We deeply appreciate your desire to contribute to our societal cause. Our team will review your details and reach out to you shortly to coordinate the next steps.</p>
+        <p>Thank you once again for your generous support!</p>
+        <br>
+        <p>Warm Regards,<br><strong>Emyris Foundation Team</strong></p>
+      </div>`,
+  });
+
+  return Promise.allSettled([adminPromise, userPromise]);
+}
