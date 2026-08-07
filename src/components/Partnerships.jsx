@@ -1,7 +1,24 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 
-const Partnerships = () => {
+const Partnerships = ({ initialPartnerships = [] }) => {
+  const [partnerships, setPartnerships] = useState(initialPartnerships);
+
+  useEffect(() => {
+    if (initialPartnerships.length === 0) {
+      fetch('/api/partnerships')
+        .then(res => res.json())
+        .then(data => setPartnerships(data || []))
+        .catch(console.error);
+    }
+  }, [initialPartnerships]);
+
+  // Determine if we need horizontal scrolling (more than 4 items)
+  const isScrollable = partnerships.length > 4;
+  const gridClass = isScrollable ? 'partnerships-scroll-container' : 'support-cards-grid';
+  const itemClass = isScrollable ? 'partnerships-item glass-card support-item' : 'glass-card support-item';
+
   return (
     <section id="partnerships" className="involved-section scroll-spy">
       <div className="container">
@@ -14,30 +31,26 @@ const Partnerships = () => {
         <div className="involved-block" style={{marginTop: '0'}}>
           <p className="text-center involved-para">Align your company's ESG goals with Emyris Foundation. We facilitate customized CSR projects with 80G tax benefit certification and detailed impact measurement sheets.</p>
           
-          <div className="support-cards-grid">
-            <div className="glass-card support-item">
-              <div className="support-icon"><i className="fa-solid fa-building-ngo"></i></div>
-              <h4>CSR</h4>
-              <p>Fully compliant with Schedule VII of the Companies Act, offering transparent reporting, audits, and impact metrics.</p>
+          {partnerships.length > 0 ? (
+            <div className={gridClass}>
+              {partnerships.map((p) => (
+                <div key={p.id} className={itemClass} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                  <div className="support-icon"><i className={p.icon || 'fa-solid fa-handshake'}></i></div>
+                  <h4>{p.title}</h4>
+                  <p style={{ flexGrow: 1 }}>{p.summary}</p>
+                  <Link href={`/partnership/${p.id}`} className="btn btn-outline-orange btn-sm btn-support-start" style={{ marginTop: '15px' }}>
+                    Read more <i className="fa-solid fa-chevron-right"></i>
+                  </Link>
+                </div>
+              ))}
             </div>
-            <div className="glass-card support-item">
-              <div className="support-icon"><i className="fa-solid fa-hand-holding-hand"></i></div>
-              <h4>Employee Engagement</h4>
-              <p>Coordinate corporate volunteering drives, local field trips, and skill-sharing seminars for your staff.</p>
+          ) : (
+            <div className="text-center" style={{ padding: '40px', color: 'var(--text-muted)' }}>
+              Loading partnerships...
             </div>
-            <div className="glass-card support-item">
-              <div className="support-icon"><i className="fa-solid fa-hand-holding-dollar"></i></div>
-              <h4>Payroll Giving</h4>
-              <p>Enable employees to seamlessly contribute a portion of their salary to drive sustainable social impact.</p>
-            </div>
-            <div className="glass-card support-item">
-              <div className="support-icon"><i className="fa-solid fa-shield-heart"></i></div>
-              <h4>Cause Marketing</h4>
-              <p>Co-brand sustainability campaigns, plantation drives, and student learning kits to build shared values.</p>
-            </div>
-          </div>
+          )}
           
-          <div className="text-center" style={{marginTop: '30px'}}>
+          <div className="text-center" style={{marginTop: '40px'}}>
             <button className="btn btn-primary" onClick={() => document.getElementById('contact')?.scrollIntoView({behavior: 'smooth'})}>Partner With Us <i className="fa-solid fa-arrow-right"></i></button>
           </div>
         </div>

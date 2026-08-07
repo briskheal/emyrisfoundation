@@ -1,4 +1,4 @@
-import { CorporateProfile, HeroSlide, HeroStat, Donor, Campaign, WorkActivity, PresenceLocation, WorkDetail, CampaignDetail, Blog } from './db';
+import { CorporateProfile, HeroSlide, HeroStat, Donor, Campaign, WorkActivity, PresenceLocation, WorkDetail, CampaignDetail, Blog, Partnership } from './db';
 import fs from 'fs';
 import path from 'path';
 

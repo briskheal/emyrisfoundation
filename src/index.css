@@ -3854,3 +3854,36 @@ textarea.form-control {
   }
 }
 
+
+/* Partnership horizontal scroll */
+.partnerships-scroll-container {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+.partnerships-scroll-container::-webkit-scrollbar {
+  height: 8px;
+}
+.partnerships-scroll-container::-webkit-scrollbar-thumb {
+  background: var(--primary-orange);
+  border-radius: 10px;
+}
+.partnerships-item {
+  flex: 0 0 calc(25% - 15px); /* 4 items per row exactly */
+  min-width: 250px; /* Fallback for small screens */
+  scroll-snap-align: start;
+}
+@media (max-width: 1024px) {
+  .partnerships-item {
+    flex: 0 0 calc(50% - 10px); /* 2 items per row */
+  }
+}
+@media (max-width: 768px) {
+  .partnerships-item {
+    flex: 0 0 65vw; /* Match the support cards size on mobile */
+  }
+}
+

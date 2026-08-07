@@ -18,6 +18,8 @@ import WorkDetailEditor from './admin/WorkDetailEditor';
 import CampaignDetailEditor from './admin/CampaignDetailEditor';
 import BlogManager from './admin/BlogManager';
 import BlogDetailEditor from './admin/BlogDetailEditor';
+import PartnershipManager from './admin/PartnershipManager';
+import PartnershipDetailEditor from './admin/PartnershipDetailEditor';
 import { compressImage } from '../lib/imageCompressor';
 
 const AdminPanel = () => {
@@ -33,6 +35,7 @@ const AdminPanel = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [editingBlog, setEditingBlog] = useState(null);
+  const [editingPartnership, setEditingPartnership] = useState(null);
 
   // Corporate form state
   const [corp, setCorp] = useState({});
@@ -271,6 +274,7 @@ const AdminPanel = () => {
     { id: 'campaigns', label: 'Campaigns', icon: 'fa-bullhorn' },
     { id: 'campaign_content', label: 'Campaign Content', icon: 'fa-file-lines' },
     { id: 'blogs', label: 'Blog Posts', icon: 'fa-blog' },
+    { id: 'partnerships', label: 'Partnerships', icon: 'fa-handshake' },
     { id: 'careers', label: 'Careers & Jobs', icon: 'fa-briefcase' },
     { id: 'publications', label: 'Publications', icon: 'fa-file-pdf' },
     { id: 'presence', label: 'Presence / Locations', icon: 'fa-location-dot' },
@@ -367,6 +371,8 @@ const AdminPanel = () => {
         {activeTab === 'campaign_content' && <CampaignDetailEditor token={token} />}
         {activeTab === 'blogs' && !editingBlog && <BlogManager token={token} onEdit={(b) => setEditingBlog(b)} />}
         {activeTab === 'blogs' && editingBlog && <BlogDetailEditor token={token} blog={editingBlog} onBack={() => setEditingBlog(null)} />}
+        {activeTab === 'partnerships' && !editingPartnership && <PartnershipManager token={token} onEdit={(p) => setEditingPartnership(p)} />}
+        {activeTab === 'partnerships' && editingPartnership && <PartnershipDetailEditor token={token} partnership={editingPartnership} onBack={() => setEditingPartnership(null)} />}
         {activeTab === 'publications' && <PublicationManager token={token} />}
         {activeTab === 'work' && <WorkManager token={token} />}
         {activeTab === 'work_content' && <WorkDetailEditor token={token} />}

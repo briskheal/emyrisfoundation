@@ -243,6 +243,18 @@ export const WorkDetail = sequelize.define('WorkDetail', {
   videos: DataTypes.JSON
 });
 
+export const Partnership = sequelize.define('Partnership', {
+  id: { type: DataTypes.STRING, primaryKey: true },
+  title: DataTypes.STRING,
+  icon: DataTypes.STRING, // e.g. "fa-solid fa-building-ngo"
+  summary: DataTypes.TEXT, // Short text for the card
+  bannerImg: DataTypes.STRING, // WebP banner image
+  content: DataTypes.TEXT('long'), // HTML WYSIWYG content
+  titleSize: { type: DataTypes.STRING, defaultValue: '3.5rem' },
+  order: { type: DataTypes.INTEGER, defaultValue: 0 },
+  updatedBy: { type: DataTypes.STRING, defaultValue: 'system' },
+});
+
 export const Blog = sequelize.define('Blog', {
   id: { type: DataTypes.STRING, primaryKey: true },
   title: DataTypes.STRING,

@@ -21,7 +21,7 @@ import Modals from '../components/Modals';
 import SmoothScroll from '../components/SmoothScroll';
 import ScrollToTop from '../components/ScrollToTop';
 
-import { getCorporateData, getHeroSlides, getHeroStats, getDonors, getWorkActivities, getCampaigns, getPresenceLocations, getBlogs } from '../lib/data-fetcher';
+import { getCorporateData, getHeroSlides, getHeroStats, getDonors, getWorkActivities, getCampaigns, getPresenceLocations, getBlogs, getPartnerships } from '../lib/data-fetcher';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,6 +35,7 @@ export default async function Home() {
   const campaigns = await getCampaigns();
   const presenceLocations = await getPresenceLocations();
   const blogs = await getBlogs();
+  const partnerships = await getPartnerships();
 
   return (
     <CorporateProvider initialData={corporateData}>
@@ -51,7 +52,7 @@ export default async function Home() {
             <Presence initialLocations={presenceLocations} />
             <Campaigns initialCampaigns={campaigns} />
             <GetInvolved />
-            <Partnerships />
+            <Partnerships initialPartnerships={partnerships} />
             <Blog initialBlogs={blogs} />
             <ActivityGallery />
             <Publications />
