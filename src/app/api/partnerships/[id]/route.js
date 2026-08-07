@@ -6,7 +6,8 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(req, { params }) {
   try {
-    const part = await Partnership.findByPk(params.id);
+    const { id } = await params;
+    const part = await Partnership.findByPk(id);
     if (!part) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     return NextResponse.json(part);
   } catch (error) {
@@ -17,8 +18,9 @@ export async function GET(req, { params }) {
 export async function PUT(req, { params }) {
   if (!verifyAuth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
+    const { id } = await params;
     const data = await req.json();
-    const part = await Partnership.findByPk(params.id);
+    const part = await Partnership.findByPk(id);
     if (!part) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     await part.update(data);
     return NextResponse.json(part);
@@ -31,7 +33,8 @@ export async function PUT(req, { params }) {
 export async function DELETE(req, { params }) {
   if (!verifyAuth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
-    const part = await Partnership.findByPk(params.id);
+    const { id } = await params;
+    const part = await Partnership.findByPk(id);
     if (!part) return NextResponse.json({ error: 'Not found' }, { status: 404 });
     await part.destroy();
     return NextResponse.json({ success: true });
