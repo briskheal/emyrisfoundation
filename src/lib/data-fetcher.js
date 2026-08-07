@@ -461,3 +461,24 @@ export async function getBlogs() {
   }
 }
 
+
+export async function getPartnerships() {
+  try {
+    const parts = await Partnership.findAll({ order: [['order', 'ASC']] });
+    return parts.map(p => p.get({ plain: true }));
+  } catch (err) {
+    console.error('Failed to get partnerships:', err);
+    return [];
+  }
+}
+
+export async function getPartnershipById(id) {
+  try {
+    const part = await Partnership.findByPk(id);
+    return part ? part.get({ plain: true }) : null;
+  } catch (err) {
+    console.error('Failed to get partnership by id:', err);
+    return null;
+  }
+}
+

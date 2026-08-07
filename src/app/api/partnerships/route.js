@@ -19,7 +19,7 @@ export async function POST(req) {
   try {
     const data = await req.json();
     if (!data.id) {
-      data.id = data.title ? data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : \partnership-\\;
+      data.id = data.title ? data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : `partnership-${Date.now()}`;
     }
     const part = await Partnership.create(data);
     return NextResponse.json(part);
