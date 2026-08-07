@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useModals } from '../../context/ModalContext';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const VolunteerModal = () => {
   const { activeModal, closeModal } = useModals();
@@ -8,18 +9,12 @@ const VolunteerModal = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
-  const [num1, setNum1] = useState(0);
-  const [num2, setNum2] = useState(0);
-  const [captcha, setCaptcha] = useState('');
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', address: '', pincode: '', capacity: '' });
 
   React.useEffect(() => {
-    if (activeModal === 'volunteer') {
-      setNum1(Math.floor(Math.random() * 10) + 1);
-      setNum2(Math.floor(Math.random() * 10) + 1);
-      setCaptcha('');
-    }
+    // Component mounted or active modal changed
   }, [activeModal]);
 
   if (activeModal !== 'volunteer') return null;
@@ -29,19 +24,19 @@ const VolunteerModal = () => {
     setLoading(true);
     setError('');
 
-    if (parseInt(captcha) !== num1 + num2) {
-      setError('Incorrect CAPTCHA answer.');
-      setLoading(false);
-      return;
-    }
-
     try {
+      let captchaToken = '';
+      if (executeRecaptcha) {
+        captchaToken = await executeRecaptcha('volunteer');
+      }
+
       const payload = {
         type: 'volunteer',
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
-        details: `Address: ${formData.address}\nPincode: ${formData.pincode}\nCapacity: ${formData.capacity}`
+        details: `Address: ${formData.address}\nPincode: ${formData.pincode}\nCapacity: ${formData.capacity}`,
+        captchaToken
       };
       const res = await fetch('/api/apply', {
         method: 'POST',
@@ -77,7 +72,7 @@ const VolunteerModal = () => {
             <div className="modal-header text-center">
               <i className="fa-solid fa-people-carry-box vol-header-icon"></i>
               <h2>Volunteer Registration</h2>
-              <p>Register as partner in progress â€“ "Together We Grow"</p>
+              <p>Register as partner in progress – "Together We Grow"</p>
             </div>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
@@ -104,23 +99,18 @@ const VolunteerModal = () => {
                   <input type="text" className="form-control" required value={formData.pincode} onChange={e => setFormData({...formData, pincode: e.target.value})} />
                 </div>
               </div>
-              <div className="form-group">
-                <label>In what capacity can you volunteer? *</label>
-                <select className="form-select" required value={formData.capacity} onChange={e => setFormData({...formData, capacity: e.target.value})}>
-                  <option value="" disabled>Select option...</option>
-                  <option value="Online / Remote">Online / Remote Tasks</option>
-                  <option value="On-ground (Weekends)">On-ground (Weekends)</option>
-                  <option value="On-ground (Flexible)">On-ground (Flexible)</option>
-                  <option value="Skill-based (Design, Tech, etc.)">Skill-based (Design, Tech, etc.)</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label>Security Check: What is {num1} + {num2}? *</label>
-                <input type="number" className="form-control" value={captcha} onChange={e => setCaptcha(e.target.value)} required />
-              </div>
-              
-              {error && <div style={{ color: '#ef4444', marginBottom: '10px', fontSize: '0.9rem' }}>{error}</div>}
+                <div className="form-group">
+                  <label>In what capacity can you volunteer? *</label>
+                  <select className="form-select" required value={formData.capacity} onChange={e => setFormData({...formData, capacity: e.target.value})}>
+                    <option value="" disabled>Select option...</option>
+                    <option value="Online / Remote">Online / Remote Tasks</option>
+                    <option value="On-ground (Weekends)">On-ground (Weekends)</option>
+                    <option value="On-ground (Flexible)">On-ground (Flexible)</option>
+                    <option value="Skill-based (Design, Tech, etc.)">Skill-based (Design, Tech, etc.)</option>
+                  </select>
+                </div>
+                
+                {error && <div style={{ color: '#ef4444', marginBottom: '10px', fontSize: '0.9rem' }}>{error}</div>}
               
               <button type="submit" className="btn btn-primary w-100" style={{ marginTop: '15px' }} disabled={loading}>
                 {loading ? 'Submitting...' : <>Register Now <i className="fa-solid fa-circle-check"></i></>}

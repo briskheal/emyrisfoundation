@@ -9,9 +9,6 @@ const JobModal = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
-  const [num1, setNum1] = useState(0);
-  const [num2, setNum2] = useState(0);
-  const [captcha, setCaptcha] = useState('');
   const [file, setFile] = useState(null);
   const { executeRecaptcha } = useGoogleReCaptcha();
 
@@ -19,9 +16,6 @@ const JobModal = () => {
 
   React.useEffect(() => {
     if (activeModal === 'job') {
-      setNum1(Math.floor(Math.random() * 10) + 1);
-      setNum2(Math.floor(Math.random() * 10) + 1);
-      setCaptcha('');
       setFile(null);
     }
   }, [activeModal]);
@@ -50,12 +44,6 @@ const JobModal = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-
-    if (parseInt(captcha) !== num1 + num2) {
-      setError('Incorrect CAPTCHA answer.');
-      setLoading(false);
-      return;
-    }
 
     if (!file) {
       setError('Please upload your CV / Resume.');
@@ -158,10 +146,6 @@ const JobModal = () => {
               <div className="form-group">
                 <label>Upload your CV / Resume (Max 5MB) *</label>
                 <input type="file" className="form-control" accept=".pdf,.doc,.docx" onChange={handleFileChange} required />
-              </div>
-              <div className="form-group">
-                <label>Security Check: What is {num1} + {num2}? *</label>
-                <input type="number" className="form-control" value={captcha} onChange={e => setCaptcha(e.target.value)} required />
               </div>
               
               {error && <div style={{ color: '#ef4444', marginBottom: '10px', fontSize: '0.9rem' }}>{error}</div>}

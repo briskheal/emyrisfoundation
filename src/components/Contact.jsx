@@ -5,27 +5,17 @@ import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 const Contact = () => {
   const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', phone: '', message: '', botField: '' });
   const [status, setStatus] = useState({ loading: false, success: false, error: '' });
-  const [num1, setNum1] = useState(0);
-  const [num2, setNum2] = useState(0);
-  const [captcha, setCaptcha] = useState('');
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   React.useEffect(() => {
-    setNum1(Math.floor(Math.random() * 10) + 1);
-    setNum2(Math.floor(Math.random() * 10) + 1);
-    setCaptcha('');
+    // Component mounted or success state changed
   }, [status.success]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus({ loading: true, success: false, error: '' });
-    
-    if (parseInt(captcha) !== num1 + num2) {
-      setStatus({ loading: false, success: false, error: 'Incorrect CAPTCHA answer.' });
-      return;
-    }
-    
-    try {
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      setStatus({ loading: true, success: false, error: '' });
+      
+      try {
       let captchaToken = '';
       if (executeRecaptcha) {
         captchaToken = await executeRecaptcha('contact');
@@ -40,9 +30,6 @@ const Contact = () => {
       if (res.ok) {
         setStatus({ loading: false, success: true, error: '' });
         setFormData({ firstName: '', lastName: '', email: '', phone: '', message: '', botField: '' });
-        setNum1(Math.floor(Math.random() * 10) + 1);
-        setNum2(Math.floor(Math.random() * 10) + 1);
-        setCaptcha('');
       } else {
         setStatus({ loading: false, success: false, error: data.error || 'Submission failed' });
       }
@@ -122,16 +109,11 @@ const Contact = () => {
                 </div>
               </div>
               <div className="form-group">
-              <label htmlFor="message">How can we help you?</label>
-              <textarea id="message" rows="4" className="form-control" placeholder="Tell us more about your inquiry..." required value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})}></textarea>
-            </div>
-            
-            <div className="form-group">
-              <label>Security Check: What is {num1} + {num2}? *</label>
-              <input type="number" className="form-control" value={captcha} onChange={e => setCaptcha(e.target.value)} required />
-            </div>
+                <label htmlFor="message">How can we help you?</label>
+                <textarea id="message" rows="4" className="form-control" placeholder="Tell us more about your inquiry..." required value={formData.message} onChange={e => setFormData({...formData, message: e.target.value})}></textarea>
+              </div>
 
-            {status.error && <div className="form-error" style={{ color: '#ef4444', marginBottom: '15px' }}>{status.error}</div>}
+              {status.error && <div className="form-error" style={{ color: '#ef4444', marginBottom: '15px' }}>{status.error}</div>}
               {status.success && <div style={{ color: '#15F5BA', marginBottom: '10px', fontSize: '0.9rem' }}><i className="fa-solid fa-circle-check"></i> Message sent successfully! We will get back to you soon.</div>}
               <button type="submit" className="btn btn-primary w-100" style={{marginTop: '10px'}} disabled={status.loading}>
                 {status.loading ? 'Sending...' : <>Send Message <i className="fa-solid fa-paper-plane"></i></>}

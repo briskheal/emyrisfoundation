@@ -1,16 +1,15 @@
 'use client';
 import React, { useState } from 'react';
 import { useModals } from '../../context/ModalContext';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const InternshipModal = () => {
   const { activeModal, closeModal } = useModals();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [num1, setNum1] = useState(0);
-  const [num2, setNum2] = useState(0);
-  const [captcha, setCaptcha] = useState('');
   const [file, setFile] = useState(null);
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const [formData, setFormData] = useState({
     name: '', email: '', phone: '', whatsapp: '', city: '', profile: '',
@@ -19,11 +18,7 @@ const InternshipModal = () => {
   });
 
   React.useEffect(() => {
-    if (activeModal === 'internship' && step === 3) {
-      setNum1(Math.floor(Math.random() * 10) + 1);
-      setNum2(Math.floor(Math.random() * 10) + 1);
-      setCaptcha('');
-    }
+    // Component mounted or active modal changed
   }, [activeModal, step]);
 
   if (activeModal !== 'internship') return null;
@@ -65,19 +60,18 @@ const InternshipModal = () => {
       return;
     }
 
-    if (parseInt(captcha) !== num1 + num2) {
-      setError('Incorrect CAPTCHA answer.');
-      setLoading(false);
-      return;
-    }
-
     if (!file) {
-      setError('Please upload your CV / Resume.');
+      setError('Please upload your CV.');
       setLoading(false);
       return;
     }
 
     try {
+      let captchaToken = '';
+      if (executeRecaptcha) {
+        captchaToken = await executeRecaptcha('internship');
+      }
+
       const payload = new FormData();
       payload.append('type', 'internship');
       payload.append('name', formData.name);
@@ -86,6 +80,7 @@ const InternshipModal = () => {
       
       const detailsStr = `WhatsApp: ${formData.whatsapp}\nCity: ${formData.city}\nProfile: ${formData.profile}\nAvailability: ${formData.availability} (${formData.days})\nDuration: ${formData.duration}\nReasons: ${formData.reasons.join(', ')}\nActivity Preference: ${formData.activityType}\nPersonality: ${formData.personality}`;
       payload.append('details', detailsStr);
+      payload.append('captchaToken', captchaToken);
       payload.append('resume', file);
       
       const res = await fetch('/api/apply', {
@@ -258,10 +253,6 @@ const InternshipModal = () => {
               <div className="form-group">
                 <label>Upload your CV / Resume (Max 5MB) *</label>
                 <input type="file" className="form-control" accept=".pdf,.doc,.docx" onChange={handleFileChange} required />
-              </div>
-              <div className="form-group">
-                <label>Security Check: What is {num1} + {num2}? *</label>
-                <input type="number" className="form-control" value={captcha} onChange={e => setCaptcha(e.target.value)} required />
               </div>
               
               {error && <div style={{ color: '#ef4444', marginBottom: '10px', fontSize: '0.9rem' }}>{error}</div>}
