@@ -8,7 +8,8 @@ const ApplicationManager = () => {
 
   const fetchItems = () => {
     fetch('/api/apply', {
-      headers: { 'Authorization': `Bearer ${getAuthToken()}` }
+      headers: { 'Authorization': `Bearer ${getAuthToken()}` },
+      cache: 'no-store'
     })
       .then(res => res.json())
       .then(data => {

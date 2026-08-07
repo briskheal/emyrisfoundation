@@ -8,7 +8,8 @@ const ContactSubmissionsManager = () => {
 
   const fetchItems = () => {
     fetch('/api/contact', {
-      headers: { 'Authorization': `Bearer ${getAuthToken()}` }
+      headers: { 'Authorization': `Bearer ${getAuthToken()}` },
+      cache: 'no-store'
     })
       .then(res => res.json())
       .then(data => {
