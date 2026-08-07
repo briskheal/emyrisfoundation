@@ -22,24 +22,28 @@ const GetInvolved = () => {
               <div className="support-icon"><i className="fa-solid fa-hands-helping"></i></div>
               <h4>Direct Service</h4>
               <p>Engage directly with the community by assisting in teaching, health services, environmental clean-ups, or campaigns.</p>
+              <button className="btn btn-outline-orange btn-sm btn-support-start" onClick={() => openModal('support', 'Direct Service')}>Start <i className="fa-solid fa-chevron-right"></i></button>
             </div>
             <div className="glass-card support-item">
               <div className="support-icon"><i className="fa-solid fa-circle-dollar-to-slot"></i></div>
               <h4>Financial &amp; In-Kind</h4>
               <p>Donate money directly to Shiksha Hi Surakhya or coordinate in-kind donation of books, clothes, and rations.</p>
-              <button className="btn btn-outline-orange btn-sm btn-support-start" onClick={() => openModal('donate')}>Donate <i className="fa-solid fa-heart"></i></button>
+              <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
+                <button className="btn btn-outline-orange btn-sm btn-support-start" onClick={() => openModal('donate')} style={{ margin: 0 }}>Donate <i className="fa-solid fa-heart"></i></button>
+                <button className="btn btn-outline-orange btn-sm btn-support-start" onClick={() => openModal('support', 'Financial & In-Kind')} style={{ margin: 0 }}>Contribute In-Kind <i className="fa-solid fa-gift"></i></button>
+              </div>
             </div>
             <div className="glass-card support-item">
               <div className="support-icon"><i className="fa-solid fa-bullhorn"></i></div>
               <h4>Advocacy &amp; Media</h4>
               <p>Create videos, write articles, or coordinate social media campaigns to raise visibility for our causes.</p>
-              <button className="btn btn-outline-orange btn-sm btn-support-start">Start <i className="fa-solid fa-chevron-right"></i></button>
+              <button className="btn btn-outline-orange btn-sm btn-support-start" onClick={() => openModal('support', 'Advocacy & Media')}>Start <i className="fa-solid fa-chevron-right"></i></button>
             </div>
             <div className="glass-card support-item">
               <div className="support-icon"><i className="fa-solid fa-chalkboard-user"></i></div>
               <h4>Skill-based Volunteering</h4>
               <p>Offer your professional expertise in marketing, finance, IT, training, or project management pro-bono.</p>
-              <button className="btn btn-outline-orange btn-sm btn-support-start">Start <i className="fa-solid fa-chevron-right"></i></button>
+              <button className="btn btn-outline-orange btn-sm btn-support-start" onClick={() => openModal('support', 'Skill-based Volunteering')}>Start <i className="fa-solid fa-chevron-right"></i></button>
             </div>
           </div>
         </div>

@@ -8,6 +8,7 @@ import ConsentModal from './modals/ConsentModal';
 import JobModal from './modals/JobModal';
 import CareersModal from './modals/CareersModal';
 import LightboxModal from './modals/LightboxModal';
+import SupportModal from './modals/SupportModal';
 
 const Modals = () => {
   const { activeModal, closeModal } = useModals();
@@ -34,6 +35,7 @@ const Modals = () => {
       <CareersModal />
       <JobModal />
       <LightboxModal />
+      <SupportModal />
     </>
   );
 };
