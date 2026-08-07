@@ -464,6 +464,7 @@ export async function getBlogs() {
 
 export async function getPartnerships() {
   try {
+    await Partnership.sync({ alter: true });
     const parts = await Partnership.findAll({ order: [['order', 'ASC']] });
     return parts.map(p => p.get({ plain: true }));
   } catch (err) {
@@ -474,6 +475,7 @@ export async function getPartnerships() {
 
 export async function getPartnershipById(id) {
   try {
+    await Partnership.sync({ alter: true });
     const part = await Partnership.findByPk(id);
     return part ? part.get({ plain: true }) : null;
   } catch (err) {

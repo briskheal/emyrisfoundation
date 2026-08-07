@@ -6,6 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
+    await Partnership.sync({ alter: true });
     const parts = await Partnership.findAll({ order: [['order', 'ASC']] });
     return NextResponse.json(parts);
   } catch (error) {
@@ -17,6 +18,7 @@ export async function GET() {
 export async function POST(req) {
   if (!verifyAuth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   try {
+    await Partnership.sync({ alter: true });
     const data = await req.json();
     if (!data.id) {
       data.id = data.title ? data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : `partnership-${Date.now()}`;

@@ -9,7 +9,12 @@ const PartnershipManager = ({ token, onEdit }) => {
     try {
       const res = await fetch('/api/partnerships');
       const data = await res.json();
-      setpartnerships(data || []);
+      if (Array.isArray(data)) {
+        setpartnerships(data);
+      } else {
+        console.error('API returned non-array:', data);
+        setpartnerships([]);
+      }
     } catch (err) {
       console.error(err);
     } finally {
@@ -84,7 +89,7 @@ const PartnershipManager = ({ token, onEdit }) => {
           <div key={partnership.id} style={{ padding: '15px', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', background: 'rgba(0,0,0,0.2)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ color: 'white' }}>
               <h4 style={{ margin: '0 0 5px 0', color: 'white' }}>{partnership.title}</h4>
-              <small style={{ color: '#aaa' }}>{new Date(partnership.publishedAt).toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-')}</small>
+              <small style={{ color: '#aaa' }}>{partnership.createdAt ? new Date(partnership.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-') : ''}</small>
             </div>
             <div style={{ display: 'flex', gap: '10px' }}>
               <button style={{ padding: '8px 16px', background: 'var(--primary-blue)', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer' }} onClick={() => onEdit(partnership)}>Edit Content</button>

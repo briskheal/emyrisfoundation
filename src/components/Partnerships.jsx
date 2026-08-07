@@ -9,8 +9,18 @@ const Partnerships = ({ initialPartnerships = [] }) => {
     if (initialPartnerships.length === 0) {
       fetch('/api/partnerships')
         .then(res => res.json())
-        .then(data => setPartnerships(data || []))
-        .catch(console.error);
+        .then(data => {
+          if (Array.isArray(data)) {
+            setPartnerships(data);
+          } else {
+            console.error('API returned non-array:', data);
+            setPartnerships([]);
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          setPartnerships([]);
+        });
     }
   }, [initialPartnerships]);
 
