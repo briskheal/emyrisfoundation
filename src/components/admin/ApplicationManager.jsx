@@ -11,7 +11,16 @@ const ApplicationManager = () => {
       headers: { 'Authorization': `Bearer ${getAuthToken()}` },
       cache: 'no-store'
     })
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          if (res.status === 401) {
+            alert('Your session has expired. Please log in again.');
+            window.location.href = '/admin-login';
+          }
+          throw new Error('Failed to fetch');
+        }
+        return res.json();
+      })
       .then(data => {
         if (Array.isArray(data)) setItems(data);
         setLoading(false);
