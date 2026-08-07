@@ -12,9 +12,6 @@ import HeroStatManager from './admin/HeroStatManager';
 import PresenceManager from './admin/PresenceManager';
 import DonorManager from './admin/DonorManager';
 import DonationsManager from './admin/DonationsManager';
-import ContactSubmissionsManager from './admin/ContactSubmissionsManager';
-import ApplicationManager from './admin/ApplicationManager';
-import CampaignRegistrationManager from './admin/CampaignRegistrationManager';
 import GalleryManager from './admin/GalleryManager';
 import JobManager from './admin/JobManager';
 import WorkDetailEditor from './admin/WorkDetailEditor';
@@ -278,9 +275,6 @@ const AdminPanel = () => {
     { id: 'publications', label: 'Publications', icon: 'fa-file-pdf' },
     { id: 'presence', label: 'Presence / Locations', icon: 'fa-location-dot' },
     { id: 'donors', label: 'Champions / Donors', icon: 'fa-medal' },
-    { id: 'contact_subs', label: 'Contact Submissions', icon: 'fa-envelope-open-text' },
-    { id: 'applications', label: 'Applications', icon: 'fa-file-signature' },
-    { id: 'campaign_regs', label: 'Campaign Regs.', icon: 'fa-clipboard-user' },
     { id: 'gallery', label: 'Activity Gallery', icon: 'fa-images' },
   ];
 
@@ -379,9 +373,6 @@ const AdminPanel = () => {
         {activeTab === 'hero-stats' && <HeroStatManager token={token} />}
         {activeTab === 'presence' && <PresenceManager token={token} />}
         {activeTab === 'donors' && <DonorManager token={token} />}
-        {activeTab === 'contact_subs' && <ContactSubmissionsManager token={token} />}
-        {activeTab === 'applications' && <ApplicationManager token={token} />}
-        {activeTab === 'campaign_regs' && <CampaignRegistrationManager token={token} />}
         {activeTab === 'gallery' && <GalleryManager token={token} />}
         {activeTab === 'careers' && <JobManager token={token} />}
         {activeTab === 'donations' && userRole === 'superadmin' && <DonationsManager token={token} />}
