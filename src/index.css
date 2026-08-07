@@ -3802,9 +3802,12 @@ textarea.form-control {
     border-radius: 10px;
   }
   .support-item {
-    min-width: 280px;
+    min-width: 240px;
+    width: 65vw;
     scroll-snap-align: center;
     flex-shrink: 0;
+    white-space: normal;
+    word-break: break-word;
   }
 }
 

@@ -28,7 +28,7 @@ const GetInvolved = () => {
               <div className="support-icon"><i className="fa-solid fa-circle-dollar-to-slot"></i></div>
               <h4>Financial &amp; In-Kind</h4>
               <p>Donate money directly to Shiksha Hi Surakhya or coordinate in-kind donation of books, clothes, and rations.</p>
-              <div style={{ display: 'flex', gap: '10px', marginTop: '15px' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '15px', justifyContent: 'center' }}>
                 <button className="btn btn-outline-orange btn-sm btn-support-start" onClick={() => openModal('donate')} style={{ margin: 0 }}>Donate <i className="fa-solid fa-heart"></i></button>
                 <button className="btn btn-outline-orange btn-sm btn-support-start" onClick={() => openModal('support', 'Financial & In-Kind')} style={{ margin: 0 }}>Contribute In-Kind <i className="fa-solid fa-gift"></i></button>
               </div>
