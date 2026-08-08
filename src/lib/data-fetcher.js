@@ -1,11 +1,21 @@
-import { CorporateProfile, HeroSlide, HeroStat, Donor, Campaign, WorkActivity, PresenceLocation, WorkDetail, CampaignDetail, Blog, Partnership } from './db';
+import { sequelize, CorporateProfile, HeroSlide, HeroStat, Donor, Campaign, WorkActivity, PresenceLocation, WorkDetail, CampaignDetail, Blog, Partnership } from './db';
 import fs from 'fs';
 import path from 'path';
+
+async function ensureSync() {
+  if (global._isDbSynced) return;
+  try {
+    await sequelize.sync({ alter: true });
+    global._isDbSynced = true;
+  } catch (err) {
+    console.error('DB Sync Error:', err);
+  }
+}
 
 export async function getCorporateData() {
   try {
     // Automatically apply schema updates on the live database (Hostycare)
-    await CorporateProfile.sync({ alter: true });
+    await ensureSync();
 
     const data = await CorporateProfile.findOne();
     if (data) {
@@ -104,7 +114,7 @@ export async function getPresenceLocations() {
 }
 export async function getWorkDetail(id) {
   try {
-    await WorkDetail.sync({ alter: true });
+    await ensureSync();
     
     let detail = await WorkDetail.findByPk(id);
     if (detail) {
@@ -435,7 +445,7 @@ export async function getCampaignDetail(id) {
 
   try {
     // Ensure table exists in database and alters schema if new columns are added
-    await CampaignDetail.sync({ alter: true });
+    await ensureSync();
     
     let detail = await CampaignDetail.findByPk(id);
     if (detail) {
@@ -464,7 +474,7 @@ export async function getBlogs() {
 
 export async function getPartnerships() {
   try {
-    await Partnership.sync({ alter: true });
+    await ensureSync();
     const parts = await Partnership.findAll({ order: [['order', 'ASC']] });
     return parts.map(p => p.get({ plain: true }));
   } catch (err) {
@@ -475,7 +485,7 @@ export async function getPartnerships() {
 
 export async function getPartnershipById(id) {
   try {
-    await Partnership.sync({ alter: true });
+    await ensureSync();
     const part = await Partnership.findByPk(id);
     return part ? part.get({ plain: true }) : null;
   } catch (err) {
