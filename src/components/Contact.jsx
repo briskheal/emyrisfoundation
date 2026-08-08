@@ -4,7 +4,7 @@ import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { useCorporate } from '../context/CorporateContext';
 
 const Contact = () => {
-  const { corpData } = useCorporate();
+  const { corporate } = useCorporate();
   const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', phone: '', message: '', botField: '' });
   const [status, setStatus] = useState({ loading: false, success: false, error: '' });
   const { executeRecaptcha } = useGoogleReCaptcha();
@@ -58,36 +58,38 @@ const Contact = () => {
                 <div className="info-icon"><i className="fa-solid fa-location-dot"></i></div>
                 <div className="info-text">
                   <h4>Address</h4>
-                  <p>{corpData?.address || 'Baroda, Gujarat / Bhubaneswar, Odisha, India'}</p>
+                  <p>{corporate?.address || 'Baroda, Gujarat / Bhubaneswar, Odisha, India'}</p>
                 </div>
               </div>
               <div className="info-item">
                 <div className="info-icon"><i className="fa-solid fa-phone"></i></div>
                 <div className="info-text">
                   <h4>Phone</h4>
-                  <p>{corpData?.phone1 || '+91 98765 43210'}</p>
+                  <p>{corporate?.phone1 || '+91 98765 43210'}</p>
                 </div>
               </div>
               <div className="info-item">
                 <div className="info-icon"><i className="fa-solid fa-envelope"></i></div>
                 <div className="info-text">
                   <h4>Email</h4>
-                  <p>{corpData?.email || 'connect@emyrisfoundation.com'}</p>
+                  <p>{corporate?.email || 'connect@emyrisfoundation.com'}</p>
                 </div>
               </div>
             </div>
 
             <div className="social-links">
-              {corpData?.fb && <a href={corpData.fb} target="_blank" rel="noopener noreferrer"><i className="fa-brands fa-facebook"></i></a>}
-              {corpData?.insta && <a href={corpData.insta} target="_blank" rel="noopener noreferrer"><i className="fa-brands fa-instagram"></i></a>}
-              {corpData?.linkedin && <a href={corpData.linkedin} target="_blank" rel="noopener noreferrer"><i className="fa-brands fa-linkedin"></i></a>}
-              {corpData?.xUrl && <a href={corpData.xUrl} target="_blank" rel="noopener noreferrer"><i className="fa-brands fa-x-twitter"></i></a>}
-              {(!corpData?.fb && !corpData?.insta && !corpData?.linkedin && !corpData?.xUrl) && (
+              {corporate?.fb && <a href={corporate.fb} target="_blank" rel="noopener noreferrer"><i className="fa-brands fa-facebook"></i></a>}
+              {corporate?.insta && <a href={corporate.insta} target="_blank" rel="noopener noreferrer"><i className="fa-brands fa-instagram"></i></a>}
+              {corporate?.linkedin && <a href={corporate.linkedin} target="_blank" rel="noopener noreferrer"><i className="fa-brands fa-linkedin"></i></a>}
+              {corporate?.xUrl && <a href={corporate.xUrl} target="_blank" rel="noopener noreferrer"><i className="fa-brands fa-x-twitter"></i></a>}
+              {corporate?.youtubeUrl && <a href={corporate.youtubeUrl} target="_blank" rel="noopener noreferrer"><i className="fa-brands fa-youtube"></i></a>}
+              {(!corporate?.fb && !corporate?.insta && !corporate?.linkedin && !corporate?.xUrl && !corporate?.youtubeUrl) && (
                 <>
                   <a href="#"><i className="fa-brands fa-facebook"></i></a>
                   <a href="#"><i className="fa-brands fa-instagram"></i></a>
                   <a href="#"><i className="fa-brands fa-linkedin"></i></a>
                   <a href="#"><i className="fa-brands fa-x-twitter"></i></a>
+                  <a href="#"><i className="fa-brands fa-youtube"></i></a>
                 </>
               )}
             </div>
