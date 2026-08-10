@@ -102,6 +102,7 @@ const Header = () => {
               <Link href="/#blog" onClick={() => setMobileMenuOpen(false)}>Blog</Link>
               <Link href="/#activity-gallery" onClick={() => setMobileMenuOpen(false)}>Gallery</Link>
               <Link href="/#publications" onClick={() => setMobileMenuOpen(false)}>Reports</Link>
+              <Link href="/news" onClick={() => setMobileMenuOpen(false)}>News</Link>
               <Link href="/#faq-section" onClick={() => setMobileMenuOpen(false)}>FAQs</Link>
             </div>
           </div>

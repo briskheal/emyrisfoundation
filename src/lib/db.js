@@ -230,6 +230,27 @@ export const JobOpening = sequelize.define('JobOpening', {
   order: { type: DataTypes.INTEGER, defaultValue: 0 },
 });
 
+export const BlogPost = sequelize.define('BlogPost', {
+  id: { type: DataTypes.STRING, primaryKey: true },
+  title: DataTypes.STRING,
+  titleSize: { type: DataTypes.STRING, defaultValue: 'normal' }, // small, normal, large
+  summary: DataTypes.TEXT,
+  content: DataTypes.TEXT, // Rich HTML content
+  category: DataTypes.STRING,
+  bannerImg: DataTypes.TEXT,
+  author: DataTypes.STRING,
+  publishedAt: DataTypes.DATE,
+});
+
+export const NewsActivity = sequelize.define('NewsActivity', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  title: DataTypes.STRING,
+  content: DataTypes.TEXT, // Rich HTML content
+  activityDate: DataTypes.DATEONLY,
+  month: DataTypes.STRING,
+  year: DataTypes.STRING,
+});
+
 export const WorkDetail = sequelize.define('WorkDetail', {
   id: { type: DataTypes.STRING, primaryKey: true }, // e.g. 'work-education'
   bannerTitle: DataTypes.STRING,

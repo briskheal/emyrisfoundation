@@ -1,4 +1,4 @@
-import { sequelize, CorporateProfile, HeroSlide, HeroStat, Donor, Campaign, WorkActivity, PresenceLocation, WorkDetail, CampaignDetail, Blog, Partnership } from './db';
+import { sequelize, CorporateProfile, HeroSlide, HeroStat, Donor, Campaign, WorkActivity, PresenceLocation, WorkDetail, CampaignDetail, Blog, Partnership, NewsActivity } from './db';
 import fs from 'fs';
 import path from 'path';
 
