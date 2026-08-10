@@ -50,12 +50,14 @@ const NewsPage = () => {
         
         <main id="app-content" style={{ background: '#0b192c', minHeight: '100vh', color: '#fff', paddingTop: '80px' }}>
           
-          {/* HERO BANNER (3:1 Ratio approach) */}
-          <section className="hero-section" style={{ 
-            width: '100%',
+          <section className="work-detail-hero" style={{ 
+            backgroundImage: `url('${corporateData?.newsBanner || '/images/hero-shiksha.webp'}')`,
             aspectRatio: '3 / 1',
-            background: `url(${corporateData?.newsBanner || '/images/hero-shiksha.webp'}) center/cover`,
-            display: 'block',
+            width: '100%',
+            height: 'auto',
+            minHeight: 'unset',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
             position: 'relative'
           }}>
           </section>
