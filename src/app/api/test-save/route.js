@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { NewsActivity } from '../../../../lib/db';
+import { NewsActivity } from '../../../lib/db';
 
 export const dynamic = 'force-dynamic';
 
