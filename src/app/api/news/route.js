@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { NewsActivity } from '../../../lib/db';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const news = await NewsActivity.findAll({ order: [['activityDate', 'DESC']] });

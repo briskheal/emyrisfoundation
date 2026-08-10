@@ -147,7 +147,7 @@ const NewsManager = ({ token, onEdit }) => {
       </div>
 
       {/* Banner Upload Section */}
-      <div className="admin-card" style={{ padding: '20px', marginBottom: '30px', display: 'flex', gap: '20px', alignItems: 'center', background: 'rgba(255,255,255,0.03)' }}>
+      <div style={{ padding: '20px', marginBottom: '30px', display: 'flex', gap: '20px', alignItems: 'center', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px' }}>
         <div style={{ flex: 1 }}>
           <h3 style={{ margin: '0 0 10px 0', color: 'white' }}>News Page Hero Banner</h3>
           <p style={{ margin: '0 0 15px 0', color: '#aaa', fontSize: '0.9rem' }}>Upload a custom 3:1 banner for the public News page.</p>
@@ -159,7 +159,7 @@ const NewsManager = ({ token, onEdit }) => {
             style={{ display: 'none' }} 
             id="news-banner-upload"
           />
-          <label htmlFor="news-banner-upload" className="admin-btn admin-btn-primary" style={{ cursor: 'pointer', display: 'inline-block' }}>
+          <label htmlFor="news-banner-upload" style={{ cursor: 'pointer', display: 'inline-block', padding: '10px 20px', background: 'var(--primary-orange)', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 'bold' }}>
             {bannerSaving ? 'Uploading...' : 'Upload Banner'}
           </label>
         </div>
@@ -176,22 +176,21 @@ const NewsManager = ({ token, onEdit }) => {
           value={newTitle}
           onChange={e => setNewTitle(e.target.value)}
           placeholder="New Activity Title" 
-          className="admin-input" 
-          style={{ flex: 1 }}
+          style={{ flex: 1, padding: '12px', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', background: 'transparent', color: 'white', fontSize: '1rem' }}
         />
-        <button type="submit" className="admin-btn admin-btn-primary">Add New</button>
+        <button type="submit" style={{ padding: '10px 20px', background: 'var(--primary-orange)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>Add New</button>
       </form>
 
       <div style={{ display: 'grid', gap: '15px' }}>
         {newsList.map(news => (
-          <div key={news.id} className="admin-card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px' }}>
+          <div key={news.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '12px' }}>
             <div style={{ color: 'white' }}>
               <h4 style={{ margin: '0 0 5px 0', color: 'white' }}>{news.title}</h4>
               <small style={{ color: '#aaa' }}>{news.activityDate ? new Date(news.activityDate).toLocaleDateString('en-IN', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-') : ''}</small>
             </div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => onEdit(news)} className="admin-btn">Edit Details & Content</button>
-              <button onClick={() => handleDelete(news.id)} className="admin-btn" style={{ background: 'rgba(239, 68, 68, 0.2)', color: '#ef4444' }}>Delete</button>
+              <button onClick={() => onEdit(news)} style={{ padding: '8px 16px', background: 'var(--primary-blue)', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>Edit Details & Content</button>
+              <button onClick={() => handleDelete(news.id)} style={{ padding: '8px 16px', background: 'rgba(239, 68, 68, 0.2)', color: '#ef4444', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>Delete</button>
             </div>
           </div>
         ))}
