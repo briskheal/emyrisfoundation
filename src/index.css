@@ -3786,6 +3786,7 @@ textarea.form-control {
 @media (max-width: 768px) {
   .support-cards-grid {
     display: flex;
+    align-items: stretch;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     padding-bottom: 20px;
@@ -3856,7 +3857,7 @@ textarea.form-control {
 
 
 /* Partnership horizontal scroll */
-.partnerships-scroll-container {
+.partnerships-scroll-container { align-items: stretch;
   display: flex;
   gap: 20px;
   overflow-x: auto;

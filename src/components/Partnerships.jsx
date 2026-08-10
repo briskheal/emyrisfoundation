@@ -44,7 +44,7 @@ const Partnerships = ({ initialPartnerships = [] }) => {
           {partnerships.length > 0 ? (
             <div className={gridClass}>
               {partnerships.map((p) => (
-                <div key={p.id} className={itemClass} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <div key={p.id} className={itemClass} style={{ display: 'flex', flexDirection: 'column' }}>
                   <div className="support-icon"><i className={p.icon || 'fa-solid fa-handshake'}></i></div>
                   <h4>{p.title}</h4>
                   <p style={{ flexGrow: 1 }}>{p.summary}</p>
