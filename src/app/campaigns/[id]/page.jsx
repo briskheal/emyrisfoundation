@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getCampaignDetail, getCorporateData } from '../../../lib/data-fetcher';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
@@ -65,17 +66,15 @@ export default async function CampaignPage({ params }) {
         <Header />
         <main id="app-content" style={{ background: '#0b192c', minHeight: '100vh', color: '#fff', paddingTop: '80px' }}>
           {/* HERO BANNER */}
-          <section className="work-detail-hero" style={{ 
-            backgroundImage: `url('${data.bannerImg || heroBg}')`, 
-            aspectRatio: '3 / 1',
-            width: '100%',
-            height: 'auto',
-            minHeight: 'unset',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            position: 'relative' 
-          }}>
-          </section>
+          <div style={{ width: '100%', aspectRatio: '3 / 1', position: 'relative' }}>
+            <Image 
+              src={data.bannerImg || heroBg}
+              alt={data?.title || 'Campaign Banner'}
+              fill
+              style={{ objectFit: 'cover' }}
+              priority
+            />
+          </div>
 
           {/* SCROLLING TITLE TICKER */}
           <div className="ticker-wrapper">
