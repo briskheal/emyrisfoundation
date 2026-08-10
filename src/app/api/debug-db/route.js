@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { sequelize } from '../../../../lib/db';
+import { sequelize } from '../../../lib/db';
 
 export const dynamic = 'force-dynamic';
 
