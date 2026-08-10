@@ -16,11 +16,11 @@ const NewsManager = ({ token, onEdit }) => {
 
   const fetchNews = async () => {
     try {
-      const resCorp = await fetch('/api/corporate');
+      const resCorp = await fetch('/api/corporate', { cache: 'no-store' });
       const dataCorp = await resCorp.json();
       setCorporateData(dataCorp || {});
 
-      const res = await fetch('/api/news');
+      const res = await fetch('/api/news', { cache: 'no-store' });
       const data = await res.json();
       setNewsList(data || []);
     } catch (err) {

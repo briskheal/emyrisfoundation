@@ -21,13 +21,13 @@ const NewsPage = () => {
 
   useEffect(() => {
     // Fetch corporate data for Header/Footer
-    fetch('/api/corporate')
+    fetch('/api/corporate', { cache: 'no-store' })
       .then(res => res.json())
       .then(data => setCorporateData(data))
       .catch(err => console.error(err));
 
     // Fetch news
-    fetch('/api/news')
+    fetch('/api/news', { cache: 'no-store' })
       .then(res => res.json())
       .then(data => setNews(data || []))
       .catch(err => console.error(err))
