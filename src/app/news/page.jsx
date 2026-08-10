@@ -52,13 +52,10 @@ const NewsPage = () => {
           
           {/* HERO BANNER (3:1 Ratio approach) */}
           <section className="hero-section" style={{ 
-            height: '33vw', 
-            minHeight: '300px',
-            maxHeight: '400px',
+            width: '100%',
+            aspectRatio: '3 / 1',
             background: `url(${corporateData?.newsBanner || '/images/hero-shiksha.webp'}) center/cover`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            display: 'block',
             position: 'relative'
           }}>
           </section>
