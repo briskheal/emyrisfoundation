@@ -167,13 +167,23 @@ const NewsPage = () => {
               maxHeight: '90vh', display: 'flex', flexDirection: 'column',
               boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)'
             }}>
+              <style>{`
+                .news-modal-content * {
+                  color: rgba(255,255,255,0.9) !important;
+                  background-color: transparent !important;
+                }
+                .news-modal-content a {
+                  color: var(--primary-orange) !important;
+                  text-decoration: underline;
+                }
+              `}</style>
               <div style={{ padding: '25px', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h3 style={{ margin: 0, color: 'var(--primary-orange)' }}>{selectedNews.title}</h3>
                 <button onClick={() => setSelectedNews(null)} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}>
                   &times;
                 </button>
               </div>
-              <div style={{ padding: '30px', overflowY: 'auto', color: 'rgba(255,255,255,0.9)', lineHeight: 1.7 }} dangerouslySetInnerHTML={{ __html: selectedNews.content }}></div>
+              <div className="news-modal-content" style={{ padding: '30px', overflowY: 'auto', lineHeight: 1.7 }} dangerouslySetInnerHTML={{ __html: selectedNews.content || '<p>No details provided.</p>' }}></div>
               <div style={{ padding: '20px 25px', borderTop: '1px solid rgba(255,255,255,0.1)', background: 'rgba(0,0,0,0.2)', color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem' }}>
                 Activity Date: {selectedNews.activityDate ? new Date(selectedNews.activityDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : ''}
               </div>
