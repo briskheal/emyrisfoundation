@@ -123,6 +123,13 @@ const NewsDetailEditor = ({ news, token, onBack }) => {
             </p>
           </div>
           
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px', marginBottom: '40px' }}>
+            {saved && <span style={{ color: '#15F5BA', marginRight: '15px', alignSelf: 'center' }}><i className="fa-solid fa-check"></i> Saved successfully</span>}
+            <button onClick={handleSave} style={{ padding: '12px 30px', background: 'var(--primary-orange)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', fontSize: '1.1rem' }} disabled={saving}>
+              {saving ? 'Saving...' : 'Save Changes'}
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
