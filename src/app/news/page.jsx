@@ -55,21 +55,20 @@ const NewsPage = () => {
             height: '33vw', 
             minHeight: '300px',
             maxHeight: '400px',
-            background: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url(${corporateData?.newsBanner || '/images/hero-shiksha.webp'}) center/cover`,
+            background: `url(${corporateData?.newsBanner || '/images/hero-shiksha.webp'}) center/cover`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             position: 'relative'
           }}>
-            <div className="container text-center">
-              <h1 style={{ color: 'white', fontSize: '3rem', fontFamily: 'var(--font-title)', marginBottom: '15px' }}>
-                News &amp; Updates
-              </h1>
-              <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto' }}>
-                Follow our daily journey and activities as we make a difference together.
-              </p>
-            </div>
           </section>
+
+          {/* SCROLLING TITLE TICKER */}
+          <div className="ticker-wrapper">
+            <div className="ticker-text" style={{ animationDuration: '24.3s' }}>
+              <span className="dot">•</span> Follow our Daily Journey and Activities. Together We Grow. <span className="dot">•</span> Follow our Daily Journey and Activities. Together We Grow. <span className="dot">•</span>
+            </div>
+          </div>
 
           {/* MAIN CONTENT SECTION */}
           <section style={{ padding: '60px 0' }}>
