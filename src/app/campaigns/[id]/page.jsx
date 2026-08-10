@@ -54,6 +54,10 @@ export default async function CampaignPage({ params }) {
   };
 
   const heroBg = getHeroImg(id);
+  
+  const campaignTextStr = `${data?.motto || ''} - ${data?.title || ''} ${data?.bannerMsg ? `- ${data.bannerMsg}` : ''}`;
+  const fullTickerStr = `${campaignTextStr}  ${campaignTextStr}`;
+  const animationDuration = `${15 + (fullTickerStr.length * 0.15)}s`;
 
   return (
     <CorporateProvider initialData={corporateData}>
@@ -75,7 +79,7 @@ export default async function CampaignPage({ params }) {
 
           {/* SCROLLING TITLE TICKER */}
           <div className="ticker-wrapper">
-            <div className="ticker-text">
+            <div className="ticker-text" style={{ animationDuration }}>
               <span className="dot">•</span> {data.motto} - {data.title} {data.bannerMsg ? ` - ${data.bannerMsg}` : ''} <span className="dot">•</span> {data.motto} - {data.title} {data.bannerMsg ? ` - ${data.bannerMsg}` : ''} <span className="dot">•</span>
             </div>
           </div>

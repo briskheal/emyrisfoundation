@@ -27,6 +27,9 @@ export default async function WorkCategoryPage({ params }) {
     return `${(year - 1).toString().slice(-2)}-${year.toString().slice(-2)}`;
   };
   const currentFy = getCurrentFinancialYear();
+  
+  const tickerTextString = `${data?.bannerTitle || ''}  ${data?.bannerTitle || ''}`;
+  const animationDuration = `${15 + (tickerTextString.length * 0.15)}s`;
 
   if (!data) {
     return (
@@ -63,7 +66,7 @@ export default async function WorkCategoryPage({ params }) {
 
         {/* SCROLLING TITLE TICKER */}
         <div className="ticker-wrapper">
-          <div className="ticker-text">
+          <div className="ticker-text" style={{ animationDuration }}>
             <span className="dot">•</span> {data.bannerTitle} <span className="dot">•</span> {data.bannerTitle} <span className="dot">•</span>
           </div>
         </div>
