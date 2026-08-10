@@ -123,10 +123,10 @@ const NewsPage = () => {
                   <div className="text-center" style={{ color: 'rgba(255,255,255,0.5)', padding: '40px' }}>No activities found for the selected dates.</div>
                 ) : (
                   filteredNews.map(item => (
-                    <div key={item.id} className="glass-card" style={{ padding: '15px', borderLeft: '4px solid var(--primary-orange)' }}>
+                    <div key={item.id} className="glass-card" style={{ background: 'rgba(30, 62, 98, 0.4)', borderColor: 'rgba(255,255,255,0.1)', padding: '15px', borderLeft: '4px solid var(--primary-orange)' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'nowrap', gap: '15px', marginBottom: '10px' }}>
-                        <h3 style={{ margin: 0, color: 'var(--primary-orange)', fontSize: '1.1rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.title}</h3>
-                        <span style={{ background: 'rgba(255,255,255,0.1)', padding: '4px 10px', borderRadius: '15px', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+                        <h3 style={{ margin: 0, color: '#fff', fontSize: '1.1rem', lineHeight: '1.4', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.title}</h3>
+                        <span style={{ color: '#15F5BA', fontSize: '0.8rem', fontWeight: 'bold', whiteSpace: 'nowrap' }}>
                           <i className="fa-regular fa-calendar" style={{ marginRight: '6px' }}></i>
                           {item.activityDate ? new Date(item.activityDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : ''}
                         </span>
