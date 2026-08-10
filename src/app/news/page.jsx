@@ -55,7 +55,7 @@ const NewsPage = () => {
             height: '33vw', 
             minHeight: '300px',
             maxHeight: '400px',
-            background: 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url(/images/hero-shiksha.webp) center/cover',
+            background: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url(${corporateData?.newsBanner || '/images/hero-shiksha.webp'}) center/cover`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -108,12 +108,12 @@ const NewsPage = () => {
                 background: 'rgba(255,255,255,0.03)', 
                 border: '1px solid rgba(255,255,255,0.08)', 
                 borderRadius: '16px',
-                padding: '30px',
-                height: '65vh', // Takes up most of the screen height
+                padding: '20px',
+                height: '70vh', // Takes up most of the screen height
                 overflowY: 'auto', // Vertical scrollbar when content is long
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '25px',
+                gap: '15px',
                 scrollbarWidth: 'thin',
                 scrollbarColor: 'var(--primary-orange) rgba(255,255,255,0.1)'
               }}>
@@ -123,25 +123,25 @@ const NewsPage = () => {
                   <div className="text-center" style={{ color: 'rgba(255,255,255,0.5)', padding: '40px' }}>No activities found for the selected dates.</div>
                 ) : (
                   filteredNews.map(item => (
-                    <div key={item.id} className="glass-card" style={{ padding: '25px', borderLeft: '4px solid var(--primary-orange)' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '10px', marginBottom: '15px' }}>
-                        <h3 style={{ margin: 0, color: 'var(--primary-orange)', fontSize: '1.4rem' }}>{item.title}</h3>
-                        <span style={{ background: 'rgba(255,255,255,0.1)', padding: '5px 12px', borderRadius: '20px', fontSize: '0.85rem' }}>
-                          <i className="fa-regular fa-calendar" style={{ marginRight: '8px' }}></i>
+                    <div key={item.id} className="glass-card" style={{ padding: '15px', borderLeft: '4px solid var(--primary-orange)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'nowrap', gap: '15px', marginBottom: '10px' }}>
+                        <h3 style={{ margin: 0, color: 'var(--primary-orange)', fontSize: '1.1rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.title}</h3>
+                        <span style={{ background: 'rgba(255,255,255,0.1)', padding: '4px 10px', borderRadius: '15px', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+                          <i className="fa-regular fa-calendar" style={{ marginRight: '6px' }}></i>
                           {item.activityDate ? new Date(item.activityDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : ''}
                         </span>
                       </div>
                       
                       {/* Show snippet of content */}
                       <div 
-                        style={{ color: 'rgba(255,255,255,0.8)', lineHeight: 1.6, maxHeight: '80px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' }}
+                        style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.9rem', lineHeight: 1.5, maxHeight: '43px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}
                         dangerouslySetInnerHTML={{ __html: item.content }}
                       />
                       
                       <button 
                         onClick={() => setSelectedNews(item)}
                         className="btn btn-outline-orange btn-sm" 
-                        style={{ marginTop: '20px' }}
+                        style={{ marginTop: '15px', padding: '4px 10px', fontSize: '0.8rem' }}
                       >
                         Read More <i className="fa-solid fa-arrow-right" style={{ marginLeft: '5px' }}></i>
                       </button>

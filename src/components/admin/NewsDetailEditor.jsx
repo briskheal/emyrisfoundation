@@ -115,7 +115,7 @@ const NewsDetailEditor = ({ news, token, onBack }) => {
               <h3 style={{ margin: 0, color: 'white' }}>Activity Report / Content</h3>
             </div>
             
-            <div style={{ background: '#fff', color: '#000', borderRadius: '4px' }}>
+            <div style={{ background: 'transparent', borderRadius: '4px' }}>
               <WysiwygEditor 
                 value={formData.content} 
                 onChange={(content) => setFormData({...formData, content})} 

@@ -1,12 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { compressImage } from '../../lib/imageCompressor';
+import ImageCropModal from './ImageCropModal';
 
 const NewsManager = ({ token, onEdit }) => {
   const [newsList, setNewsList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newTitle, setNewTitle] = useState('');
+  
+  // Banner state
+  const [corporateData, setCorporateData] = useState({});
+  const [bannerSaving, setBannerSaving] = useState(false);
+  const [cropSrc, setCropSrc] = useState(null);
+  const [cropFileName, setCropFileName] = useState('');
+  const fileInputRef = useRef(null);
 
   const fetchNews = async () => {
     try {
+      const resCorp = await fetch('/api/corporate');
+      const dataCorp = await resCorp.json();
+      setCorporateData(dataCorp || {});
+
       const res = await fetch('/api/news');
       const data = await res.json();
       setNewsList(data || []);
@@ -70,12 +83,91 @@ const NewsManager = ({ token, onEdit }) => {
     }
   };
 
+  const handleFileSelect = (e) => {
+    try {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (fileInputRef.current) fileInputRef.current.value = '';
+      const reader = new FileReader();
+      reader.onload = () => {
+        setCropSrc(reader.result);
+        setCropFileName(file.name.replace(/\.[^/.]+$/, "") + ".webp");
+      };
+      reader.readAsDataURL(file);
+    } catch (err) {
+      console.error("Error reading file:", err);
+    }
+  };
+
+  const handleCropComplete = async (croppedFile) => {
+    setCropSrc(null);
+    setBannerSaving(true);
+    try {
+      const compressedFile = await compressImage(croppedFile);
+      const form = new FormData();
+      form.append('file', compressedFile);
+      
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` },
+        body: form
+      });
+      
+      if (!res.ok) throw new Error('Upload failed');
+      const data = await res.json();
+      const imageUrl = data.url;
+
+      const saveRes = await fetch('/api/corporate', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ ...corporateData, newsBanner: imageUrl })
+      });
+      
+      if (saveRes.ok) {
+        setCorporateData({ ...corporateData, newsBanner: imageUrl });
+      } else {
+        alert('Failed to save banner');
+      }
+    } catch (err) {
+      alert('Error uploading banner');
+    } finally {
+      setBannerSaving(false);
+    }
+  };
+
   if (loading) return <div style={{ color: 'white' }}>Loading...</div>;
 
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <h2 style={{ margin: 0, color: 'white' }}>Manage News & Activities</h2>
+      </div>
+
+      {/* Banner Upload Section */}
+      <div className="admin-card" style={{ padding: '20px', marginBottom: '30px', display: 'flex', gap: '20px', alignItems: 'center', background: 'rgba(255,255,255,0.03)' }}>
+        <div style={{ flex: 1 }}>
+          <h3 style={{ margin: '0 0 10px 0', color: 'white' }}>News Page Hero Banner</h3>
+          <p style={{ margin: '0 0 15px 0', color: '#aaa', fontSize: '0.9rem' }}>Upload a custom 3:1 banner for the public News page.</p>
+          <input 
+            type="file" 
+            accept="image/*" 
+            onChange={handleFileSelect} 
+            ref={fileInputRef} 
+            style={{ display: 'none' }} 
+            id="news-banner-upload"
+          />
+          <label htmlFor="news-banner-upload" className="admin-btn admin-btn-primary" style={{ cursor: 'pointer', display: 'inline-block' }}>
+            {bannerSaving ? 'Uploading...' : 'Upload Banner'}
+          </label>
+        </div>
+        {corporateData.newsBanner && (
+          <div style={{ flex: 1 }}>
+            <img src={corporateData.newsBanner} alt="News Banner" style={{ width: '100%', maxHeight: '100px', objectFit: 'cover', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }} />
+          </div>
+        )}
       </div>
 
       <form onSubmit={handleAdd} style={{ display: 'flex', gap: '10px', marginBottom: '30px' }}>
@@ -105,6 +197,16 @@ const NewsManager = ({ token, onEdit }) => {
         ))}
         {newsList.length === 0 && <p style={{ color: '#aaa' }}>No activities found.</p>}
       </div>
+
+      {cropSrc && (
+        <ImageCropModal 
+          imageSrc={cropSrc}
+          fileName={cropFileName}
+          aspect={3 / 1}
+          onCropComplete={handleCropComplete}
+          onClose={() => setCropSrc(null)}
+        />
+      )}
     </div>
   );
 };
