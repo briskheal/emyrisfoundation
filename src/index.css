@@ -2787,8 +2787,8 @@ textarea.form-control {
 
 .presence-grid {
     display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 40px;
+    grid-template-columns: 240px 1fr;
+    gap: 25px;
     margin-top: 40px;
 }
 
@@ -2805,11 +2805,11 @@ textarea.form-control {
     background: rgba(11, 25, 44, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.05);
     color: rgba(255, 255, 255, 0.7);
-    padding: 20px 25px;
+    padding: 12px 18px;
     border-radius: var(--border-radius-sm);
     font-family: var(--font-title);
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
     text-align: left;
     transition: var(--transition-fast);
@@ -2825,7 +2825,7 @@ textarea.form-control {
 }
 
 .presence-detail-card {
-    padding: 40px !important;
+    padding: 25px !important;
     background: rgba(11, 25, 44, 0.45) !important;
     border: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -3437,7 +3437,7 @@ textarea.form-control {
     margin-bottom: 25px;
 }
 .presence-header h3 {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     color: var(--primary-orange);
     margin: 0;
 }
@@ -3457,19 +3457,20 @@ textarea.form-control {
 .p-stat {
     background: rgba(21, 245, 186, 0.1);
     border: 1px solid rgba(21, 245, 186, 0.2);
-    padding: 20px;
+    padding: 15px;
     border-radius: 12px;
     text-align: center;
 }
 .p-stat h4 {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     color: var(--primary-green);
     margin: 0 0 5px 0;
 }
 .p-stat p {
     margin: 0;
     color: rgba(255, 255, 255, 0.8);
-    font-weight: 500;
+    font-weight: 400;
+    font-size: 0.9rem;
 }
 .presence-contact {
     background: rgba(11, 25, 44, 0.6);
@@ -3481,6 +3482,8 @@ textarea.form-control {
 .presence-contact h4 {
     color: var(--primary-blue);
     margin: 0 0 10px 0;
+    font-size: 1.05rem;
+    font-weight: 500;
 }
 .presence-contact p {
     margin: 5px 0;
@@ -3488,11 +3491,13 @@ textarea.form-control {
     display: flex;
     align-items: center;
     gap: 10px;
+    font-size: 0.9rem;
 }
 .presence-programs h4 {
     color: var(--white);
     margin: 0 0 15px 0;
-    font-size: 1.2rem;
+    font-size: 1.05rem;
+    font-weight: 500;
 }
 .presence-programs ul {
     list-style: none;
@@ -3507,6 +3512,7 @@ textarea.form-control {
     align-items: center;
     gap: 10px;
     color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
 }
 .text-blue { color: var(--primary-blue); }
 
