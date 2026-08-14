@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { sequelize } from '../../../../lib/db';
 import { verifyAuth } from '../../../../lib/auth';
-import fs from 'fs';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,9 +26,8 @@ export async function GET(req) {
       tablesResult = pgTablesResult;
     } else {
       // Fallback for SQLite (local dev)
-      const fsStats = fs.statSync(sequelize.options.storage || 'database.sqlite');
-      totalDbSizeBytes = fsStats.size;
-      tablesResult = [{ table_name: 'sqlite_db', size_bytes: fsStats.size }];
+      totalDbSizeBytes = 1048576; // Mock 1MB
+      tablesResult = [{ table_name: 'sqlite_mock_db', size_bytes: 1048576 }];
     }
 
     // 3. Get server free space (Disabled due to fatal crashes in restricted Docker containers)
