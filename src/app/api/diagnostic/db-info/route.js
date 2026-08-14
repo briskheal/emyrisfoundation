@@ -32,17 +32,10 @@ export async function GET(req) {
       tablesResult = [{ table_name: 'sqlite_db', size_bytes: fsStats.size }];
     }
 
-    // 3. Get server free space
+    // 3. Get server free space (Disabled due to fatal crashes in restricted Docker containers)
     let totalServerBytes = 0;
     let freeServerBytes = 0;
-    try {
-      const rootPath = process.platform === 'win32' ? process.cwd().substring(0, 3) : '/';
-      const stat = fs.statfsSync(rootPath);
-      totalServerBytes = stat.blocks * stat.bsize;
-      freeServerBytes = stat.bfree * stat.bsize;
-    } catch (fsErr) {
-      console.error('Error reading filesystem stats:', fsErr);
-    }
+
 
     return NextResponse.json({ 
       success: true, 
