@@ -36,7 +36,8 @@ export async function GET(req) {
     let totalServerBytes = 0;
     let freeServerBytes = 0;
     try {
-      const stat = fs.statfsSync('/');
+      const rootPath = process.platform === 'win32' ? process.cwd().substring(0, 3) : '/';
+      const stat = fs.statfsSync(rootPath);
       totalServerBytes = stat.blocks * stat.bsize;
       freeServerBytes = stat.bfree * stat.bsize;
     } catch (fsErr) {
