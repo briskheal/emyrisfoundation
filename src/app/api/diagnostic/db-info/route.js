@@ -6,8 +6,8 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(req) {
   try {
-    const authError = await verifyAuth(req);
-    if (authError) return authError;
+    const isAuthenticated = await verifyAuth(req);
+    if (!isAuthenticated) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     let totalDbSizeBytes = 0;
     let tablesResult = [];
