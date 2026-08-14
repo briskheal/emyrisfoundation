@@ -32,10 +32,6 @@ export async function GET(req) {
       tablesResult = [{ table_name: 'sqlite_mock_db', size_bytes: 1048576 }];
     }
 
-    // 3. Get server free space (Disabled due to fatal crashes in restricted Docker containers)
-    let totalServerBytes = 0;
-    let freeServerBytes = 0;
-
     // Get size of public/uploads (Gallery/Media)
     let uploadsSizeBytes = 0;
     try {
@@ -49,6 +45,40 @@ export async function GET(req) {
       console.log('No uploads folder or error reading it');
     }
 
+    // 3. Safe Server Free Space calculation via OS commands (prevents Node.js V8 crashes)
+    let totalServerBytes = 0;
+    let freeServerBytes = 0;
+    try {
+      const { exec } = require('child_process');
+      const util = require('util');
+      const execPromise = util.promisify(exec);
+      
+      if (process.platform === 'win32') {
+        const { stdout } = await execPromise('wmic logicaldisk get size,freespace');
+        const lines = stdout.split('\n');
+        for (let line of lines) {
+          const parts = line.trim().split(/\s+/);
+          if (parts.length === 2 && !isNaN(parseInt(parts[0], 10)) && !isNaN(parseInt(parts[1], 10))) {
+            freeServerBytes = parseInt(parts[0], 10);
+            totalServerBytes = parseInt(parts[1], 10);
+            break;
+          }
+        }
+      } else {
+        const { stdout } = await execPromise('df -k /');
+        const lines = stdout.split('\n');
+        if (lines.length > 1) {
+          const parts = lines[1].trim().split(/\s+/);
+          if (parts.length >= 4 && !isNaN(parseInt(parts[1], 10)) && !isNaN(parseInt(parts[3], 10))) {
+            totalServerBytes = parseInt(parts[1], 10) * 1024;
+            freeServerBytes = parseInt(parts[3], 10) * 1024;
+          }
+        }
+      }
+    } catch (e) {
+      console.log('Error getting server space via command line', e);
+    }
+
     return NextResponse.json({ 
       success: true, 
       db: {
@@ -57,6 +87,10 @@ export async function GET(req) {
       },
       media: {
         totalBytes: uploadsSizeBytes
+      },
+      server: {
+        totalBytes: totalServerBytes,
+        freeBytes: freeServerBytes
       }
     });
   } catch (err) {

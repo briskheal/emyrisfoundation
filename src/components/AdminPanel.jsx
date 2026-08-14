@@ -537,6 +537,28 @@ const AdminPanel = () => {
                     <div style={{ color: 'rgba(255,255,255,0.5)', padding: '20px 0' }}>Loading statistics...</div>
                   ) : dbStats ? (
                     <div>
+                      {/* Server Storage Progress */}
+                      {dbStats.server && dbStats.server.totalBytes > 0 && (
+                        <div style={{ marginBottom: '25px', padding: '15px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem' }}>
+                            <span style={{ color: '#15F5BA', fontWeight: 'bold' }}>
+                              Used Space: {((dbStats.db.totalBytes + (dbStats.media?.totalBytes || 0)) / (1024 * 1024)).toFixed(2)} MB
+                            </span>
+                            <span style={{ color: 'rgba(255,255,255,0.5)' }}>{(dbStats.server.freeBytes / (1024 * 1024 * 1024)).toFixed(2)} GB Available</span>
+                          </div>
+                          <div style={{ width: '100%', height: '12px', background: 'rgba(255,255,255,0.1)', borderRadius: '6px', overflow: 'hidden' }}>
+                            <div style={{ 
+                              width: `${Math.max(1, ((dbStats.db.totalBytes + (dbStats.media?.totalBytes || 0)) / dbStats.server.totalBytes) * 100)}%`, 
+                              height: '100%', 
+                              background: 'linear-gradient(90deg, #15F5BA, #0c9b74)' 
+                            }}></div>
+                          </div>
+                          <div style={{ marginTop: '10px', fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', textAlign: 'right' }}>
+                            Total Server Capacity: {(dbStats.server.totalBytes / (1024 * 1024 * 1024)).toFixed(2)} GB
+                          </div>
+                        </div>
+                      )}
+
                       {/* Top Tables Breakdown */}
                       {dbStats.db.tables && dbStats.db.tables.length > 0 && (
                         <div>
