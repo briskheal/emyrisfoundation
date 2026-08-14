@@ -499,63 +499,52 @@ const AdminPanel = () => {
                 </div>
   
               </div>
-
+              
               {/* DB Stats Block */}
               {userRole === 'superadmin' && (
                 <div style={{ marginTop: '30px', padding: '20px', background: 'rgba(0,0,0,0.2)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', gap: '15px' }}>
                     <h3 style={{ margin: 0, color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <i className="fa-solid fa-database" style={{ color: '#15F5BA' }}></i> Database & Server Storage
+                      <i className="fa-solid fa-database" style={{ color: '#15F5BA' }}></i> Storage Utilization
                     </h3>
-                    <button onClick={() => fetchDbStats(token)} disabled={loadingDbStats} style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'white', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '0.8rem' }}>
-                      <i className={`fa-solid fa-rotate-right ${loadingDbStats ? 'fa-spin' : ''}`}></i> Refresh
-                    </button>
+                    
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                      {dbStats && (
+                        <div style={{ display: 'flex', gap: '20px', background: 'rgba(255,255,255,0.05)', padding: '6px 16px', borderRadius: '8px' }}>
+                          <div style={{ textAlign: 'center' }}>
+                            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', textTransform: 'uppercase' }}>Database Size</div>
+                            <div style={{ color: '#15F5BA', fontWeight: 'bold', fontSize: '1rem' }}>
+                              {(dbStats.db.totalBytes / (1024 * 1024)).toFixed(2)} MB
+                            </div>
+                          </div>
+                          <div style={{ width: '1px', background: 'rgba(255,255,255,0.1)' }}></div>
+                          <div style={{ textAlign: 'center' }}>
+                            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', textTransform: 'uppercase' }}>Gallery Media</div>
+                            <div style={{ color: '#f97316', fontWeight: 'bold', fontSize: '1rem' }}>
+                              {(dbStats.media?.totalBytes / (1024 * 1024)).toFixed(2)} MB
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                      
+                      <button onClick={() => fetchDbStats(token)} disabled={loadingDbStats} style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'white', padding: '8px 16px', borderRadius: '6px', cursor: 'pointer', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <i className={`fa-solid fa-rotate-right ${loadingDbStats ? 'fa-spin' : ''}`}></i> Refresh
+                      </button>
+                    </div>
                   </div>
                   
                   {loadingDbStats && !dbStats ? (
-                    <div style={{ color: 'rgba(255,255,255,0.5)' }}>Loading statistics...</div>
+                    <div style={{ color: 'rgba(255,255,255,0.5)', padding: '20px 0' }}>Loading statistics...</div>
                   ) : dbStats ? (
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
-                      
-                      {/* Server Storage Progress */}
-                      <div>
-                        <h4 style={{ color: 'rgba(255,255,255,0.8)', margin: '0 0 15px 0', fontSize: '0.9rem' }}>Storage Utilization</h4>
-                        
-                        {dbStats.server.totalBytes > 0 ? (
-                          <>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem' }}>
-                              <span style={{ color: '#15F5BA', fontWeight: 'bold' }}>DB Size: {(dbStats.db.totalBytes / (1024 * 1024)).toFixed(2)} MB</span>
-                              <span style={{ color: 'rgba(255,255,255,0.5)' }}>{(dbStats.server.freeBytes / (1024 * 1024 * 1024)).toFixed(2)} GB Available</span>
-                            </div>
-                            <div style={{ width: '100%', height: '12px', background: 'rgba(255,255,255,0.1)', borderRadius: '6px', overflow: 'hidden' }}>
-                              <div style={{ 
-                                width: `${Math.max(1, (dbStats.db.totalBytes / dbStats.server.totalBytes) * 100)}%`, 
-                                height: '100%', 
-                                background: 'linear-gradient(90deg, #15F5BA, #0c9b74)' 
-                              }}></div>
-                            </div>
-                            <div style={{ marginTop: '10px', fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', textAlign: 'right' }}>
-                              Total Server Capacity: {(dbStats.server.totalBytes / (1024 * 1024 * 1024)).toFixed(2)} GB
-                            </div>
-                          </>
-                        ) : (
-                          <div style={{ padding: '15px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px' }}>
-                            <div style={{ color: '#15F5BA', fontWeight: 'bold', fontSize: '1.2rem', marginBottom: '5px' }}>
-                              {(dbStats.db.totalBytes / (1024 * 1024)).toFixed(2)} MB
-                            </div>
-                            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem' }}>Total Database Size</div>
-                          </div>
-                        )}
-                      </div>
-
+                    <div>
                       {/* Top Tables Breakdown */}
                       {dbStats.db.tables && dbStats.db.tables.length > 0 && (
                         <div>
                           <h4 style={{ color: 'rgba(255,255,255,0.8)', margin: '0 0 15px 0', fontSize: '0.9rem' }}>Largest Modules</h4>
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '12px' }}>
                             {dbStats.db.tables.map((table, i) => (
-                              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', fontSize: '0.85rem' }}>
-                                <span style={{ color: 'rgba(255,255,255,0.8)' }}>{table.name}</span>
+                              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 14px', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', fontSize: '0.85rem' }}>
+                                <span style={{ color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>{table.name}</span>
                                 <span style={{ color: 'rgba(255,255,255,0.5)' }}>{(table.bytes / 1024).toFixed(1)} KB</span>
                               </div>
                             ))}
@@ -565,9 +554,9 @@ const AdminPanel = () => {
                       
                     </div>
                   ) : dbStatsError ? (
-                    <div style={{ color: '#ef4444' }}>Error loading statistics: {dbStatsError}</div>
+                    <div style={{ color: '#ef4444', padding: '20px 0' }}>Error loading statistics: {dbStatsError}</div>
                   ) : (
-                    <div style={{ color: 'rgba(255,255,255,0.5)' }}>Could not load database statistics.</div>
+                    <div style={{ color: 'rgba(255,255,255,0.5)', padding: '20px 0' }}>Could not load database statistics.</div>
                   )}
                 </div>
               )}

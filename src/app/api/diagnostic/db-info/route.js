@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { sequelize } from '../../../../lib/db';
 import { verifyAuth } from '../../../../lib/auth';
+import fs from 'fs/promises';
+import path from 'path';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,7 +23,7 @@ export async function GET(req) {
         SELECT relname as table_name, pg_total_relation_size(relid) as size_bytes
         FROM pg_catalog.pg_statio_user_tables
         ORDER BY pg_total_relation_size(relid) DESC
-        LIMIT 5;
+        LIMIT 6;
       `);
       tablesResult = pgTablesResult;
     } else {
@@ -34,6 +36,18 @@ export async function GET(req) {
     let totalServerBytes = 0;
     let freeServerBytes = 0;
 
+    // Get size of public/uploads (Gallery/Media)
+    let uploadsSizeBytes = 0;
+    try {
+      const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+      const files = await fs.readdir(uploadsDir);
+      for (const file of files) {
+        const stats = await fs.stat(path.join(uploadsDir, file));
+        uploadsSizeBytes += stats.size;
+      }
+    } catch (e) {
+      console.log('No uploads folder or error reading it');
+    }
 
     return NextResponse.json({ 
       success: true, 
@@ -41,9 +55,8 @@ export async function GET(req) {
         totalBytes: totalDbSizeBytes,
         tables: tablesResult.map(t => ({ name: t.table_name, bytes: parseInt(t.size_bytes, 10) }))
       },
-      server: {
-        totalBytes: totalServerBytes,
-        freeBytes: freeServerBytes
+      media: {
+        totalBytes: uploadsSizeBytes
       }
     });
   } catch (err) {
