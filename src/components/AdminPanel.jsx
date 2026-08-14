@@ -44,9 +44,9 @@ const AdminPanel = () => {
   const [corp, setCorp] = useState({});
   const [qrPreview, setQrPreview] = useState('');
   const [logoPreview, setLogoPreview] = useState('');
-  
   const [dbStats, setDbStats] = useState(null);
   const [loadingDbStats, setLoadingDbStats] = useState(false);
+  const [dbStatsError, setDbStatsError] = useState(null);
 
   // Fetch initial data
   useEffect(() => {
@@ -87,6 +87,7 @@ const AdminPanel = () => {
 
   const fetchDbStats = async (authToken) => {
     setLoadingDbStats(true);
+    setDbStatsError(null);
     try {
       const res = await fetch('/api/diagnostic/db-stats', {
         headers: { 'Authorization': `Bearer ${authToken}` }
@@ -94,9 +95,12 @@ const AdminPanel = () => {
       const data = await res.json();
       if (data.success) {
         setDbStats(data);
+      } else {
+        setDbStatsError(data.error || 'Unknown API error');
       }
     } catch (err) {
       console.error('Error fetching DB stats:', err);
+      setDbStatsError(err.message);
     } finally {
       setLoadingDbStats(false);
     }
@@ -554,6 +558,8 @@ const AdminPanel = () => {
                       )}
                       
                     </div>
+                  ) : dbStatsError ? (
+                    <div style={{ color: '#ef4444' }}>Error loading statistics: {dbStatsError}</div>
                   ) : (
                     <div style={{ color: 'rgba(255,255,255,0.5)' }}>Could not load database statistics.</div>
                   )}

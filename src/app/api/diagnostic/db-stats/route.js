@@ -10,17 +10,27 @@ export async function GET(req) {
     const authError = await verifyAuth(req);
     if (authError) return authError;
 
-    // 1. Get database total size
-    const [dbSizeResult] = await sequelize.query(`SELECT pg_database_size(current_database()) as size_bytes`);
-    const totalDbSizeBytes = parseInt(dbSizeResult[0]?.size_bytes || 0, 10);
+    let totalDbSizeBytes = 0;
+    let tablesResult = [];
 
-    // 2. Get top 5 tables by size
-    const [tablesResult] = await sequelize.query(`
-      SELECT relname as table_name, pg_total_relation_size(relid) as size_bytes
-      FROM pg_catalog.pg_statio_user_tables
-      ORDER BY pg_total_relation_size(relid) DESC
-      LIMIT 5;
-    `);
+    // Check if dialect is postgres
+    if (sequelize.getDialect() === 'postgres') {
+      const [dbSizeResult] = await sequelize.query(`SELECT pg_database_size(current_database()) as size_bytes`);
+      totalDbSizeBytes = parseInt(dbSizeResult[0]?.size_bytes || 0, 10);
+
+      const [pgTablesResult] = await sequelize.query(`
+        SELECT relname as table_name, pg_total_relation_size(relid) as size_bytes
+        FROM pg_catalog.pg_statio_user_tables
+        ORDER BY pg_total_relation_size(relid) DESC
+        LIMIT 5;
+      `);
+      tablesResult = pgTablesResult;
+    } else {
+      // Fallback for SQLite (local dev)
+      const fsStats = fs.statSync(sequelize.options.storage || 'database.sqlite');
+      totalDbSizeBytes = fsStats.size;
+      tablesResult = [{ table_name: 'sqlite_db', size_bytes: fsStats.size }];
+    }
 
     // 3. Get server free space
     let totalServerBytes = 0;
