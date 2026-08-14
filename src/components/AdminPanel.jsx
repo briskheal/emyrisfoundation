@@ -89,14 +89,20 @@ const AdminPanel = () => {
     setLoadingDbStats(true);
     setDbStatsError(null);
     try {
-      const res = await fetch('/api/diagnostic/db-stats', {
+      const res = await fetch('/api/diagnostic/db-info', {
         headers: { 'Authorization': `Bearer ${authToken}` }
       });
-      const data = await res.json();
-      if (data.success) {
-        setDbStats(data);
-      } else {
-        setDbStatsError(data.error || 'Unknown API error');
+      const text = await res.text();
+      try {
+        const data = JSON.parse(text);
+        if (data.success) {
+          setDbStats(data);
+        } else {
+          setDbStatsError(data.error || 'Unknown API error');
+        }
+      } catch (parseErr) {
+        console.error('Raw response:', text);
+        setDbStatsError(`API returned non-JSON. Status: ${res.status}. Body: ${text.slice(0, 100)}`);
       }
     } catch (err) {
       console.error('Error fetching DB stats:', err);
