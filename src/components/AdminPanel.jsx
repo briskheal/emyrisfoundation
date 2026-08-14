@@ -562,14 +562,25 @@ const AdminPanel = () => {
                       {/* Top Tables Breakdown */}
                       {dbStats.db.tables && dbStats.db.tables.length > 0 && (
                         <div>
-                          <h4 style={{ color: 'rgba(255,255,255,0.8)', margin: '0 0 15px 0', fontSize: '0.9rem' }}>Largest Modules</h4>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', margin: '0 0 15px 0' }}>
+                            <h4 style={{ color: 'rgba(255,255,255,0.8)', margin: 0, fontSize: '0.9rem' }}>Database Space Breakdown</h4>
+                          </div>
+                          
                           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '12px' }}>
                             {dbStats.db.tables.map((table, i) => (
                               <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 14px', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', fontSize: '0.85rem' }}>
-                                <span style={{ color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>{table.name}</span>
+                                <span style={{ color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>{table.name.replace(/s$/, '').replace(/_/g, ' ')} Module</span>
                                 <span style={{ color: 'rgba(255,255,255,0.5)' }}>{(table.bytes / 1024).toFixed(1)} KB</span>
                               </div>
                             ))}
+                            
+                            {/* Calculate and display System Overhead to make the math balance */}
+                            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 14px', background: 'rgba(255,255,255,0.01)', border: '1px dashed rgba(255,255,255,0.1)', borderRadius: '8px', fontSize: '0.85rem' }}>
+                              <span style={{ color: 'rgba(255,255,255,0.4)', fontStyle: 'italic' }}>System Overhead & Indexes</span>
+                              <span style={{ color: 'rgba(255,255,255,0.4)' }}>
+                                {((dbStats.db.totalBytes - dbStats.db.tables.reduce((acc, t) => acc + t.bytes, 0)) / 1024 / 1024).toFixed(2)} MB
+                              </span>
+                            </div>
                           </div>
                         </div>
                       )}
