@@ -44,6 +44,9 @@ const AdminPanel = () => {
   const [corp, setCorp] = useState({});
   const [qrPreview, setQrPreview] = useState('');
   const [logoPreview, setLogoPreview] = useState('');
+  
+  const [dbStats, setDbStats] = useState(null);
+  const [loadingDbStats, setLoadingDbStats] = useState(false);
 
   // Fetch initial data
   useEffect(() => {
@@ -68,16 +71,34 @@ const AdminPanel = () => {
       const data = await res.json();
       if (res.ok) {
         setToken(data.token);
-        setUserRole(data.role || 'superadmin');
+        setUserRole(data.role);
         setIsLoggedIn(true);
-        setLoginError('');
-        // Set default tab based on role
+        if (data.role === 'superadmin') {
+          fetchDbStats(data.token);
+        }
         setActiveTab(data.role === 'junior' ? 'hero' : 'corporate');
       } else {
-        setLoginError(data.error || 'Login failed');
+        setLoginError(data.error);
       }
-    } catch (error) {
-      setLoginError('Server error');
+    } catch (err) {
+      setLoginError('Network Error');
+    }
+  };
+
+  const fetchDbStats = async (authToken) => {
+    setLoadingDbStats(true);
+    try {
+      const res = await fetch('/api/diagnostic/db-stats', {
+        headers: { 'Authorization': `Bearer ${authToken}` }
+      });
+      const data = await res.json();
+      if (data.success) {
+        setDbStats(data);
+      }
+    } catch (err) {
+      console.error('Error fetching DB stats:', err);
+    } finally {
+      setLoadingDbStats(false);
     }
   };
 
@@ -465,11 +486,82 @@ const AdminPanel = () => {
                     <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: '0.8rem' }}>No file</span>
                   )}
                 </div>
+                </div>
+  
               </div>
 
+              {/* DB Stats Block */}
+              {userRole === 'superadmin' && (
+                <div style={{ marginTop: '30px', padding: '20px', background: 'rgba(0,0,0,0.2)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                    <h3 style={{ margin: 0, color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <i className="fa-solid fa-database" style={{ color: '#15F5BA' }}></i> Database & Server Storage
+                    </h3>
+                    <button onClick={() => fetchDbStats(token)} disabled={loadingDbStats} style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: 'white', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '0.8rem' }}>
+                      <i className={`fa-solid fa-rotate-right ${loadingDbStats ? 'fa-spin' : ''}`}></i> Refresh
+                    </button>
+                  </div>
+                  
+                  {loadingDbStats && !dbStats ? (
+                    <div style={{ color: 'rgba(255,255,255,0.5)' }}>Loading statistics...</div>
+                  ) : dbStats ? (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+                      
+                      {/* Server Storage Progress */}
+                      <div>
+                        <h4 style={{ color: 'rgba(255,255,255,0.8)', margin: '0 0 15px 0', fontSize: '0.9rem' }}>Storage Utilization</h4>
+                        
+                        {dbStats.server.totalBytes > 0 ? (
+                          <>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontSize: '0.85rem' }}>
+                              <span style={{ color: '#15F5BA', fontWeight: 'bold' }}>DB Size: {(dbStats.db.totalBytes / (1024 * 1024)).toFixed(2)} MB</span>
+                              <span style={{ color: 'rgba(255,255,255,0.5)' }}>{(dbStats.server.freeBytes / (1024 * 1024 * 1024)).toFixed(2)} GB Available</span>
+                            </div>
+                            <div style={{ width: '100%', height: '12px', background: 'rgba(255,255,255,0.1)', borderRadius: '6px', overflow: 'hidden' }}>
+                              <div style={{ 
+                                width: `${Math.max(1, (dbStats.db.totalBytes / dbStats.server.totalBytes) * 100)}%`, 
+                                height: '100%', 
+                                background: 'linear-gradient(90deg, #15F5BA, #0c9b74)' 
+                              }}></div>
+                            </div>
+                            <div style={{ marginTop: '10px', fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', textAlign: 'right' }}>
+                              Total Server Capacity: {(dbStats.server.totalBytes / (1024 * 1024 * 1024)).toFixed(2)} GB
+                            </div>
+                          </>
+                        ) : (
+                          <div style={{ padding: '15px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px' }}>
+                            <div style={{ color: '#15F5BA', fontWeight: 'bold', fontSize: '1.2rem', marginBottom: '5px' }}>
+                              {(dbStats.db.totalBytes / (1024 * 1024)).toFixed(2)} MB
+                            </div>
+                            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem' }}>Total Database Size</div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Top Tables Breakdown */}
+                      {dbStats.db.tables && dbStats.db.tables.length > 0 && (
+                        <div>
+                          <h4 style={{ color: 'rgba(255,255,255,0.8)', margin: '0 0 15px 0', fontSize: '0.9rem' }}>Largest Modules</h4>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            {dbStats.db.tables.map((table, i) => (
+                              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', fontSize: '0.85rem' }}>
+                                <span style={{ color: 'rgba(255,255,255,0.8)' }}>{table.name}</span>
+                                <span style={{ color: 'rgba(255,255,255,0.5)' }}>{(table.bytes / 1024).toFixed(1)} KB</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                    </div>
+                  ) : (
+                    <div style={{ color: 'rgba(255,255,255,0.5)' }}>Could not load database statistics.</div>
+                  )}
+                </div>
+              )}
+
             </div>
-          </div>
-        )}
+          )}
 
         {/* Bank & UPI Tab */}
         {activeTab === 'payment' && (
